@@ -1,0 +1,11 @@
+version: '3'
+
+silent: true
+
+tasks:
+  world: 
+    cmds:
+      - echo 'running all checks'
+
+  default:
+    cmds: [task: world]
