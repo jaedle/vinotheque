@@ -6,4 +6,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: Arduino/actions/setup-taskfile@master
+      with:
+        version: '2.6.1'
     - run: task world
