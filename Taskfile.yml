@@ -5,8 +5,15 @@ silent: true
 tasks:
   world: 
     cmds:
+      - task: check-preconditions
       - task: format-service
       - task: test-service
+      - task: integration-test-service
+
+  check-preconditions:
+    cmds:
+      - go version | grep 'go1.14' &> /dev/null
+      - which ginkgo &> /dev/null
 
   format-service:
     dir: service/
@@ -16,7 +23,12 @@ tasks:
   test-service:
     dir: service/
     cmds:
-      - go test ./...
+      - ginkgo -r --skipPackage=integration
+
+  integration-test-service:
+    dir: service/
+    cmds:
+      - ginkgo test/integration
 
   default:
     cmds: [task: world]
