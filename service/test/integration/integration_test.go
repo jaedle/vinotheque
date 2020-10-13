@@ -1,12 +1,30 @@
 package integration_test
 
 import (
+	"os/exec"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	. "github.com/onsi/gomega/gexec"
 )
 
 var _ = Describe("Integration", func() {
-	It("should be a novel", func() {
-		Expect(true).To(Equal(true))
+	var artifact string
+
+	BeforeSuite(func() {
+		var err error
+		artifact, err = Build("github.com/jaedle/vinotheque/service")
+		Expect(err).ShouldNot(HaveOccurred())
+	})
+
+	AfterSuite(func() {
+		CleanupBuildArtifacts()
+	})
+
+	It("executes service", func() {
+		command := exec.Command(artifact)
+		session, err := Start(command, GinkgoWriter, GinkgoWriter)
+		Expect(err).ShouldNot(HaveOccurred())
+		Eventually(session).Should(Exit(0))
 	})
 })
