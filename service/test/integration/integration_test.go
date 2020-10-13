@@ -10,6 +10,7 @@ import (
 
 var _ = Describe("Integration", func() {
 	var artifact string
+	var session *Session
 
 	BeforeSuite(func() {
 		var err error
@@ -19,6 +20,12 @@ var _ = Describe("Integration", func() {
 
 	AfterSuite(func() {
 		CleanupBuildArtifacts()
+	})
+
+	AfterEach(func() {
+		if session != nil {
+			session.Kill()
+		}
 	})
 
 	It("executes service", func() {
