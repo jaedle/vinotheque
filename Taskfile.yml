@@ -5,7 +5,18 @@ silent: true
 tasks:
   world: 
     cmds:
-      - echo 'running all checks'
+      - task: format-service
+      - task: test-service
+
+  format-service:
+    dir: service/
+    cmds:
+      - go fmt ./...
+
+  test-service:
+    dir: service/
+    cmds:
+      - go test ./...
 
   default:
     cmds: [task: world]

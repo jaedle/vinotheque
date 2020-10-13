@@ -8,4 +8,7 @@ jobs:
     - uses: Arduino/actions/setup-taskfile@master
       with:
         version: '3.0.0'
+    - uses: actions/setup-go@v2
+      with:
+        go-version: '1.14'
     - run: task world
