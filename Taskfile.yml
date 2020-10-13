@@ -10,6 +10,10 @@ tasks:
       - task: test-service
       - task: integration-test-service
 
+  install-tools:
+    cmds:
+      - $(cd $HOME && go get github.com/onsi/ginkgo/ginkgo)
+
   check-preconditions:
     cmds:
       - go version | grep 'go1.14' &> /dev/null
