@@ -18,14 +18,14 @@ var _ = Describe("Integration", func() {
 		Expect(err).ShouldNot(HaveOccurred())
 	})
 
-	AfterSuite(func() {
-		CleanupBuildArtifacts()
-	})
-
 	AfterEach(func() {
 		if session != nil {
 			session.Kill()
 		}
+	})
+
+	AfterSuite(func() {
+		CleanupBuildArtifacts()
 	})
 
 	It("executes service", func() {
