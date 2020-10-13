@@ -9,6 +9,7 @@ tasks:
       - task: format-service
       - task: test-service
       - task: integration-test-service
+      - task: cleanup-dependencies-service
 
   install-tools:
     cmds:
@@ -33,6 +34,12 @@ tasks:
     dir: service/
     cmds:
       - ginkgo test/integration
+
+  cleanup-dependencies-service:
+    dir: service/
+    cmds:
+      - go mod verify
+      - go mod tidy
 
   default:
     cmds: [task: world]
