@@ -17,7 +17,7 @@ tasks:
 
   check-preconditions:
     cmds:
-      - go version | grep 'go1.14' &> /dev/null
+      - go version | grep 'go1.15' &> /dev/null
       - which ginkgo &> /dev/null
 
   format-service:

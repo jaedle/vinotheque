@@ -1,6 +1,6 @@
 module github.com/jaedle/vinotheque/service
 
-go 1.14
+go 1.15
 
 require (
 	github.com/onsi/ginkgo v1.14.2
