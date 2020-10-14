@@ -2,6 +2,7 @@ package integration_test
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os/exec"
 	"time"
@@ -53,6 +54,26 @@ var _ = Describe("Integration", func() {
 		Expect(err).ShouldNot(HaveOccurred())
 
 		Eventually(session).Should(Exit(1))
+	})
+
+	It("returns dummy list of wine", func() {
+		command := exec.Command(artifact)
+		command.Env = append(command.Env, fmt.Sprintf("PORT=%d", port))
+		var err error
+		session, err = Start(command, GinkgoWriter, GinkgoWriter)
+		Expect(err).ShouldNot(HaveOccurred())
+
+		awaitStartup()
+
+		resp, err := http.Get(url("/api/wines"))
+		Expect(err).ShouldNot(HaveOccurred())
+		defer resp.Body.Close()
+		Expect(resp.StatusCode).To(Equal(http.StatusOK))
+		Expect(resp.Header.Get("Content-Type")).To(Equal("application/json"))
+
+		body, err := ioutil.ReadAll(resp.Body)
+		Expect(err).ShouldNot(HaveOccurred())
+		Expect(string(body)).To(Equal(`{"wines":[{"name":"Great Shiraz"},{"name":"Wodden Pinor Noir"}]}`))
 	})
 })
 
