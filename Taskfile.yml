@@ -43,3 +43,18 @@ tasks:
 
   default:
     cmds: [task: world]
+
+  start-service:
+    desc: locally start service
+    deps: [stop-service]
+    dir: service/
+    env:
+      PORT: 8080
+    cmds:
+      - PORT=8080 screen -dmS service go run main.go
+      - ./wait-healthy.sh
+
+  stop-service:
+    desc: locally stop service
+    cmds:
+      - (! lsof -ti tcp:8080 &> /dev/null) || kill -9 $(lsof -ti tcp:8080) &> /dev/null
