@@ -34,6 +34,8 @@ tasks:
       - go version | grep 'go1.15' &> /dev/null
       - node --version | grep 'v14.' &> /dev/null
       - which ginkgo &> /dev/null
+      - which screen &> /dev/null
+      - which curl &> /dev/null
 
   format-service:
     dir: service/
