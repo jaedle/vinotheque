@@ -19,7 +19,10 @@ tasks:
       - task: install-e2e-dependencies
 
   install-tools:
-    cmds: ['$(cd $HOME && go get -u github.com/onsi/ginkgo/ginkgo)']
+    cmds:
+      - '$(cd $HOME && go get -u github.com/onsi/ginkgo/ginkgo)'
+      - curl -fsSL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$PWD/tools" v1.27.0
+
 
   install-e2e-dependencies:
     dir: e2e/
@@ -31,11 +34,15 @@ tasks:
 
   check-preconditions:
     cmds:
-      - go version | grep 'go1.15' &> /dev/null
-      - node --version | grep 'v14.' &> /dev/null
+      - which go &> /dev/null
+      - which node &> /dev/null
       - which ginkgo &> /dev/null
       - which screen &> /dev/null
       - which curl &> /dev/null
+      - '[[ -x tools/golangci-lint ]]'
+      - go version | grep 'go1.15' &> /dev/null
+      - node --version | grep 'v14.' &> /dev/null
+      - tools/golangci-lint --version | grep 'has version 1.27' &> /dev/null
 
   format-service:
     dir: service/
