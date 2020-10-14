@@ -1,7 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"log"
+	"net/http"
+	"os"
+)
 
 func main() {
-	fmt.Println("hello world")
+	port, ok := os.LookupEnv("PORT")
+	if !ok {
+		os.Exit(1)
+	}
+
+	http.HandleFunc("/health", func(w http.ResponseWriter, _ *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
