@@ -4,6 +4,7 @@ silent: true
 
 tasks:
   install:
+    desc: install required dependencies and tools
     cmds:
       - task: install-tools
       - task: install-service-dependencies
@@ -28,17 +29,18 @@ tasks:
     cmds: [ npm ci --no-progress ]
 
   world:
+    desc: run - literally - everything :)
     cmds:
       - task: check-preconditions
       - task: format-service
       - task: lint
       - task: test
-      - task: integration-test-service
       - task: e2e
       - task: cleanup-dependencies-service
       - task: stop
 
   check-preconditions:
+    desc: check if everything is ready to go
     cmds:
       - which go &> /dev/null
       - which node &> /dev/null
@@ -51,35 +53,37 @@ tasks:
       - tools/golangci-lint --version | grep 'has version 1.27' &> /dev/null
 
   format-service:
+    desc: formats sourcecode on service
     dir: service/
     cmds: [ go fmt ./... ]
 
   lint:
+    desc: lints project
     cmds: [ task: lint-service, task: lint-ui ]
 
   lint-service:
+    desc: lints service
     dir: service/
     cmds: [ ../tools/golangci-lint run --fix ]
 
   lint-ui:
+    desc: lints ui
     dir: ui/
     cmds: [ npm run lint ]
 
   test:
+    desc: runs component tests
     cmds: [ task: test-service, task: test-ui ]
 
   test-service:
+    desc: run tests for service
     dir: service/
-    cmds: [ ginkgo -r --skipPackage=integration ]
+    cmds: [ ginkgo -r --skipPackage=integration, ginkgo test/integration ]
 
   test-ui:
+    desc: run ui tests
     dir: ui/
     cmds: [ npm run test ]
-
-
-  integration-test-service:
-    dir: service/
-    cmds: [ ginkgo test/integration ]
 
   cleanup-dependencies-service:
     dir: service/
