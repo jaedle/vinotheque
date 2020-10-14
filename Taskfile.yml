@@ -7,6 +7,7 @@ tasks:
     cmds:
       - task: install-tools
       - task: install-service-dependencies
+      - task: install-ui-dependencies
       - task: install-e2e-dependencies
 
   install-tools:
@@ -16,21 +17,26 @@ tasks:
 
   install-e2e-dependencies:
     dir: e2e/
-    cmds: [npm ci --no-progress]
+    cmds: [ npm ci --no-progress ]
 
   install-service-dependencies:
     dir: service/
-    cmds: [go mod download]
+    cmds: [ go mod download ]
+
+  install-ui-dependencies:
+    dir: ui/
+    cmds: [ npm ci --no-progress ]
 
   world:
     cmds:
       - task: check-preconditions
       - task: format-service
-      - task: lint-service
-      - task: test-service
+      - task: lint
+      - task: test
       - task: integration-test-service
       - task: e2e
       - task: cleanup-dependencies-service
+      - task: stop
 
   check-preconditions:
     cmds:
@@ -46,34 +52,48 @@ tasks:
 
   format-service:
     dir: service/
-    cmds: [go fmt ./...]
+    cmds: [ go fmt ./... ]
+
+  lint:
+    cmds: [ task: lint-service, task: lint-ui ]
 
   lint-service:
     dir: service/
-    cmds: [../tools/golangci-lint run --fix]
+    cmds: [ ../tools/golangci-lint run --fix ]
 
+  lint-ui:
+    dir: ui/
+    cmds: [ npm run lint ]
+
+  test:
+    cmds: [ task: test-service, task: test-ui ]
 
   test-service:
     dir: service/
-    cmds: [ginkgo -r --skipPackage=integration]
+    cmds: [ ginkgo -r --skipPackage=integration ]
+
+  test-ui:
+    dir: ui/
+    cmds: [ npm run test ]
+
 
   integration-test-service:
     dir: service/
-    cmds: [ginkgo test/integration]
+    cmds: [ ginkgo test/integration ]
 
   cleanup-dependencies-service:
     dir: service/
-    cmds: [go mod verify, go mod tidy]
+    cmds: [ go mod verify, go mod tidy ]
 
   e2e:
     desc: run e2e test
-    deps: [start-service]
+    deps: [ start-service, start-ui ]
     dir: e2e
-    cmds: [npm run test]
+    cmds: [ npm run test ]
 
   start-service:
     desc: locally start service
-    deps: [stop-service]
+    deps: [ stop-service ]
     dir: service/
     env:
       PORT: 8080
@@ -83,7 +103,23 @@ tasks:
 
   stop-service:
     desc: locally stop service
-    cmds: ['(! lsof -ti tcp:8080 &> /dev/null) || kill -9 $(lsof -ti tcp:8080) &> /dev/null']
+    cmds: [ '(! lsof -ti tcp:8080 &> /dev/null) || kill -9 $(lsof -ti tcp:8080) &> /dev/null' ]
+
+  start-ui:
+    desc: locally start ui
+    deps: [ stop-service ]
+    dir: ui/
+    cmds:
+      - screen -dmS ui npm run start
+      - ./wait-healthy.sh
+
+  stop-ui:
+    desc: locally stop ui
+    cmds: [ '(! lsof -ti tcp:4200 &> /dev/null) || kill -9 $(lsof -ti tcp:4200) &> /dev/null' ]
+
+  stop:
+    desc: stop all background processes
+    deps: [ stop-service, stop-ui ]
 
   default:
-    cmds: [task: world]
+    cmds: [ task: world ]

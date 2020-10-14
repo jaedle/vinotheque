@@ -1,5 +1,5 @@
 fixture`Getting Started`
-    .page`http://localhost:8080/health`;
+    .page`http://localhost:4200/`;
 
 test('My first test', async t => {
 });
