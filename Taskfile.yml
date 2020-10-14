@@ -15,6 +15,7 @@ tasks:
   install:
     cmds:
       - task: install-tools
+      - task: install-service-dependencies
       - task: install-e2e-dependencies
 
   install-tools:
@@ -23,6 +24,10 @@ tasks:
   install-e2e-dependencies:
     dir: e2e/
     cmds: [npm ci --no-progress]
+
+  install-service-dependencies:
+    dir: service/
+    cmds: [go mod download]
 
   check-preconditions:
     cmds:
