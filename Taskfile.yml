@@ -3,15 +3,6 @@ version: '3'
 silent: true
 
 tasks:
-  world: 
-    cmds:
-      - task: check-preconditions
-      - task: format-service
-      - task: test-service
-      - task: integration-test-service
-      - task: e2e
-      - task: cleanup-dependencies-service
-
   install:
     cmds:
       - task: install-tools
@@ -23,7 +14,6 @@ tasks:
       - '$(cd $HOME && go get -u github.com/onsi/ginkgo/ginkgo)'
       - curl -fsSL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$PWD/tools" v1.27.0
 
-
   install-e2e-dependencies:
     dir: e2e/
     cmds: [npm ci --no-progress]
@@ -31,6 +21,16 @@ tasks:
   install-service-dependencies:
     dir: service/
     cmds: [go mod download]
+
+  world:
+    cmds:
+      - task: check-preconditions
+      - task: format-service
+      - task: lint-service
+      - task: test-service
+      - task: integration-test-service
+      - task: e2e
+      - task: cleanup-dependencies-service
 
   check-preconditions:
     cmds:
@@ -47,6 +47,11 @@ tasks:
   format-service:
     dir: service/
     cmds: [go fmt ./...]
+
+  lint-service:
+    dir: service/
+    cmds: [../tools/golangci-lint run --fix]
+
 
   test-service:
     dir: service/
@@ -75,6 +80,7 @@ tasks:
     cmds:
       - screen -dmS service go run main.go
       - ./wait-healthy.sh
+
   stop-service:
     desc: locally stop service
     cmds: ['(! lsof -ti tcp:8080 &> /dev/null) || kill -9 $(lsof -ti tcp:8080) &> /dev/null']
