@@ -91,9 +91,21 @@ tasks:
 
   e2e:
     desc: run e2e test
-    deps: [ start-service, start-ui ]
+    deps: [ start-reverse-proxy, start-service, start-ui ]
     dir: e2e
     cmds: [ npm run test ]
+
+  start-reverse-proxy:
+    desc: locally start reverse-proxy
+    deps: [ stop-reverse-proxy ]
+    dir: reverse-proxy/
+    cmds:
+      - screen -dmS reverse-proxy go run main.go
+      - ./wait-healthy.sh
+
+  stop-reverse-proxy:
+    desc: locally stop reverse proxy
+    cmds: [ '(! lsof -ti tcp:8000 &> /dev/null) || kill -9 $(lsof -ti tcp:8000) &> /dev/null' ]
 
   start-service:
     desc: locally start service
@@ -111,7 +123,7 @@ tasks:
 
   start-ui:
     desc: locally start ui
-    deps: [ stop-service ]
+    deps: [ stop-ui ]
     dir: ui/
     cmds:
       - screen -dmS ui npm run start
@@ -123,7 +135,7 @@ tasks:
 
   stop:
     desc: stop all background processes
-    deps: [ stop-service, stop-ui ]
+    deps: [ stop-reverse-proxy, stop-service, stop-ui ]
 
   default:
     cmds: [ task: world ]

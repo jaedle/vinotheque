@@ -12,7 +12,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	http.HandleFunc("/health", func(w http.ResponseWriter, _ *http.Request) {
+	http.HandleFunc("/api/health", func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	})
 

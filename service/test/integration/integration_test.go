@@ -14,7 +14,7 @@ import (
 const port = 8080
 const waitStartup = 10 * time.Second
 const pollIntervalStartup = 100 * time.Millisecond
-const healthEndpoint = "/health"
+const healthEndpoint = "/api/health"
 
 var _ = Describe("Integration", func() {
 	var artifact string
