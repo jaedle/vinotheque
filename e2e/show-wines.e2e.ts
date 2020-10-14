@@ -1,5 +1,9 @@
-fixture`Getting Started`
+import { Selector } from 'testcafe';
+
+fixture`Vinotheque`
     .page`http://localhost:4200/`;
 
-test('My first test', async t => {
+test('Title is correct', async t => {
+    await t
+        .expect(Selector("title").innerText).eql('Vinotheque');
 });
