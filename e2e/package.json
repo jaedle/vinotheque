@@ -1,0 +1,14 @@
+{
+  "name": "e2e",
+  "version": "0.0.0",
+  "description": "e2e test for Vinotheque",
+  "scripts": {
+    "test": "testcafe chrome:headless *.ts"
+  },
+  "author": "Dennis Jekubczyk",
+  "license": "MIT",
+  "repository": "https://github.com/jaedle/vinotheque",
+  "devDependencies": {
+    "testcafe": "^1.9.4"
+  }
+}

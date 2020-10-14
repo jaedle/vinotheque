@@ -9,40 +9,48 @@ tasks:
       - task: format-service
       - task: test-service
       - task: integration-test-service
+      - task: e2e
       - task: cleanup-dependencies-service
 
-  install-tools:
+  install:
     cmds:
-      - $(cd $HOME && go get github.com/onsi/ginkgo/ginkgo)
+      - task: install-tools
+      - task: install-e2e-dependencies
+
+  install-tools:
+    cmds: ['$(cd $HOME && go get -u github.com/onsi/ginkgo/ginkgo)']
+
+  install-e2e-dependencies:
+    dir: e2e/
+    cmds: [npm ci --no-progress]
 
   check-preconditions:
     cmds:
       - go version | grep 'go1.15' &> /dev/null
+      - node --version | grep 'v14.' &> /dev/null
       - which ginkgo &> /dev/null
 
   format-service:
     dir: service/
-    cmds:
-      - go fmt ./...
+    cmds: [go fmt ./...]
 
   test-service:
     dir: service/
-    cmds:
-      - ginkgo -r --skipPackage=integration
+    cmds: [ginkgo -r --skipPackage=integration]
 
   integration-test-service:
     dir: service/
-    cmds:
-      - ginkgo test/integration
+    cmds: [ginkgo test/integration]
 
   cleanup-dependencies-service:
     dir: service/
-    cmds:
-      - go mod verify
-      - go mod tidy
+    cmds: [go mod verify, go mod tidy]
 
-  default:
-    cmds: [task: world]
+  e2e:
+    desc: run e2e test
+    deps: [start-service]
+    dir: e2e
+    cmds: [npm run test]
 
   start-service:
     desc: locally start service
@@ -51,10 +59,11 @@ tasks:
     env:
       PORT: 8080
     cmds:
-      - PORT=8080 screen -dmS service go run main.go
+      - screen -dmS service go run main.go
       - ./wait-healthy.sh
-
   stop-service:
     desc: locally stop service
-    cmds:
-      - (! lsof -ti tcp:8080 &> /dev/null) || kill -9 $(lsof -ti tcp:8080) &> /dev/null
+    cmds: ['(! lsof -ti tcp:8080 &> /dev/null) || kill -9 $(lsof -ti tcp:8080) &> /dev/null']
+
+  default:
+    cmds: [task: world]
