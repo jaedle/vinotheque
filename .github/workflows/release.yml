@@ -37,6 +37,8 @@ jobs:
     needs: [test, build]
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
       - uses: mtanzi/action-automerge@v1
         id: merge
         with:
