@@ -1,17 +1,42 @@
 on:
   push:
     branches:
-      - "master"
+      - "main"
 
 name: Create Release
 
 jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: Arduino/actions/setup-taskfile@master
+        with:
+          version: "3.0.0"
+      - uses: actions/setup-go@v2
+        with:
+          go-version: "1.15"
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+      - run: task install
+      - run: task world
+
   build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: Arduino/actions/setup-taskfile@master
+        with:
+          version: "3.0.0"
+      - run: task build-docker-images
+
+  release:
     name: Create Release
     runs-on: ubuntu-latest
+    needs: [test, build]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
