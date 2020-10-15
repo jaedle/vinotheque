@@ -1,4 +1,4 @@
-import { Selector } from 'testcafe';
+import {Selector} from 'testcafe';
 
 fixture`Vinotheque`
     .page`http://localhost:8000/`;
@@ -6,4 +6,11 @@ fixture`Vinotheque`
 test('Title is correct', async t => {
     await t
         .expect(Selector("title").innerText).eql('Vinotheque');
+});
+
+test('shows wines', async t => {
+    await t
+        .expect(Selector('li').withText('Great Shiraz').visible).eql(true);
+    await t
+        .expect(Selector('li').withText('Wodden Pinot Noir').visible).eql(true);
 });

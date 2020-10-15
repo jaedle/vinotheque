@@ -18,7 +18,7 @@ func main() {
 
 	http.HandleFunc("/api/wines", func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Add("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"wines":[{"name":"Great Shiraz"},{"name":"Wodden Pinor Noir"}]}`))
+		_, _ = w.Write([]byte(`{"wines":[{"name":"Great Shiraz"},{"name":"Wodden Pinot Noir"}]}`))
 		w.WriteHeader(200)
 	})
 

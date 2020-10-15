@@ -32,6 +32,7 @@ tasks:
     desc: run - literally - everything :)
     cmds:
       - task: check-preconditions
+      - task: stop
       - task: format-service
       - task: lint
       - task: test
@@ -69,7 +70,7 @@ tasks:
   lint-ui:
     desc: lints ui
     dir: ui/
-    cmds: [ npm run lint ]
+    cmds: [ npm run lint:fix ]
 
   test:
     desc: runs component tests
@@ -136,6 +137,9 @@ tasks:
   stop:
     desc: stop all background processes
     deps: [ stop-reverse-proxy, stop-service, stop-ui ]
+
+  start:
+    deps: [ start-reverse-proxy, start-service, start-ui ]
 
   default:
     cmds: [ task: world ]

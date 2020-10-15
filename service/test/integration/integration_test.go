@@ -73,7 +73,7 @@ var _ = Describe("Integration", func() {
 
 		body, err := ioutil.ReadAll(resp.Body)
 		Expect(err).ShouldNot(HaveOccurred())
-		Expect(string(body)).To(Equal(`{"wines":[{"name":"Great Shiraz"},{"name":"Wodden Pinor Noir"}]}`))
+		Expect(string(body)).To(Equal(`{"wines":[{"name":"Great Shiraz"},{"name":"Wodden Pinot Noir"}]}`))
 	})
 })
 
