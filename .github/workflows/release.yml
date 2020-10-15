@@ -33,7 +33,7 @@ jobs:
 
   release:
     name: Create Release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: [test, build]
     steps:
       - uses: actions/checkout@v2
