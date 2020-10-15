@@ -37,8 +37,9 @@ jobs:
     needs: [test, build]
     steps:
       - uses: actions/checkout@v2
-      - uses: Embraser01/update-git-branch-action@v1.0.0
+      - uses: mtanzi/action-automerge@v1
+        id: merge
         with:
-          branch: release
-          force: 1
-          githubToken: ${{ secrets.GITHUB_TOKEN }} # Github Token
+          github_token: ${{ github.token }}
+          source: 'master'
+          target: 'release'
