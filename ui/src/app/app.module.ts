@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatListModule} from '@angular/material/list';
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,8 @@ import {MatListModule} from '@angular/material/list';
     BrowserModule,
     HttpClientModule,
     MatListModule,
+    MatToolbarModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
