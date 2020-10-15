@@ -135,10 +135,11 @@ tasks:
     cmds: [ '(! lsof -ti tcp:4200 &> /dev/null) || kill -9 $(lsof -ti tcp:4200) &> /dev/null || true' ]
 
   stop:
-    desc: stop all background processes
+    desc: stop components for local development
     deps: [ stop-reverse-proxy, stop-service, stop-ui ]
 
   start:
+    desc: start components for local development
     deps: [ start-reverse-proxy, start-service, start-ui ]
 
   default:
