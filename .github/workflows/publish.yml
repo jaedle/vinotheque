@@ -1,6 +1,7 @@
 on:
   push:
-    tags: [latest]
+    branches:
+      - refs/tags/*
 
 jobs:
   release:
