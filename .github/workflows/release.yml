@@ -40,6 +40,6 @@ jobs:
       - uses: mtanzi/action-automerge@v1
         id: merge
         with:
-          github_token: ${{ github.token }}
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           source: 'main'
           target: 'release'
