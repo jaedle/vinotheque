@@ -3,7 +3,7 @@ on:
     branches:
       - "main"
 
-name: Create Release
+name: Update release branch
 
 jobs:
   test:
@@ -37,8 +37,8 @@ jobs:
     needs: [test, build]
     steps:
       - uses: actions/checkout@v2
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - uses: Embraser01/update-git-branch-action@v1.0.0
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: false
+          branch: release
+          force: 1
+          githubToken: ${{ secrets.GITHUB_TOKEN }} # Github Token
