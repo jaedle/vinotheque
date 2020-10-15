@@ -1,0 +1,17 @@
+{
+	admin off
+}
+
+:8080
+encode zstd gzip
+log
+
+route /api/* {
+	reverse_proxy http://service:8080
+}
+
+route /* {
+	reverse_proxy http://ui:8080
+}
+
+respond /* 404

@@ -143,3 +143,26 @@ tasks:
 
   default:
     cmds: [ task: world ]
+
+  start-local-docker-compose:
+    deps: [ build-docker-images ]
+    dir: deployments/
+    cmds:
+      - task: stop-local-docker-compose
+      - docker-compose up --remove-orphans --force-recreate -d
+      - open http://localhost:8001
+
+  stop-local-docker-compose:
+    dir: deployments/
+    cmds: [ docker-compose down --remove-orphans -v ]
+
+  build-docker-images:
+    deps: [ build-ui-docker-image, build-service-docker-image ]
+
+  build-ui-docker-image:
+    dir: ui/
+    cmds: [ docker image build -t jaedle/vinotheque:ui-latest . ]
+
+  build-service-docker-image:
+    dir: service/
+    cmds: [ docker image build -t jaedle/vinotheque:service-latest . ]
