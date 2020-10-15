@@ -106,7 +106,7 @@ tasks:
 
   stop-reverse-proxy:
     desc: locally stop reverse proxy
-    cmds: [ '(! lsof -ti tcp:8000 &> /dev/null) || kill -9 $(lsof -ti tcp:8000) &> /dev/null' ]
+    cmds: [ '(! lsof -ti tcp:8000 &> /dev/null) || kill -9 $(lsof -ti tcp:8000) &> /dev/null || true' ]
 
   start-service:
     desc: locally start service
@@ -120,7 +120,7 @@ tasks:
 
   stop-service:
     desc: locally stop service
-    cmds: [ '(! lsof -ti tcp:8080 &> /dev/null) || kill -9 $(lsof -ti tcp:8080) &> /dev/null' ]
+    cmds: [ '(! lsof -ti tcp:8080 &> /dev/null) || kill -9 $(lsof -ti tcp:8080) &> /dev/null || true' ]
 
   start-ui:
     desc: locally start ui
@@ -132,7 +132,7 @@ tasks:
 
   stop-ui:
     desc: locally stop ui
-    cmds: [ '(! lsof -ti tcp:4200 &> /dev/null) || kill -9 $(lsof -ti tcp:4200) &> /dev/null' ]
+    cmds: [ '(! lsof -ti tcp:4200 &> /dev/null) || kill -9 $(lsof -ti tcp:4200) &> /dev/null || true' ]
 
   stop:
     desc: stop all background processes
