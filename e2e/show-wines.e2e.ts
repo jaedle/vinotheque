@@ -10,7 +10,7 @@ test('Title is correct', async t => {
 
 test('shows wines', async t => {
     await t
-        .expect(Selector('li').withText('Great Shiraz').visible).eql(true);
+        .expect(Selector('.wine-name').withText('Great Shiraz').visible).eql(true);
     await t
-        .expect(Selector('li').withText('Wodden Pinot Noir').visible).eql(true);
+        .expect(Selector('.wine-name').withText('Wodden Pinot Noir').visible).eql(true);
 });
