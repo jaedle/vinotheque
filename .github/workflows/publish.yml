@@ -1,7 +1,6 @@
 on:
-  release:
-    types: 
-      - created
+  push:
+    tags: [latest]
 
 jobs:
   release:
