@@ -21,4 +21,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v1
+      - uses: Arduino/actions/setup-taskfile@master
+        with:
+          version: '3.0.0'
       - run: task build-docker-images
