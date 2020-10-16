@@ -1,5 +1,5 @@
 on:
-  release:
+  release: [published]
 
 name: publish release to dockerhub
 
