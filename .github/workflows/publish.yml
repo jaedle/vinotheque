@@ -1,7 +1,5 @@
 on:
-  push:
-    branches:
-      - 'release'
+  release:
 
 jobs:
   release:
@@ -13,4 +11,3 @@ jobs:
         with:
           version: "3.0.0"
       - run: task build-docker-images
-          

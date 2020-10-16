@@ -34,14 +34,12 @@ jobs:
   release:
     name: Create Release
     runs-on: ubuntu-20.04
-    needs: [test, build]
+    needs: [ test, build ]
     steps:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
-      - uses: mtanzi/action-automerge@v1
-        id: merge
-        with:
-          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          source: 'main'
-          target: 'release'
+      - uses: "marvinpinto/action-automatic-releases@latest"
+          with:
+            repo_token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+            automatic_release_tag: "latest"
