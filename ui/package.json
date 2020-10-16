@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "component": "testcafe",
+    "component:live": "testcafe chrome --live",
     "build": "ng build",
     "build:prod": "ng build --prod",
     "test": "ng test",
