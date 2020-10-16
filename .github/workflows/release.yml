@@ -40,6 +40,6 @@ jobs:
         with:
           persist-credentials: false
       - uses: "marvinpinto/action-automatic-releases@latest"
-          with:
-            repo_token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
-            automatic_release_tag: "latest"
+        with:
+          repo_token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+          automatic_release_tag: "latest"
