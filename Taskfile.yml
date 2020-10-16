@@ -84,7 +84,22 @@ tasks:
   test-ui:
     desc: run ui tests
     dir: ui/
+    cmds:
+      - task: unit-test-ui
+      - task: component-test-ui
+
+  unit-test-ui:
+    desc: run ui tests
+    dir: ui/
     cmds: [ npm run test ]
+
+  component-test-ui:
+    desc: run component ui-tests
+    deps: [ start-ui ]
+    dir: ui/
+    cmds:
+      - npm run component
+      - task: stop-ui
 
   cleanup-dependencies-service:
     dir: service/

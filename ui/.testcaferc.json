@@ -1,0 +1,4 @@
+{
+  "browsers": "chrome:headless",
+  "src": ["**/*.comp-spec.ts"]
+}
