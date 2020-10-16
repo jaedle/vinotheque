@@ -4,6 +4,7 @@ import {AppComponent} from './app.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
+import {AppModule} from './app.module';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -12,10 +13,8 @@ describe('AppComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         MatToolbarModule,
-        MatListModule
-      ],
-      declarations: [
-        AppComponent
+        MatListModule,
+        AppModule
       ],
     }).compileComponents();
   });

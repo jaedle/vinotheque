@@ -1,13 +1,9 @@
-import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HttpClientModule} from '@angular/common/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatListModule} from '@angular/material/list';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
+import {OverviewModule} from './overview/overview.module';
+import {APP_BASE_HREF} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -15,14 +11,11 @@ import {MatButtonModule} from '@angular/material/button';
   ],
   imports: [
     AppRoutingModule,
-    BrowserAnimationsModule,
-    BrowserModule,
-    HttpClientModule,
-    MatListModule,
-    MatToolbarModule,
-    MatButtonModule,
+    OverviewModule
   ],
-  providers: [],
+  providers: [
+    {provide: APP_BASE_HREF, useValue: '/'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

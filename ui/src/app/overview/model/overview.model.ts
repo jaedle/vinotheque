@@ -1,4 +1,4 @@
-export class Model {
+export class OverviewModel {
   constructor(public readonly wines: Wines) {
   }
 }

@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {WineService} from './overview/services/wine.service';
-import {OverviewModel} from './overview/model/overview.model';
+import {OverviewModel} from '../model/overview.model';
+import {WineService} from '../services/wine.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-page',
+  templateUrl: './page.component.html',
+  styleUrls: ['./page.component.scss']
 })
-export class AppComponent implements OnInit {
+export class PageComponent implements OnInit {
   model: OverviewModel;
   error = false;
 
