@@ -9,12 +9,14 @@ import {Model} from './wine';
 })
 export class AppComponent implements OnInit {
   model: Model;
+  error = false;
 
   constructor(private wineService: WineService) {
   }
 
   ngOnInit(): void {
-    this.wineService.getWines()
-      .subscribe(model => this.model = model);
+    this.wineService.getWines().subscribe(model => this.model = model, error => {
+      this.error = true;
+    });
   }
 }

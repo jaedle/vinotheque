@@ -10,8 +10,13 @@
 </p>
 
 <div class="content">
-  <h1>Wines</h1>
-  <mat-list>
-    <mat-list-item *ngFor="let wine of model?.wines.wines" class="wine-name">{{wine.name}}</mat-list-item>
-  </mat-list>
+  <ng-container *ngIf="error">
+    could not fetch wines
+  </ng-container>
+  <ng-container *ngIf="!error">
+    <h1>Wines</h1>
+    <mat-list>
+      <mat-list-item *ngFor="let wine of model?.wines.wines" class="wine-name">{{wine.name}}</mat-list-item>
+    </mat-list>
+  </ng-container>
 </div>
