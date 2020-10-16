@@ -167,3 +167,18 @@ tasks:
   build-service-docker-image:
     dir: service/
     cmds: [ docker image build -t jaedle/vinotheque:service-latest . ]
+
+  docker-login:
+    desc: login into dockerhub
+    cmds:
+      - echo '{{.password}}' | docker login --username '{{.username}}' --password-stdin
+
+  publish-docker-images:
+    desc: push docker images to dockerhub
+    deps: [ push-ui-docker-image, push-service-docker-image ]
+
+  push-ui-docker-image:
+    cmds: [ docker image push jaedle/vinotheque:ui-latest ]
+
+  push-service-docker-image:
+    cmds: [ docker image push jaedle/vinotheque:service-latest ]
