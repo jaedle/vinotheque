@@ -4,7 +4,7 @@ on:
       - '!release'
   pull_request:
 
-name: tests
+name: test branches or pull requests
 
 jobs:
   test:

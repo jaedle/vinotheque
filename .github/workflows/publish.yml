@@ -1,6 +1,8 @@
 on:
   release:
 
+name: publish release to dockerhub
+
 jobs:
   release:
     name: publish artifacts
