@@ -12,6 +12,6 @@ jobs:
       - uses: Arduino/actions/setup-taskfile@master
         with:
           version: "3.0.0"
-      - run: task docker-login username='{{ secrets.DOCKERHUB_USERNAME }}' password='{{ secrets.DOCKERHUB_PASSWORD }}'
+      - run: task docker-login username='${{ secrets.DOCKERHUB_USERNAME }}' password='${{ secrets.DOCKERHUB_PASSWORD }}'
       - run: task build-docker-images
       - run: task publish-docker-images
