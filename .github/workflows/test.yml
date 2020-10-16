@@ -1,7 +1,8 @@
 on: 
   push:
     branches:
-      - '!release'
+      - '*'
+      - '!main'
   pull_request:
 
 name: test branches or pull requests
