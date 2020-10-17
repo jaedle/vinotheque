@@ -4,12 +4,14 @@
   "description": "e2e test for Vinotheque",
   "scripts": {
     "test": "testcafe chrome:headless *.ts",
-    "test:watch": "testcafe chrome --live *.ts"
+    "test:watch": "testcafe chrome --live *.ts",
+    "format": "npx prettier --write ."
   },
   "author": "Dennis Jekubczyk",
   "license": "MIT",
   "repository": "https://github.com/jaedle/vinotheque",
   "devDependencies": {
+    "prettier": "^2.1.2",
     "testcafe": "^1.9.4"
   }
 }

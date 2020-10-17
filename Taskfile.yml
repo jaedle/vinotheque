@@ -33,7 +33,7 @@ tasks:
     cmds:
       - task: check-preconditions
       - task: stop
-      - task: format-service
+      - task: format
       - task: lint
       - task: test
       - task: e2e
@@ -53,8 +53,17 @@ tasks:
       - node --version | grep 'v14.' &> /dev/null
       - tools/golangci-lint --version | grep 'has version 1.27' &> /dev/null
 
+  format:
+    desc: formats sources
+    deps: [ format-service ]
+
+  format-e2e:
+    desc: formats sources in e2e
+    dir: e2e/
+    cmds: [ npm run format ]
+
   format-service:
-    desc: formats sourcecode on service
+    desc: formats sources in service
     dir: service/
     cmds: [ go fmt ./... ]
 
