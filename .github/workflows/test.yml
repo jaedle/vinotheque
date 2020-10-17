@@ -1,8 +1,7 @@
 on: 
   push:
-    branches:
-      - '*'
-      - '!main'
+    branches-ignore:
+      - 'main'
   pull_request:
 
 name: test branches or pull requests
