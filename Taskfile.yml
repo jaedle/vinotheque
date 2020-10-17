@@ -62,6 +62,13 @@ tasks:
     dir: e2e/
     cmds: [ npm run format ]
 
+  format-ui:
+    desc: formats sources in ui
+    dir: ui/
+    cmds: [ npm run format ]
+
+
+
   format-service:
     desc: formats sources in service
     dir: service/
