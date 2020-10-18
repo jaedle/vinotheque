@@ -1,4 +1,7 @@
 wines:
+  - name: Great Shiraz
+    winery: Stuff
+    type: red
   - name: Generic Fresh Shoes
     winery: Gottlieb, Trantow and Abshire
     type: sparkling
