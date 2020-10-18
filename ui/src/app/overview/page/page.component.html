@@ -18,7 +18,7 @@
   <ng-container *ngIf="error"> could not fetch wines</ng-container>
   <ng-container *ngIf="!error">
     <h1>Wines</h1>
-    <mat-chip-list aria-label="Fish selection">
+    <mat-chip-list>
       <mat-chip [selected]="wineType === undefined" (click)="showAllWines()" id="show-all-wines">All</mat-chip>
       <mat-chip [selected]="wineType === 'WHITE'" (click)="showWhiteWines()" id="show-white-wines">White</mat-chip>
       <mat-chip [selected]="wineType === 'ROSE'" (click)="showRoseWines()" id="show-rose-wines">Rose</mat-chip>
