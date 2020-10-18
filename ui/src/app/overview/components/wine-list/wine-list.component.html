@@ -1,9 +1,9 @@
-<table id="wine-list" mat-table [dataSource]="wines.wines" class="mat-elevation-z8">
+<table id="wine-list" mat-table [dataSource]="wines?.wines" class="mat-elevation-z8">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell class="wine-name" *matCellDef="let element"> {{element.name}} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="['name']"></tr>
-  <tr mat-row *matRowDef="let row; columns: ['name'];"></tr>
+  <tr mat-row class="wine" *matRowDef="let row; columns: ['name'];"></tr>
 </table>
