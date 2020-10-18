@@ -11,6 +11,7 @@ import { WineService } from './services/wine.service';
 import {MatChipsModule} from '@angular/material/chips';
 import {RouterModule} from '@angular/router';
 import { WineListComponent } from './components/wine-list/wine-list.component';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [PageComponent, WineListComponent],
@@ -23,7 +24,8 @@ import { WineListComponent } from './components/wine-list/wine-list.component';
     MatToolbarModule,
     MatButtonModule,
     MatChipsModule,
-    RouterModule
+    RouterModule,
+    MatTableModule
   ],
   exports: [PageComponent],
   providers: [WineService],
