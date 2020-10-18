@@ -1,16 +1,37 @@
 export class OverviewModel {
-  constructor(public readonly wines: Wines) {}
+
+  private active: WineType | undefined;
+
+  constructor(public readonly wines: Wines) {
+    this.active = undefined;
+  }
+
+  getWines(): Wine[] {
+    if (this.active === undefined) {
+      return this.wines.wines;
+    }
+
+    return this.wines.wines.filter(wine => wine.type === this.active);
+  }
+
+  filter(type: WineType): void {
+    this.active = type;
+  }
 }
 
 export class Wines {
-  constructor(public readonly wines: Wine[]) {}
+  constructor(public readonly wines: Wine[]) {
+  }
 }
 
 export class Wine {
-  constructor(public readonly name: string, public readonly type: WineType) {}
+  constructor(public readonly name: string, public readonly type: WineType) {
+  }
 }
 
 export enum WineType {
   RED,
-  WHITE
+  WHITE,
+  SPARKLING,
+  ROSE,
 }

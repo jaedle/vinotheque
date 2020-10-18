@@ -11,12 +11,25 @@ export class WineService {
   constructor(private http: HttpClient) {
   }
 
+  private static getWineType(wine: WineDto): WineType {
+    switch (wine.type) {
+      case 'red':
+        return WineType.RED;
+      case 'white':
+        return WineType.WHITE;
+      case 'rose':
+        return WineType.ROSE;
+      case 'sparkling':
+        return WineType.SPARKLING;
+    }
+  }
+
   getWines(): Observable<OverviewModel> {
     return this.http.get<GetWineResponse>('/api/wines').pipe(
       map((response) => {
         return new OverviewModel(
           new Wines(response.wines.map((wine) => {
-            const type: WineType = wine.type === 'red' ? WineType.RED : WineType.WHITE;
+            const type = WineService.getWineType(wine);
             return new Wine(wine.name, type);
           })),
         );
