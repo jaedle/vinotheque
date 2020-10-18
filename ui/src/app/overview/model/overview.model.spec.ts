@@ -43,4 +43,12 @@ describe('OverviewModelSpec', () => {
 
     expect(model.getWines()).toEqual([aRoseWine]);
   });
+
+  it('resets filter', () => {
+    const model = new OverviewModel(new Wines([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]));
+    model.filter(WineType.ROSE);
+    model.resetFilter();
+
+    expect(model.getWines()).toEqual([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]);
+  });
 });

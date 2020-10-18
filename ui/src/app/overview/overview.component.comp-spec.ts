@@ -84,6 +84,17 @@ test('shows only sparkling wines on selection', async (t) => {
   await assertDoesNotShowWine(t, aWhiteWine);
 });
 
+test('shows all wines again after filter selection',  async (t) => {
+  await t.click(Selector('#show-sparkling-wines'));
+  await t.click(Selector('#show-all-wines'));
+
+  await assertShowsWine(t, aRedWine);
+  await assertShowsWine(t, anotherRedWine);
+  await assertShowsWine(t, aWhiteWine);
+  await assertShowsWine(t, aSparklingWine);
+  await assertShowsWine(t, aRoseWine);
+});
+
 async function assertDoesNotShowWine(t, name: string) {
   return t.expect(Selector('.wine-name', {timeout: 0}).withText(name).visible).eql(false);
 }

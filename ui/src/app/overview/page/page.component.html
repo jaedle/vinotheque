@@ -19,9 +19,10 @@
   <ng-container *ngIf="!error">
     <h1>Wines</h1>
     <mat-chip-list aria-label="Fish selection">
+      <mat-chip (click)="showAllWines()" id="show-all-wines">All wines</mat-chip>
       <mat-chip (click)="showWhiteWines()" id="show-white-wines">White wines</mat-chip>
-      <mat-chip (click)="showRedWines()" id="show-red-wines">Red wines</mat-chip>
       <mat-chip (click)="showRoseWines()" id="show-rose-wines">Rose wines</mat-chip>
+      <mat-chip (click)="showRedWines()" id="show-red-wines">Red wines</mat-chip>
       <mat-chip (click)="showSparklingWines()" id="show-sparkling-wines">Sparkling wines</mat-chip>
     </mat-chip-list>
     <mat-list>

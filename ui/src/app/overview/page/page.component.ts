@@ -41,4 +41,8 @@ export class PageComponent implements OnInit {
   showSparklingWines(): void {
     this.model.filter(WineType.SPARKLING);
   }
+
+  showAllWines(): void {
+    this.model.resetFilter();
+  }
 }

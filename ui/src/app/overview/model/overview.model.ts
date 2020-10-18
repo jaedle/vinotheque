@@ -17,6 +17,10 @@ export class OverviewModel {
   filter(type: WineType): void {
     this.active = type;
   }
+
+  resetFilter(): void {
+    this.active = undefined;
+  }
 }
 
 export class Wines {
