@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { WineService } from './services/wine.service';
 import {MatChipsModule} from '@angular/material/chips';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [PageComponent],
@@ -20,7 +21,8 @@ import {MatChipsModule} from '@angular/material/chips';
     MatListModule,
     MatToolbarModule,
     MatButtonModule,
-    MatChipsModule
+    MatChipsModule,
+    RouterModule
   ],
   exports: [PageComponent],
   providers: [WineService],

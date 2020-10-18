@@ -84,6 +84,18 @@ test('shows only sparkling wines on selection', async (t) => {
   await assertDoesNotShowWine(t, aWhiteWine);
 });
 
+test('remembers wine selection on refresh', async (t) => {
+  await t.click(Selector('#show-sparkling-wines'));
+
+  await t.eval(() => location.reload(true));
+
+  await assertShowsWine(t, aSparklingWine);
+  await assertDoesNotShowWine(t, aRoseWine);
+  await assertDoesNotShowWine(t, aRedWine);
+  await assertDoesNotShowWine(t, anotherRedWine);
+  await assertDoesNotShowWine(t, aWhiteWine);
+});
+
 test('shows all wines again after filter selection',  async (t) => {
   await t.click(Selector('#show-sparkling-wines'));
   await t.click(Selector('#show-all-wines'));

@@ -34,8 +34,8 @@ export class Wine {
 }
 
 export enum WineType {
-  RED,
-  WHITE,
-  SPARKLING,
-  ROSE,
+  RED = 'RED',
+  WHITE = 'WHITE',
+  SPARKLING = 'SPARKLING',
+  ROSE = 'ROSE',
 }
