@@ -7,3 +7,7 @@ wines:
     type: white
   - name: Fruity Bubble
     type: sparkling
+  - name: Riesling vom Kies
+    type: white
+  - name: El Coto Rosado 2019
+    type: rose
