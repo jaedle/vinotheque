@@ -1,11 +1,11 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { WineService } from '../services/wine.service';
+import {WineService} from '../services/wine.service';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { OverviewModel, Wine, Wines } from '../model/overview.model';
+import {OverviewModel, Wine, Wines, WineType} from '../model/overview.model';
 
 describe('WineService', () => {
   let service: WineService;
@@ -28,15 +28,17 @@ describe('WineService', () => {
 
     result.subscribe((model) => {
       expect(model).toEqual(
-        new OverviewModel(new Wines([new Wine('wine-1'), new Wine('wine-2')])),
-      );
+        new OverviewModel(new Wines([
+          new Wine('a-red-wine', WineType.RED),
+          new Wine('a-white-wine', WineType.WHITE)])
+        ));
       done();
     });
 
     http
       .expectOne((req) => req.url === '/api/wines' && req.method === 'GET')
       .flush({
-        wines: [{ name: 'wine-1' }, { name: 'wine-2' }],
+        wines: [{name: 'a-red-wine', type: 'red'}, {name: 'a-white-wine', type: 'white'}],
       });
   });
 });
