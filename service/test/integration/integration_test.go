@@ -81,6 +81,11 @@ var _ = Describe("Integration", func() {
 		command.Env = append(command.Env, fmt.Sprintf("WINES=%s", winelist.Name()))
 
 		var err error
+		err = ioutil.WriteFile(winelist.Name(), []byte(`wines:
+- name: Great Shiraz
+- name: Wodden Pinot Noir`), os.ModePerm)
+		Expect(err).ShouldNot(HaveOccurred())
+
 		session, err = Start(command, GinkgoWriter, GinkgoWriter)
 		Expect(err).ShouldNot(HaveOccurred())
 

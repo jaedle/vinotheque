@@ -6,11 +6,12 @@ RUN CGO_ENABLED=0 go build -o service main.go
 
 FROM scratch as runtime
 
+VOLUME /data
+COPY test/wines.yml /data/wines.yml
+ENV WINES=/data/wines.yml
+
 WORKDIR /app
 COPY --from=build /build/service ./
 
-VOLUME /data
-
 ENV PORT 8080
-ENV WINES=/data/wine.yml
 CMD [ "/app/service" ]
