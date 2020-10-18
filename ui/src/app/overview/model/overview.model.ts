@@ -6,12 +6,12 @@ export class OverviewModel {
     this.active = undefined;
   }
 
-  getWines(): Wine[] {
+  getWines(): Wines {
     if (this.active === undefined) {
-      return this.wines.wines;
+      return this.wines;
     }
 
-    return this.wines.wines.filter(wine => wine.type === this.active);
+    return new Wines(this.wines.wines.filter(wine => wine.type === this.active));
   }
 
   filter(type: WineType): void {

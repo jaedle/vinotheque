@@ -8,5 +8,5 @@ import {Wine, Wines} from '../../model/overview.model';
 })
 export class WineListComponent {
 
-  @Input() wines: Wine[];
+  @Input() wines: Wines;
 }

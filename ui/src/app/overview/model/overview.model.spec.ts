@@ -9,7 +9,7 @@ describe('OverviewModelSpec', () => {
   it('sohws all wines on beginning', () => {
     const model = new OverviewModel(new Wines([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]));
 
-    expect(model.getWines()).toEqual([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]);
+    expect(model.getWines()).toEqual(new Wines([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]));
   });
 
   it('shows only white wines if filtered', () => {
@@ -17,7 +17,7 @@ describe('OverviewModelSpec', () => {
 
     model.filter(WineType.WHITE);
 
-    expect(model.getWines()).toEqual([aWhiteWine]);
+    expect(model.getWines()).toEqual((new Wines([aWhiteWine])));
   });
 
   it('shows only red wines if filtered', () => {
@@ -25,7 +25,7 @@ describe('OverviewModelSpec', () => {
 
     model.filter(WineType.RED);
 
-    expect(model.getWines()).toEqual([aRedWine]);
+    expect(model.getWines()).toEqual(new Wines([aRedWine]));
   });
 
   it('shows only sparkling wines if filtered', () => {
@@ -33,7 +33,7 @@ describe('OverviewModelSpec', () => {
 
     model.filter(WineType.SPARKLING);
 
-    expect(model.getWines()).toEqual([aSparklingWine]);
+    expect(model.getWines()).toEqual(new Wines([aSparklingWine]));
   });
 
   it('shows only rose wines if filtered', () => {
@@ -41,7 +41,7 @@ describe('OverviewModelSpec', () => {
 
     model.filter(WineType.ROSE);
 
-    expect(model.getWines()).toEqual([aRoseWine]);
+    expect(model.getWines()).toEqual(new Wines([aRoseWine]));
   });
 
   it('resets filter', () => {
@@ -49,6 +49,6 @@ describe('OverviewModelSpec', () => {
     model.filter(WineType.ROSE);
     model.resetFilter();
 
-    expect(model.getWines()).toEqual([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]);
+    expect(model.getWines()).toEqual(new Wines([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]));
   });
 });
