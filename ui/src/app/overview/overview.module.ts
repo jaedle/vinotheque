@@ -10,9 +10,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { WineService } from './services/wine.service';
 import {MatChipsModule} from '@angular/material/chips';
 import {RouterModule} from '@angular/router';
+import { WineListComponent } from './components/wine-list/wine-list.component';
 
 @NgModule({
-  declarations: [PageComponent],
+  declarations: [PageComponent, WineListComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,

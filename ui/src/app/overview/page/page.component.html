@@ -25,12 +25,6 @@
       <mat-chip [selected]="wineType === 'RED'" (click)="showRedWines()" id="show-red-wines">Red</mat-chip>
       <mat-chip [selected]="wineType === 'SPARKLING'" (click)="showSparklingWines()" id="show-sparkling-wines">Sparkling</mat-chip>
     </mat-chip-list>
-    <mat-list>
-      <mat-list-item
-        *ngFor="let wine of model?.getWines()"
-        class="wine-name"
-      >{{ wine.name }}</mat-list-item
-      >
-    </mat-list>
+    <app-wine-list [wines]="model?.getWines()"></app-wine-list>
   </ng-container>
 </div>
