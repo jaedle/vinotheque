@@ -145,6 +145,7 @@ tasks:
     dir: service/
     env:
       PORT: 8080
+      WINES: "test/wines.yml"
     cmds:
       - screen -dmS service go run main.go
       - ./wait-healthy.sh

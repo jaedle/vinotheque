@@ -1,3 +1,9 @@
 wines:
   - name: Great Shiraz
+    type: red
   - name: Wodden Pinot Noir
+    type: red
+  - name: Pinot Gris
+    type: white
+  - name: Fruity Bubble
+    type: sparkling

@@ -34,7 +34,6 @@ func main() {
 		os.Exit(1)
 	}
 
-
 	http.HandleFunc("/api/wines", func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Add("Content-Type", "application/json")
 		_, _ = w.Write(json)
