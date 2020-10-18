@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.wineService.getWines().subscribe(
       (model) => (this.model = model),
-      (error) => {
+      () => {
         this.error = true;
       },
     );

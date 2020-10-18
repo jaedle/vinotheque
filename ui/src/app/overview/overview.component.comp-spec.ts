@@ -34,6 +34,6 @@ fixture`Error`.page`http://localhost:4200/`.requestHooks(failure);
 
 test('shows error message', async (t) => {
   await t
-    .expect(Selector('.content').withText('').innerText)
+    .expect(Selector('.content').innerText)
     .eql('could not fetch wines');
 });
