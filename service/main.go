@@ -12,6 +12,11 @@ func main() {
 		os.Exit(1)
 	}
 
+	_, ok = os.LookupEnv("WINES")
+	if !ok {
+		os.Exit(1)
+	}
+
 	http.HandleFunc("/api/health", func(w http.ResponseWriter, _ *http.Request) {
 		w.WriteHeader(http.StatusOK)
 	})

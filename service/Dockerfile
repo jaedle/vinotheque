@@ -9,5 +9,8 @@ FROM scratch as runtime
 WORKDIR /app
 COPY --from=build /build/service ./
 
+VOLUME /data
+
 ENV PORT 8080
+ENV WINES=/data/wine.yml
 CMD [ "/app/service" ]

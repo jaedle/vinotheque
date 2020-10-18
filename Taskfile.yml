@@ -177,6 +177,7 @@ tasks:
     cmds: [ task: world ]
 
   start-local-docker-compose:
+    desc: start local within docker-compose
     deps: [ build-docker-images ]
     dir: deployments/
     cmds:

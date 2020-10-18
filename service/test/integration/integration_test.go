@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"os/exec"
 	"time"
 
@@ -19,12 +20,15 @@ const healthEndpoint = "/api/health"
 
 var _ = Describe("Integration", func() {
 	var artifact string
+	var winelist *os.File
 	var session *Session
 
 	BeforeSuite(func() {
 		var err error
 		artifact, err = Build("github.com/jaedle/vinotheque/service")
 		Expect(err).ShouldNot(HaveOccurred())
+		winelist, err = ioutil.TempFile("", "")
+		Expect(err).NotTo(HaveOccurred())
 	})
 
 	AfterEach(func() {
@@ -34,12 +38,16 @@ var _ = Describe("Integration", func() {
 	})
 
 	AfterSuite(func() {
+		if winelist != nil {
+			_ = os.Remove(winelist.Name())
+		}
 		CleanupBuildArtifacts()
 	})
 
 	It("starts service", func() {
 		command := exec.Command(artifact)
 		command.Env = append(command.Env, fmt.Sprintf("PORT=%d", port))
+		command.Env = append(command.Env, fmt.Sprintf("WINES=%s", winelist.Name()))
 		var err error
 		session, err = Start(command, GinkgoWriter, GinkgoWriter)
 		Expect(err).ShouldNot(HaveOccurred())
@@ -56,9 +64,22 @@ var _ = Describe("Integration", func() {
 		Eventually(session).Should(Exit(1))
 	})
 
+	It("fails on missing wine list", func() {
+		var err error
+		command := exec.Command(artifact)
+		command.Env = append(command.Env, fmt.Sprintf("PORT=%d", port))
+
+		session, err = Start(command, GinkgoWriter, GinkgoWriter)
+		Expect(err).ShouldNot(HaveOccurred())
+
+		Eventually(session).Should(Exit(1))
+	})
+
 	It("returns dummy list of wine", func() {
 		command := exec.Command(artifact)
 		command.Env = append(command.Env, fmt.Sprintf("PORT=%d", port))
+		command.Env = append(command.Env, fmt.Sprintf("WINES=%s", winelist.Name()))
+
 		var err error
 		session, err = Start(command, GinkgoWriter, GinkgoWriter)
 		Expect(err).ShouldNot(HaveOccurred())
