@@ -29,10 +29,10 @@ describe('WineService', () => {
     result.subscribe((model) => {
       expect(model).toEqual(
         new OverviewModel(new Wines([
-          new Wine('a-red-wine', WineType.RED),
-          new Wine('a-white-wine', WineType.WHITE),
-          new Wine('a-rose-wine', WineType.ROSE),
-          new Wine('a-sparkling-wine', WineType.SPARKLING),
+          new Wine('a-red-wine', 'winery-1', WineType.RED),
+          new Wine('a-white-wine', 'winery-2', WineType.WHITE),
+          new Wine('a-rose-wine', 'winery-3', WineType.ROSE),
+          new Wine('a-sparkling-wine', 'winery-4', WineType.SPARKLING),
         ])));
       done();
     });
@@ -41,10 +41,10 @@ describe('WineService', () => {
       .expectOne((req) => req.url === '/api/wines' && req.method === 'GET')
       .flush({
         wines: [
-          {name: 'a-red-wine', type: 'red'},
-          {name: 'a-white-wine', type: 'white'},
-          {name: 'a-rose-wine', type: 'rose'},
-          {name: 'a-sparkling-wine', type: 'sparkling'},
+          {name: 'a-red-wine', type: 'red', winery: 'winery-1'},
+          {name: 'a-white-wine', type: 'white', winery: 'winery-2'},
+          {name: 'a-rose-wine', type: 'rose', winery: 'winery-3'},
+          {name: 'a-sparkling-wine', type: 'sparkling', winery: 'winery-4'},
         ],
       });
   });

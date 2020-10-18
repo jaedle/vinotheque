@@ -29,7 +29,9 @@ export class Wines {
 }
 
 export class Wine {
-  constructor(public readonly name: string, public readonly type: WineType) {
+  constructor(public readonly name: string,
+              public readonly winery: string,
+              public readonly type: WineType) {
   }
 }
 

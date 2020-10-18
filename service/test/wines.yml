@@ -1,13 +1,19 @@
 wines:
   - name: Great Shiraz
     type: red
+    winery: Winery 1
   - name: Wodden Pinot Noir
     type: red
+    winery: Winery 2
   - name: Pinot Gris
     type: white
+    winery: Winery 1
   - name: Fruity Bubble
     type: sparkling
+    winery: Winery 5
   - name: Riesling vom Kies
     type: white
+    winery: Winery 1
   - name: El Coto Rosado 2019
     type: rose
+    winery: Winery 3

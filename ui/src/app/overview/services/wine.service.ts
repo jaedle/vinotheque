@@ -30,7 +30,7 @@ export class WineService {
         return new OverviewModel(
           new Wines(response.wines.map((wine) => {
             const type = WineService.getWineType(wine);
-            return new Wine(wine.name, type);
+            return new Wine(wine.name, wine.winery, type);
           })),
         );
       }),
@@ -45,4 +45,5 @@ export interface GetWineResponse {
 export interface WineDto {
   name: string;
   type: string;
+  winery: string;
 }

@@ -1,10 +1,10 @@
 import {OverviewModel, Wine, Wines, WineType} from './overview.model';
 
 describe('OverviewModelSpec', () => {
-  const aRedWine = new Wine('a-red-wine', WineType.RED);
-  const aWhiteWine = new Wine('a-white-wine', WineType.WHITE);
-  const aSparklingWine = new Wine('a-sparkling-wine', WineType.SPARKLING);
-  const aRoseWine = new Wine('a-sparkling-wine', WineType.ROSE);
+  const aRedWine = new Wine('a-red-wine', 'TODO', WineType.RED);
+  const aWhiteWine = new Wine('a-white-wine', 'TODO', WineType.WHITE);
+  const aSparklingWine = new Wine('a-sparkling-wine', 'TODO', WineType.SPARKLING);
+  const aRoseWine = new Wine('a-sparkling-wine', 'TODO', WineType.ROSE);
 
   it('sohws all wines on beginning', () => {
     const model = new OverviewModel(new Wines([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]));
