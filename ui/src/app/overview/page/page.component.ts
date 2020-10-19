@@ -12,7 +12,8 @@ export class PageComponent implements OnInit {
   model: OverviewModel;
   view: OverviewModel;
   error = false;
-  private wineType: WineType | undefined;
+  wineType: WineType | undefined;
+  readonly WineType = WineType;
 
   constructor(private wineService: WineService, private router: Router, private activatedRoute: ActivatedRoute) {
   }

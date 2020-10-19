@@ -19,11 +19,20 @@
   <ng-container *ngIf="!error">
     <h1>Wines</h1>
     <mat-chip-list>
-      <mat-chip [selected]="wineType === undefined" (click)="showAllWines()" id="show-all-wines">All</mat-chip>
-      <mat-chip [selected]="wineType === 'WHITE'" (click)="showWhiteWines()" id="show-white-wines">White</mat-chip>
-      <mat-chip [selected]="wineType === 'ROSE'" (click)="showRoseWines()" id="show-rose-wines">Rose</mat-chip>
-      <mat-chip [selected]="wineType === 'RED'" (click)="showRedWines()" id="show-red-wines">Red</mat-chip>
-      <mat-chip [selected]="wineType === 'SPARKLING'" (click)="showSparklingWines()" id="show-sparkling-wines">Sparkling</mat-chip>
+      <mat-chip (click)="showAllWines()" [selected]="wineType === undefined" id="show-all-wines">All ({{model.count()}})
+      </mat-chip>
+      <mat-chip (click)="showWhiteWines()" [selected]="wineType === WineType.WHITE" id="show-white-wines">
+        White({{model.countFor(WineType.WHITE)}})
+      </mat-chip>
+      <mat-chip (click)="showRoseWines()" [selected]="wineType === WineType.ROSE" id="show-rose-wines">
+        Rose({{model.countFor(WineType.ROSE)}})
+      </mat-chip>
+      <mat-chip (click)="showRedWines()" [selected]="wineType === WineType.RED" id="show-red-wines">Red
+        ({{model.countFor(WineType.RED)}})
+      </mat-chip>
+      <mat-chip (click)="showSparklingWines()" [selected]="wineType === WineType.SPARKLING" id="show-sparkling-wines">
+        Sparkling ({{model.countFor(WineType.SPARKLING)}})
+      </mat-chip>
     </mat-chip-list>
     <app-wine-list [wines]="model?.getWines()"></app-wine-list>
   </ng-container>

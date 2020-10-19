@@ -21,6 +21,14 @@ export class OverviewModel {
   resetFilter(): void {
     this.active = undefined;
   }
+
+  countFor(type: WineType): number {
+    return this.wines.wines.filter(wine => wine.type === type).length;
+  }
+
+  count(): number {
+    return this.wines.wines.length;
+  }
 }
 
 export class Wines {

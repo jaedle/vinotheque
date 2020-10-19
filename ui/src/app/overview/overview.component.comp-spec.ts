@@ -122,6 +122,40 @@ async function assertDoesNotShowWine(t, name: string) {
   return t.expect(Selector('.wine-name', {timeout: 0}).withText(name).visible).eql(false);
 }
 
+function generateWines(type: string, count: number) {
+  const wines = [];
+  for (let i = 0; i < count; i++) {
+    wines.push(
+      {name: `${type}-wine-${i}`, type: type, winery: `${type}-winery-${i}`}
+    );
+  }
+  return wines;
+}
+
+function wineReponse() {
+  return {
+    wines: [
+      ...generateWines(sparkling, 15),
+      ...generateWines(white, 32),
+      ...generateWines(rose, 11),
+      ...generateWines(red, 10),
+    ],
+  };
+}
+
+const countResponse = RequestMock()
+  .onRequestTo('http://localhost:4200/api/wines')
+  .respond(wineReponse());
+
+fixture`counts wines`.page`http://localhost:4200/`.requestHooks(countResponse);
+test('shows count of wines', async (t) => {
+  await t.expect(Selector('#show-all-wines').innerText).contains("(68)");
+  await t.expect(Selector('#show-sparkling-wines').innerText).contains("(15)");
+  await t.expect(Selector('#show-white-wines').innerText).contains("(32)");
+  await t.expect(Selector('#show-rose-wines').innerText).contains("(11)");
+  await t.expect(Selector('#show-red-wines').innerText).contains("(10)");
+});
+
 fixture`Error`.page`http://localhost:4200/`.requestHooks(failure);
 
 test('shows error message', async (t) => {

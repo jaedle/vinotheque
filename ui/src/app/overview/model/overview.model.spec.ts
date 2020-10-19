@@ -1,5 +1,6 @@
 import {OverviewModel, Wine, Wines, WineType} from './overview.model';
 
+
 describe('OverviewModelSpec', () => {
   const aRedWine = new Wine('a-red-wine', 'TODO', WineType.RED);
   const aWhiteWine = new Wine('a-white-wine', 'TODO', WineType.WHITE);
@@ -51,4 +52,30 @@ describe('OverviewModelSpec', () => {
 
     expect(model.getWines()).toEqual(new Wines([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]));
   });
+
+  it('counts wines', () => {
+    const model = new OverviewModel(new Wines([
+      ...generateWines(WineType.RED, 10),
+      ...generateWines(WineType.WHITE, 15),
+      ...generateWines(WineType.SPARKLING, 12),
+      ...generateWines(WineType.ROSE, 5)
+    ]));
+
+    expect(model.count()).toEqual(10 + 15 + 12 + 5);
+    expect(model.countFor(WineType.RED)).toEqual(10);
+    expect(model.countFor(WineType.WHITE)).toEqual(15);
+    expect(model.countFor(WineType.SPARKLING)).toEqual(12);
+    expect(model.countFor(WineType.ROSE)).toEqual(5);
+  });
+
+  function generateWines(type: string, count: number): Wine[] {
+    const wines = [];
+    for (let i = 0; i < count; i++) {
+      wines.push(
+        {name: `${type}-wine-${i}`, type, winery: `${type}-winery-${i}`}
+      );
+    }
+
+    return wines;
+  }
 });
