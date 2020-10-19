@@ -13,6 +13,7 @@ function aWine() {
         winery: faker.company.companyName(),
         type: aType(),
         grape: faker.commerce.productName(),
+        year: faker.date.past(20).getFullYear()
     };
 }
 

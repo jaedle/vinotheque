@@ -40,7 +40,8 @@ export class Wine {
   constructor(public readonly name: string,
               public readonly winery: string,
               public readonly type: WineType,
-              public readonly grape: string) {
+              public readonly grape: string,
+              public readonly year: number) {
   }
 }
 

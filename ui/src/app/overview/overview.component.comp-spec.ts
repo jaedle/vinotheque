@@ -23,15 +23,21 @@ const aWhiteWineGrape = 'Chardonnay';
 const aSparklingWineGrape = 'Riesling';
 const aRoseWineGrape = 'Sangiovese';
 
+const aRedWineYear = 2001;
+const anotherRedWineYear = 2010;
+const aWhiteWineYear = 2015;
+const aSparklingWineYear = 2019;
+const aRoseWineYear = 2018;
+
 const wines = RequestMock()
   .onRequestTo('http://localhost:4200/api/wines')
   .respond({
     wines: [
-      {name: aRedWine, type: red, winery: winery1, grape: aRedWineGrape},
-      {name: anotherRedWine, type: red, winery: winery2, grape: anotherRedWineGrape},
-      {name: aWhiteWine, type: white, winery: winery3, grape: aWhiteWineGrape},
-      {name: aSparklingWine, type: sparkling, winery: winery4, grape: aSparklingWineGrape},
-      {name: aRoseWine, type: rose, winery: winery5, grape: aRoseWineGrape}
+      {name: aRedWine, type: red, winery: winery1, grape: aRedWineGrape, year: aRedWineYear},
+      {name: anotherRedWine, type: red, winery: winery2, grape: anotherRedWineGrape, year: anotherRedWineYear},
+      {name: aWhiteWine, type: white, winery: winery3, grape: aWhiteWineGrape, year: aWhiteWineYear},
+      {name: aSparklingWine, type: sparkling, winery: winery4, grape: aSparklingWineGrape, year: aSparklingWineYear},
+      {name: aRoseWine, type: rose, winery: winery5, grape: aRoseWineGrape, year: aRoseWineYear}
     ],
   });
 
@@ -46,18 +52,19 @@ test('title is correct', async (t) => {
 });
 
 test('shows wines', async (t) => {
-  await assertShowsWineWithDetails(t, aRedWine, winery1, aRedWineGrape);
-  await assertShowsWineWithDetails(t, anotherRedWine, winery2, anotherRedWineGrape);
-  await assertShowsWineWithDetails(t, aWhiteWine, winery3, aWhiteWineGrape);
-  await assertShowsWineWithDetails(t, aSparklingWine, winery4, aSparklingWineGrape);
-  await assertShowsWineWithDetails(t, aRoseWine, winery5, aRoseWineGrape);
+  await assertShowsWineWithDetails(t, aRedWine, winery1, aRedWineGrape, aRedWineYear);
+  await assertShowsWineWithDetails(t, anotherRedWine, winery2, anotherRedWineGrape, anotherRedWineYear);
+  await assertShowsWineWithDetails(t, aWhiteWine, winery3, aWhiteWineGrape, aWhiteWineYear);
+  await assertShowsWineWithDetails(t, aSparklingWine, winery4, aSparklingWineGrape, aSparklingWineYear);
+  await assertShowsWineWithDetails(t, aRoseWine, winery5, aRoseWineGrape, aRoseWineYear);
 });
 
-async function assertShowsWineWithDetails(t, name: string, winery: string, grape: string) {
+async function assertShowsWineWithDetails(t, name: string, winery: string, grape: string, year: number) {
   const currentWine = Selector('.wine').child('.wine-name').withText(name);
   await t.expect(currentWine.visible).eql(true);
   await t.expect(currentWine.sibling('.winery').withText(winery).visible).eql(true);
   await t.expect(currentWine.sibling('.grape').withText(grape).visible).eql(true);
+  await t.expect(currentWine.sibling('.year').withText(year.toString()).visible).eql(true);
 }
 
 async function assertShowsWine(t, name: string) {
@@ -135,7 +142,13 @@ function generateWines(type: string, count: number) {
   const wines = [];
   for (let i = 0; i < count; i++) {
     wines.push(
-      {name: `${type}-wine-${i}`, type: type, winery: `${type}-winery-${i}`, grape: `${type}-grape-${i}`}
+      {
+        name: `${type}-wine-${i}`,
+        type: type,
+        winery: `${type}-winery-${i}`,
+        grape: `${type}-grape-${i}`,
+        year: 1990 + i
+      }
     );
   }
   return wines;
