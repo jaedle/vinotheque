@@ -12,6 +12,7 @@ function aWine() {
         name: faker.commerce.productName(),
         winery: faker.company.companyName(),
         type: aType(),
+        grape: faker.commerce.productName(),
     };
 }
 

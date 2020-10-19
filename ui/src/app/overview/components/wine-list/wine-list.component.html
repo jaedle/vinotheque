@@ -9,7 +9,11 @@
     <td mat-cell class="winery" *matCellDef="let element"> {{element.winery}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="grape">
+    <th mat-header-cell *matHeaderCellDef>Grape</th>
+    <td mat-cell class="grape" *matCellDef="let element"> {{element.grape}} </td>
+  </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="['name','winery']"></tr>
-  <tr mat-row class="wine" *matRowDef="let row; columns: ['name','winery'];"></tr>
+  <tr mat-header-row *matHeaderRowDef="['name','winery','grape']"></tr>
+  <tr mat-row class="wine" *matRowDef="let row; columns: ['name','winery','grape'];"></tr>
 </table>
