@@ -14,7 +14,6 @@ export class WineSelectorComponent implements OnInit {
   wineType: WineType | undefined;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
-
   }
 
 
@@ -30,28 +29,39 @@ export class WineSelectorComponent implements OnInit {
 
       this.refresh();
     });
-
-    this.refresh();
   }
 
   showWhiteWines(): void {
-    this.router.navigateByUrl(`?type=${WineType.WHITE}`);
+    this.wineType = WineType.WHITE;
+    this.navigate();
   }
 
   showRedWines(): void {
-    this.router.navigateByUrl(`?type=${WineType.RED}`);
+    this.wineType = WineType.RED;
+    this.navigate();
   }
 
   showRoseWines(): void {
-    this.router.navigateByUrl(`?type=${WineType.ROSE}`);
+    this.wineType = WineType.ROSE;
+    this.navigate();
   }
 
   showSparklingWines(): void {
-    this.router.navigateByUrl(`?type=${WineType.SPARKLING}`);
+    this.wineType = WineType.SPARKLING;
+    this.navigate();
   }
 
   showAllWines(): void {
-    this.router.navigateByUrl('?type=');
+    this.wineType = undefined;
+    this.navigate();
+  }
+
+  private navigate(): void {
+    let typeParameter = '';
+    if (this.wineType !== undefined) {
+      typeParameter = this.wineType;
+    }
+    this.router.navigateByUrl(`?type=${typeParameter}`);
   }
 
   private refresh(): void {
