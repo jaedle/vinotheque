@@ -1,4 +1,4 @@
-<table id="wine-list" mat-table [dataSource]="wines?.wines" class="mat-elevation-z8">
+<table id="wine-list" mat-table [dataSource]="model.getWines().wines" class="mat-elevation-z8">
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
     <td mat-cell class="wine-name" *matCellDef="let element"> {{element.name}} </td>
