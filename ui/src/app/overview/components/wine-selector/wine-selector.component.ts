@@ -76,4 +76,8 @@ export class WineSelectorComponent implements OnInit {
     }
   }
 
+  typeChanged(type: WineType): void {
+    this.wineType = type;
+    this.navigate();
+  }
 }

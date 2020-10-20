@@ -1,16 +1,16 @@
 <mat-chip-list>
-  <mat-chip (click)="showAllWines()" [selected]="wineType === undefined" id="show-all-wines">All ({{model.count()}})
-  </mat-chip>
-  <mat-chip (click)="showWhiteWines()" [selected]="wineType === WineType.WHITE" id="show-white-wines">
-    White({{model.countFor(WineType.WHITE)}})
-  </mat-chip>
-  <mat-chip (click)="showRoseWines()" [selected]="wineType === WineType.ROSE" id="show-rose-wines">
-    Rose({{model.countFor(WineType.ROSE)}})
-  </mat-chip>
-  <mat-chip (click)="showRedWines()" [selected]="wineType === WineType.RED" id="show-red-wines">Red
-    ({{model.countFor(WineType.RED)}})
-  </mat-chip>
-  <mat-chip (click)="showSparklingWines()" [selected]="wineType === WineType.SPARKLING" id="show-sparkling-wines">
-    Sparkling ({{model.countFor(WineType.SPARKLING)}})
-  </mat-chip>
+  <app-wine-type-selector (typeSelect)="typeChanged($event)"
+                          [current]="wineType" [model]="model" [type]="undefined"
+                          display="All" id="show-all-wines"></app-wine-type-selector>
+  <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model" [type]="WineType.WHITE"
+                          display="White" id="show-white-wines"></app-wine-type-selector>
+  <app-wine-type-selector (typeSelect)="typeChanged($event)"
+                          [current]="wineType" [model]="model" [type]="WineType.ROSE"
+                          display="Rose" id="show-rose-wines"></app-wine-type-selector>
+  <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model" [type]="WineType.RED"
+                          display="Red" id="show-red-wines"></app-wine-type-selector>
+  <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model"
+                          [type]="WineType.SPARKLING"
+                          display="Sparkling" id="show-sparkling-wines"></app-wine-type-selector>
 </mat-chip-list>
+
