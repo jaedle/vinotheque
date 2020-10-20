@@ -9,4 +9,5 @@ import {Wine, Wines} from '../../model/overview.model';
 export class WineListComponent {
 
   @Input() wines: Wines;
+  columns: string[] = ['name', 'winery', 'grape', 'year'];
 }

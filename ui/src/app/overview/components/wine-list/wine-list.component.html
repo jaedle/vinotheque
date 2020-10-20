@@ -19,6 +19,6 @@
     <td mat-cell class="year" *matCellDef="let element"> {{element.year}} </td>
   </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="['name','winery','grape','year']"></tr>
-  <tr mat-row class="wine" *matRowDef="let row; columns: ['name','winery','grape','year'];"></tr>
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr mat-row class="wine" *matRowDef="let row; columns: columns;"></tr>
 </table>

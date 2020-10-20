@@ -154,7 +154,7 @@ function generateWines(type: string, count: number) {
   return wines;
 }
 
-function wineReponse() {
+function wineResponse() {
   return {
     wines: [
       ...generateWines(sparkling, 15),
@@ -167,7 +167,7 @@ function wineReponse() {
 
 const countResponse = RequestMock()
   .onRequestTo('http://localhost:4200/api/wines')
-  .respond(wineReponse());
+  .respond(wineResponse());
 
 fixture`counts wines`.page`http://localhost:4200/`.requestHooks(countResponse);
 test('shows count of wines', async (t) => {
