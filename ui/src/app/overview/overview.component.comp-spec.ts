@@ -67,76 +67,76 @@ async function assertShowsWineWithDetails(t, name: string, winery: string, grape
   await t.expect(currentWine.sibling('.year').withText(year.toString()).visible).eql(true);
 }
 
-async function assertShowsWine(t, name: string) {
-  return t.expect(Selector('.wine-name').withText(name).visible).eql(true);
-}
-
+const whiteWinesButton = Selector('#show-white-wines');
 test('shows only white wines on selection', async (t) => {
-  await t.click(Selector('#show-white-wines'));
+  await t.click(whiteWinesButton);
 
   await assertShowsWine(t, aWhiteWine);
-  await assertDoesNotShowWine(t, aRedWine);
-  await assertDoesNotShowWine(t, anotherRedWine);
-  await assertDoesNotShowWine(t, aSparklingWine);
-  await assertDoesNotShowWine(t, aRoseWine);
+  await assertDoesNotShowWines(t, aRedWine, anotherRedWine, aSparklingWine, aRoseWine);
 });
 
-test('shows only red wines on selection', async (t) => {
-  await t.click(Selector('#show-red-wines'));
-
-  await assertShowsWine(t, aRedWine);
-  await assertShowsWine(t, anotherRedWine);
-  await assertDoesNotShowWine(t, aWhiteWine);
-  await assertDoesNotShowWine(t, aSparklingWine);
-  await assertDoesNotShowWine(t, aRoseWine);
-});
-
-test('shows only rose wines on selection', async (t) => {
-  await t.click(Selector('#show-rose-wines'));
-
-  await assertShowsWine(t, aRoseWine);
-  await assertDoesNotShowWine(t, aSparklingWine);
-  await assertDoesNotShowWine(t, aRedWine);
-  await assertDoesNotShowWine(t, anotherRedWine);
-  await assertDoesNotShowWine(t, aWhiteWine);
-});
-
-test('shows only sparkling wines on selection', async (t) => {
-  await t.click(Selector('#show-sparkling-wines'));
-
-  await assertShowsWine(t, aSparklingWine);
-  await assertDoesNotShowWine(t, aRoseWine);
-  await assertDoesNotShowWine(t, aRedWine);
-  await assertDoesNotShowWine(t, anotherRedWine);
-  await assertDoesNotShowWine(t, aWhiteWine);
-});
-
-test('remembers wine selection on refresh', async (t) => {
-  await t.click(Selector('#show-sparkling-wines'));
-
-  await t.eval(() => location.reload(true));
-
-  await assertShowsWine(t, aSparklingWine);
-  await assertDoesNotShowWine(t, aRoseWine);
-  await assertDoesNotShowWine(t, aRedWine);
-  await assertDoesNotShowWine(t, anotherRedWine);
-  await assertDoesNotShowWine(t, aWhiteWine);
-});
-
-test('shows all wines again after filter selection', async (t) => {
-  await t.click(Selector('#show-sparkling-wines'));
-  await t.click(Selector('#show-all-wines'));
-
-  await assertShowsWine(t, aRedWine);
-  await assertShowsWine(t, anotherRedWine);
-  await assertShowsWine(t, aWhiteWine);
-  await assertShowsWine(t, aSparklingWine);
-  await assertShowsWine(t, aRoseWine);
-});
+async function assertDoesNotShowWines(t, ...names: string[]) {
+  for (let name of names) {
+    await assertDoesNotShowWine(t, name);
+  }
+}
 
 async function assertDoesNotShowWine(t, name: string) {
   return t.expect(Selector('.wine-name', {timeout: 0}).withText(name).visible).eql(false);
 }
+
+async function assertShowsWine(t, name: string) {
+  return t.expect(Selector('.wine-name').withText(name).visible).eql(true);
+}
+
+
+const redWinesButton = Selector('#show-red-wines');
+test('shows only red wines on selection', async (t) => {
+  await t.click(redWinesButton);
+
+  await assertShowsWines(t, aRedWine, anotherRedWine);
+  await assertDoesNotShowWines(t, aWhiteWine, aSparklingWine, aRoseWine);
+});
+
+async function assertShowsWines(t, ...names: string[]) {
+  for (let name of names) {
+    await assertShowsWine(t, name);
+  }
+}
+
+const roseWinesButton = Selector('#show-rose-wines');
+test('shows only rose wines on selection', async (t) => {
+  await t.click(roseWinesButton);
+
+  await assertShowsWine(t, aRoseWine);
+  await assertDoesNotShowWines(t, aSparklingWine, aRedWine, anotherRedWine, aWhiteWine);
+});
+
+const sparklingWinesButton = Selector('#show-sparkling-wines');
+test('shows only sparkling wines on selection', async (t) => {
+  await t.click(sparklingWinesButton);
+
+  await assertShowsWine(t, aSparklingWine);
+  await assertDoesNotShowWines(t, aRoseWine, aRedWine, anotherRedWine, aWhiteWine);
+});
+
+test('remembers wine selection on refresh', async (t) => {
+  await t.click(sparklingWinesButton);
+
+  await t.eval(() => location.reload());
+
+  await assertShowsWine(t, aSparklingWine);
+  await assertDoesNotShowWines(t, aRoseWine, aRedWine, anotherRedWine, aWhiteWine);
+});
+
+const allWinesButton = Selector('#show-all-wines');
+test('shows all wines again after filter selection', async (t) => {
+  await t.click(sparklingWinesButton);
+  await t.click(allWinesButton);
+
+  await assertShowsWines(t, aRedWine, anotherRedWine, aWhiteWine, aSparklingWine, aRoseWine);
+});
+
 
 function generateWines(type: string, count: number) {
   const wines = [];
@@ -154,13 +154,22 @@ function generateWines(type: string, count: number) {
   return wines;
 }
 
+const countFixture = {
+  sparkling: 15,
+  white: 32,
+  rose: 11,
+  red: 10,
+  allWineCount: 15 + 32 + 11 + 10
+};
+
+
 function wineResponse() {
   return {
     wines: [
-      ...generateWines(sparkling, 15),
-      ...generateWines(white, 32),
-      ...generateWines(rose, 11),
-      ...generateWines(red, 10),
+      ...generateWines(sparkling, countFixture.sparkling),
+      ...generateWines(white, countFixture.white),
+      ...generateWines(rose, countFixture.rose),
+      ...generateWines(red, countFixture.red),
     ],
   };
 }
@@ -171,11 +180,11 @@ const countResponse = RequestMock()
 
 fixture`counts wines`.page`http://localhost:4200/`.requestHooks(countResponse);
 test('shows count of wines', async (t) => {
-  await t.expect(Selector('#show-all-wines').innerText).contains("(68)");
-  await t.expect(Selector('#show-sparkling-wines').innerText).contains("(15)");
-  await t.expect(Selector('#show-white-wines').innerText).contains("(32)");
-  await t.expect(Selector('#show-rose-wines').innerText).contains("(11)");
-  await t.expect(Selector('#show-red-wines').innerText).contains("(10)");
+  await t.expect(allWinesButton.innerText).contains(`(${countFixture.allWineCount})`);
+  await t.expect(sparklingWinesButton.innerText).contains(`(${countFixture.sparkling})`);
+  await t.expect(whiteWinesButton.innerText).contains(`(${countFixture.white})`);
+  await t.expect(roseWinesButton.innerText).contains(`(${countFixture.rose})`);
+  await t.expect(redWinesButton.innerText).contains(`(${countFixture.red})`);
 });
 
 fixture`Error`.page`http://localhost:4200/`.requestHooks(failure);
