@@ -9,11 +9,11 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./page.component.scss'],
 })
 export class PageComponent implements OnInit {
-  readonly WineType = WineType;
+  private error = false;
 
+  readonly WineType = WineType;
   model: OverviewModel;
   view: OverviewModel;
-  error = false;
   wineType: WineType | undefined;
 
   constructor(private wineService: WineService, private router: Router, private activatedRoute: ActivatedRoute) {
@@ -66,6 +66,10 @@ export class PageComponent implements OnInit {
 
   hasModel(): boolean {
     return this.model !== undefined;
+  }
+
+  hasError(): boolean {
+    return this.error;
   }
 
   private refresh(): void {
