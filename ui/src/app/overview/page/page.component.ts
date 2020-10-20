@@ -19,50 +19,17 @@ export class PageComponent implements OnInit {
   constructor(private wineService: WineService, private router: Router, private activatedRoute: ActivatedRoute) {
   }
 
-
   ngOnInit(): void {
     this.wineService.getWines().subscribe(
       (model) => {
         this.model = model;
-        this.refresh();
       },
       () => {
         this.error = true;
       },
     );
-
-    this.activatedRoute.queryParamMap.subscribe((params) => {
-      const wineType: string | null = params.get('type');
-      if (null == wineType) {
-        this.wineType = undefined;
-        return;
-      } else {
-        this.wineType = WineType[wineType];
-      }
-
-      this.refresh();
-    });
   }
 
-  showWhiteWines(): void {
-    this.router.navigateByUrl(`?type=${WineType.WHITE}`);
-  }
-
-  showRedWines(): void {
-    this.router.navigateByUrl(`?type=${WineType.RED}`);
-  }
-
-  showRoseWines(): void {
-    this.router.navigateByUrl(`?type=${WineType.ROSE}`);
-  }
-
-  showSparklingWines(): void {
-    this.router.navigateByUrl(`?type=${WineType.SPARKLING}`);
-  }
-
-  showAllWines(): void {
-    this.router.navigateByUrl('?type=');
-  }
 
   hasModel(): boolean {
     return this.model !== undefined;
@@ -72,15 +39,5 @@ export class PageComponent implements OnInit {
     return this.error;
   }
 
-  private refresh(): void {
-    if (this.model === undefined) {
-      return;
-    }
 
-    if (this.wineType === undefined) {
-      this.model.resetFilter();
-    } else {
-      this.model.filter(this.wineType);
-    }
-  }
 }

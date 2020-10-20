@@ -15,25 +15,10 @@
 </p>
 
 <div class="content">
-  <ng-container *ngIf="hasError()"> could not fetch wines</ng-container>
+  <ng-container *ngIf="hasError()">could not fetch wines</ng-container>
   <ng-container *ngIf="hasModel()">
     <h1>Wines</h1>
-    <mat-chip-list>
-      <mat-chip (click)="showAllWines()" [selected]="wineType === undefined" id="show-all-wines">All ({{model.count()}})
-      </mat-chip>
-      <mat-chip (click)="showWhiteWines()" [selected]="wineType === WineType.WHITE" id="show-white-wines">
-        White({{model.countFor(WineType.WHITE)}})
-      </mat-chip>
-      <mat-chip (click)="showRoseWines()" [selected]="wineType === WineType.ROSE" id="show-rose-wines">
-        Rose({{model.countFor(WineType.ROSE)}})
-      </mat-chip>
-      <mat-chip (click)="showRedWines()" [selected]="wineType === WineType.RED" id="show-red-wines">Red
-        ({{model.countFor(WineType.RED)}})
-      </mat-chip>
-      <mat-chip (click)="showSparklingWines()" [selected]="wineType === WineType.SPARKLING" id="show-sparkling-wines">
-        Sparkling ({{model.countFor(WineType.SPARKLING)}})
-      </mat-chip>
-    </mat-chip-list>
+    <app-wine-selector [model]="model"></app-wine-selector>
     <app-wine-list [wines]="model.getWines()"></app-wine-list>
   </ng-container>
 </div>

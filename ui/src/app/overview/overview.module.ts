@@ -12,9 +12,10 @@ import {MatChipsModule} from '@angular/material/chips';
 import {RouterModule} from '@angular/router';
 import { WineListComponent } from './components/wine-list/wine-list.component';
 import {MatTableModule} from '@angular/material/table';
+import { WineSelectorComponent } from './components/wine-selector/wine-selector.component';
 
 @NgModule({
-  declarations: [PageComponent, WineListComponent],
+  declarations: [PageComponent, WineListComponent, WineSelectorComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
