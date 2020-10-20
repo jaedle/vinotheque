@@ -9,11 +9,12 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./page.component.scss'],
 })
 export class PageComponent implements OnInit {
+  readonly WineType = WineType;
+
   model: OverviewModel;
   view: OverviewModel;
   error = false;
   wineType: WineType | undefined;
-  readonly WineType = WineType;
 
   constructor(private wineService: WineService, private router: Router, private activatedRoute: ActivatedRoute) {
   }
@@ -61,6 +62,10 @@ export class PageComponent implements OnInit {
 
   showAllWines(): void {
     this.router.navigateByUrl('?type=');
+  }
+
+  hasModel(): boolean {
+    return this.model !== undefined;
   }
 
   private refresh(): void {
