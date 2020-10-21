@@ -1,25 +1,30 @@
 export class OverviewModel {
 
-  private active: WineType | undefined;
+  private active: WineType[];
 
   constructor(public readonly wines: Wines) {
-    this.active = undefined;
+    this.resetFilter();
   }
 
   getWines(): Wines {
-    if (this.active === undefined) {
+    if (this.active.length === 0) {
       return this.wines;
     }
 
-    return new Wines(this.wines.wines.filter(wine => wine.type === this.active));
+    return new Wines(this.wines.wines.filter(wine => wine.type === this.active[0]));
   }
 
-  filter(type: WineType): void {
-    this.active = type;
+
+  filterTemp(type: WineType | undefined): void {
+    this.filter([type]);
   }
 
   resetFilter(): void {
-    this.active = undefined;
+    this.active = [];
+  }
+
+  filter(type: WineType[]): void {
+    this.active = type;
   }
 
   countFor(type: WineType): number {

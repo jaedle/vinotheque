@@ -156,7 +156,6 @@ test.skip('aggregates wine type filters', async (t) => {
 
   await assertShowsWines(t, aSparklingWine, aRedWine, anotherRedWine);
   await assertDoesNotShowWines(t, aWhiteWine, aRoseWine);
-
 });
 
 

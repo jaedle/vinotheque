@@ -1,6 +1,17 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {OverviewModel, WineType} from '../../model/overview.model';
 
+export class TypeSelectionChange {
+  constructor(public readonly type: WineType) {
+  }
+}
+
+export class TypeSelected extends TypeSelectionChange {
+}
+
+export class TypeDeselected extends TypeSelectionChange {
+}
+
 @Component({
   selector: 'app-wine-type-selector',
   templateUrl: './wine-type-selector.component.html',
@@ -11,7 +22,7 @@ export class WineTypeSelectorComponent implements OnInit {
   @Input() model: OverviewModel;
   @Input() display: string;
   @Input() current: WineType[];
-  @Output() typeSelect = new EventEmitter<WineType>();
+  @Output() typeSelect = new EventEmitter<TypeSelectionChange>();
 
   count: number;
 
@@ -25,9 +36,9 @@ export class WineTypeSelectorComponent implements OnInit {
 
   clicked(): void {
     if (this.isSelected()) {
-      this.typeSelect.emit(undefined);
+      this.typeSelect.emit(new TypeDeselected(this.type));
     } else {
-      this.typeSelect.emit(this.type);
+      this.typeSelect.emit(new TypeSelected(this.type));
     }
   }
 }
