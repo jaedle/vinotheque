@@ -10,8 +10,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class WineSelectorComponent implements OnInit {
 
   @Input() model: OverviewModel;
-  readonly WineType = WineType;
-  wineType: WineType | undefined;
+  readonly wineType = WineType;
+  current: WineType[];
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {
   }
@@ -21,45 +21,27 @@ export class WineSelectorComponent implements OnInit {
     this.activatedRoute.queryParamMap.subscribe((params) => {
       const wineType: string | null = params.get('type');
       if (null == wineType) {
-        this.wineType = undefined;
-        return;
+        this.current = [];
       } else {
-        this.wineType = WineType[wineType];
+        this.current = [WineType[wineType]];
       }
-
       this.refresh();
     });
   }
 
-  showWhiteWines(): void {
-    this.wineType = WineType.WHITE;
-    this.navigate();
-  }
-
-  showRedWines(): void {
-    this.wineType = WineType.RED;
-    this.navigate();
-  }
-
-  showRoseWines(): void {
-    this.wineType = WineType.ROSE;
-    this.navigate();
-  }
-
-  showSparklingWines(): void {
-    this.wineType = WineType.SPARKLING;
-    this.navigate();
-  }
-
-  showAllWines(): void {
-    this.wineType = undefined;
+  typeChanged(type: WineType): void {
+    if (type === undefined) {
+      this.current = [];
+    } else {
+      this.current = [type];
+    }
     this.navigate();
   }
 
   private navigate(): void {
     let typeParameter = '';
-    if (this.wineType !== undefined) {
-      typeParameter = this.wineType;
+    if (this.current.length > 0) {
+      typeParameter = this.current[0];
     }
     this.router.navigateByUrl(`?type=${typeParameter}`);
   }
@@ -72,12 +54,7 @@ export class WineSelectorComponent implements OnInit {
     if (this.wineType === undefined) {
       this.model.resetFilter();
     } else {
-      this.model.filter(this.wineType);
+      this.model.filter(this.current[0]);
     }
-  }
-
-  typeChanged(type: WineType): void {
-    this.wineType = type;
-    this.navigate();
   }
 }

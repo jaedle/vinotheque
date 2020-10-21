@@ -10,21 +10,17 @@ export class WineTypeSelectorComponent implements OnInit {
   @Input() type: WineType;
   @Input() model: OverviewModel;
   @Input() display: string;
-  @Input() current: WineType | undefined;
+  @Input() current: WineType[];
   @Output() typeSelect = new EventEmitter<WineType>();
 
   count: number;
 
   ngOnInit(): void {
-    if (this.type === undefined) {
-      this.count = this.model.count();
-    } else {
       this.count = this.model.countFor(this.type);
-    }
   }
 
   isSelected(): boolean {
-    return this.current === this.type;
+    return this.current.indexOf(this.type) >= 0;
   }
 
   clicked(): void {

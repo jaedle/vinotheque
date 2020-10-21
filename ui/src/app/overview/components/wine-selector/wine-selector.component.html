@@ -4,17 +4,17 @@
       <mat-panel-title>Type</mat-panel-title>
     </mat-expansion-panel-header>
     <mat-chip-list [multiple]="true">
-      <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model"
-                              [type]="WineType.WHITE"
+      <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="current" [model]="model"
+                              [type]="wineType.WHITE"
                               display="White" id="show-white-wines"></app-wine-type-selector>
-      <app-wine-type-selector (typeSelect)="typeChanged($event)"
-                              [current]="wineType" [model]="model" [type]="WineType.ROSE"
+      <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="current" [model]="model"
+                              [type]="wineType.ROSE"
                               display="Rose" id="show-rose-wines"></app-wine-type-selector>
-      <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model"
-                              [type]="WineType.RED"
+      <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="current" [model]="model"
+                              [type]="wineType.RED"
                               display="Red" id="show-red-wines"></app-wine-type-selector>
-      <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model"
-                              [type]="WineType.SPARKLING"
+      <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="current" [model]="model"
+                              [type]="wineType.SPARKLING"
                               display="Sparkling" id="show-sparkling-wines"></app-wine-type-selector>
     </mat-chip-list>
   </mat-expansion-panel>
