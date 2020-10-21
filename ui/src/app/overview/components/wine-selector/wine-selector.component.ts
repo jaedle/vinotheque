@@ -71,7 +71,7 @@ export class WineSelectorComponent implements OnInit {
     if (this.current.length === 0) {
       this.model.resetFilter();
     } else {
-      this.model.filterTemp(this.current[0]);
+      this.model.filter(this.current);
     }
   }
 }

@@ -149,7 +149,7 @@ test('shows all wines again after filter selection', async (t) => {
   await assertShowsWines(t, aRedWine, anotherRedWine, aWhiteWine, aSparklingWine, aRoseWine);
 });
 
-test.skip('aggregates wine type filters', async (t) => {
+test('aggregates wine type filters', async (t) => {
   await t.click(toggleWineTypeFilter);
   await t.click(sparklingWinesButton);
   await t.click(redWinesButton);

@@ -11,14 +11,16 @@ export class OverviewModel {
       return this.wines;
     }
 
-    return new Wines(this.wines.wines.filter(wine => wine.type === this.active[0]));
+    const wines = this.wines.wines.filter(wine => {
+      for (const type of this.active) {
+        if (wine.type === type) {
+          return true;
+        }
+      }
+      return false;
+    });
+    return new Wines(wines);
   }
-
-
-  filterTemp(type: WineType | undefined): void {
-    this.filter([type]);
-  }
-
   resetFilter(): void {
     this.active = [];
   }
