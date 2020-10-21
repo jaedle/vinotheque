@@ -48,7 +48,6 @@ const failure = RequestMock()
 
 const toggleWineTypeFilter = Selector('#filter-types');
 const whiteWinesButton = Selector('#show-white-wines');
-const allWinesButton = Selector('#show-all-wines');
 const redWinesButton = Selector('#show-red-wines');
 const sparklingWinesButton = Selector('#show-sparkling-wines');
 const roseWinesButton = Selector('#show-rose-wines');
@@ -145,7 +144,7 @@ test('remembers wine selection on refresh', async (t) => {
 test('shows all wines again after filter selection', async (t) => {
   await t.click(toggleWineTypeFilter);
   await t.click(sparklingWinesButton);
-  await t.click(allWinesButton);
+  await t.click(sparklingWinesButton);
 
   await assertShowsWines(t, aRedWine, anotherRedWine, aWhiteWine, aSparklingWine, aRoseWine);
 });
@@ -172,7 +171,6 @@ const countFixture = {
   white: 32,
   rose: 11,
   red: 10,
-  allWineCount: 15 + 32 + 11 + 10
 };
 
 
@@ -195,7 +193,6 @@ fixture`counts wines`.page`http://localhost:4200/`.requestHooks(countResponse);
 test('shows count of wines', async (t) => {
   await t.click(toggleWineTypeFilter);
 
-  await t.expect(allWinesButton.innerText).contains(`(${countFixture.allWineCount})`);
   await t.expect(sparklingWinesButton.innerText).contains(`(${countFixture.sparkling})`);
   await t.expect(whiteWinesButton.innerText).contains(`(${countFixture.white})`);
   await t.expect(roseWinesButton.innerText).contains(`(${countFixture.rose})`);

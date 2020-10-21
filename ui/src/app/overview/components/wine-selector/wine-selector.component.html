@@ -3,10 +3,7 @@
     <mat-expansion-panel-header>
       <mat-panel-title>Type</mat-panel-title>
     </mat-expansion-panel-header>
-    <mat-chip-list>
-      <app-wine-type-selector (typeSelect)="typeChanged($event)"
-                              [current]="wineType" [model]="model" [type]="undefined"
-                              display="All" id="show-all-wines"></app-wine-type-selector>
+    <mat-chip-list [multiple]="true">
       <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model"
                               [type]="WineType.WHITE"
                               display="White" id="show-white-wines"></app-wine-type-selector>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {OverviewModel, WineType} from '../../model/overview.model';
 
 @Component({
@@ -11,7 +11,6 @@ export class WineTypeSelectorComponent implements OnInit {
   @Input() model: OverviewModel;
   @Input() display: string;
   @Input() current: WineType | undefined;
-
   @Output() typeSelect = new EventEmitter<WineType>();
 
   count: number;
@@ -29,6 +28,10 @@ export class WineTypeSelectorComponent implements OnInit {
   }
 
   clicked(): void {
-    this.typeSelect.emit(this.type);
+    if (this.isSelected()) {
+      this.typeSelect.emit(undefined);
+    } else {
+      this.typeSelect.emit(this.type);
+    }
   }
 }
