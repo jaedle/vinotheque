@@ -173,6 +173,15 @@ test('shows wine grapes', async (t) => {
   await showsGrape(t, aWhiteWineGrape);
 });
 
+test('sorts wine grapes', async (t) => {
+  await t.click(toggleGrapeFilterButton);
+  const grapes = [aRedWineGrape, anotherRedWineGrape, aRoseWineGrape, aSparklingWineGrape, aWhiteWineGrape];
+  grapes.sort();
+
+  for (let i = 0; i < grapes.length; i++) {
+    await t.expect(Selector('#filter-grapes').find('.grape').nth(i).withText(grapes[i]).visible).eql(true);
+  }
+});
 
 function generateWines(type: string, count: number) {
   const wines = [];

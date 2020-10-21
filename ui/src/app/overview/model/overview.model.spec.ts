@@ -2,10 +2,10 @@ import {OverviewModel, Wine, Wines, WineType} from './overview.model';
 
 
 describe('OverviewModelSpec', () => {
-  const aRedWine = new Wine('a-red-wine', 'red-wine-winery', WineType.RED, 'red-wine-winery', 1010);
-  const aWhiteWine = new Wine('a-white-wine', 'white-wine-winery', WineType.WHITE, 'white-wine-winery', 1010);
-  const aSparklingWine = new Wine('a-sparkling-wine', 'sparkling-wine-winery', WineType.SPARKLING, 'a-sparkling-wine', 1010);
-  const aRoseWine = new Wine('a-rose-wine', 'rose-wine-winery', WineType.ROSE, 'rose-wine-winery', 1010);
+  const aRedWine = new Wine('a-red-wine', 'red-wine-winery', WineType.RED, 'red-wine-grape', 1010);
+  const aWhiteWine = new Wine('a-white-wine', 'white-wine-winery', WineType.WHITE, 'white-wine-grape', 1010);
+  const aSparklingWine = new Wine('a-sparkling-wine', 'sparkling-wine-winery', WineType.SPARKLING, 'sparkling-wine-grape', 1010);
+  const aRoseWine = new Wine('a-rose-wine', 'rose-wine-winery', WineType.ROSE, 'rose-wine-grape', 1010);
 
   it('sohws all wines on beginning', () => {
     const model = new OverviewModel(new Wines([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]));
@@ -90,6 +90,6 @@ describe('OverviewModelSpec', () => {
   it('returns grapes of wines', () => {
     const model = new OverviewModel(new Wines([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]));
 
-    expect(model.getGrapes()).toEqual([aRedWine.grape, aWhiteWine.grape, aSparklingWine.grape, aRoseWine.grape]);
+    expect(model.getGrapes()).toEqual([aRedWine.grape, aWhiteWine.grape, aSparklingWine.grape, aRoseWine.grape].sort());
   });
 });

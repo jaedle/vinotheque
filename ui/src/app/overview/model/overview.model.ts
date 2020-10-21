@@ -38,7 +38,7 @@ export class OverviewModel {
   }
 
   getGrapes(): string[] {
-    return this.wines.wines.map(wine => wine.grape);
+    return this.wines.wines.map(wine => wine.grape).sort();
   }
 }
 
