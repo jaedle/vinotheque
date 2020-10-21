@@ -19,6 +19,7 @@ export class OverviewModel {
       }
       return false;
     });
+
     return new Wines(wines);
   }
   resetFilter(): void {
@@ -38,7 +39,10 @@ export class OverviewModel {
   }
 
   getGrapes(): string[] {
-    return this.wines.wines.map(wine => wine.grape).sort();
+    return this.wines.wines
+      .map(wine => wine.grape)
+      .filter((grape, index, self) => self.indexOf(grape) === index)
+      .sort();
   }
 }
 

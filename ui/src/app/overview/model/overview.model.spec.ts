@@ -7,6 +7,12 @@ describe('OverviewModelSpec', () => {
   const aSparklingWine = new Wine('a-sparkling-wine', 'sparkling-wine-winery', WineType.SPARKLING, 'sparkling-wine-grape', 1010);
   const aRoseWine = new Wine('a-rose-wine', 'rose-wine-winery', WineType.ROSE, 'rose-wine-grape', 1010);
 
+  let wineNameCounter: number;
+
+  beforeEach(() => {
+    wineNameCounter = 0;
+  });
+
   it('sohws all wines on beginning', () => {
     const model = new OverviewModel(new Wines([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]));
 
@@ -87,9 +93,26 @@ describe('OverviewModelSpec', () => {
     expect(model.getWines()).toEqual((new Wines([aWhiteWine, aSparklingWine])));
   });
 
-  it('returns grapes of wines', () => {
-    const model = new OverviewModel(new Wines([aRedWine, aWhiteWine, aSparklingWine, aRoseWine]));
+  it('returns unique grapes of wines', () => {
+    const wines = [
+      aWineWithGrape('grape-1', WineType.RED),
+      aWineWithGrape('grape-1', WineType.ROSE),
+      aWineWithGrape('grape-2', WineType.RED),
+      aWineWithGrape('grape-3', WineType.WHITE),
+      aWineWithGrape('grape-4', WineType.SPARKLING),
+      aWineWithGrape('grape-4', WineType.WHITE),
+      aWineWithGrape('grape-5', WineType.WHITE),
+      aWineWithGrape('grape-0', WineType.RED),
+    ];
 
-    expect(model.getGrapes()).toEqual([aRedWine.grape, aWhiteWine.grape, aSparklingWine.grape, aRoseWine.grape].sort());
+    const model = new OverviewModel(new Wines(wines));
+
+    expect(model.getGrapes()).toEqual(['grape-0', 'grape-1', 'grape-2', 'grape-3', 'grape-4', 'grape-5']);
   });
+
+  function aWineWithGrape(grape: string, type: WineType): Wine {
+    wineNameCounter++;
+    return new Wine(`a-wine-${wineNameCounter}`, 'a-winery', type, grape, 1010);
+  }
+
 });
