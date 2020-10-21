@@ -52,6 +52,8 @@ const redWinesButton = Selector('#show-red-wines');
 const sparklingWinesButton = Selector('#show-sparkling-wines');
 const roseWinesButton = Selector('#show-rose-wines');
 
+const toggleGrapeFilterButton = Selector('#filter-grapes');
+
 fixture`Vinotheque`.page`http://localhost:4200/`.requestHooks(wines);
 
 test('title is correct', async (t) => {
@@ -156,6 +158,19 @@ test('aggregates wine type filters', async (t) => {
 
   await assertShowsWines(t, aSparklingWine, aRedWine, anotherRedWine);
   await assertDoesNotShowWines(t, aWhiteWine, aRoseWine);
+});
+
+async function showsGrape(t, grape: string) {
+  await t.expect(Selector('#filter-grapes').find('.grape').withText(grape).visible).eql(true);
+}
+
+test('shows wine grapes', async (t) => {
+  await t.click(toggleGrapeFilterButton);
+  await showsGrape(t, aRedWineGrape);
+  await showsGrape(t, anotherRedWineGrape);
+  await showsGrape(t, aRoseWineGrape);
+  await showsGrape(t, aSparklingWineGrape);
+  await showsGrape(t, aWhiteWineGrape);
 });
 
 

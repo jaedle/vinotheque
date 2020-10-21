@@ -36,6 +36,10 @@ export class OverviewModel {
   count(): number {
     return this.wines.wines.length;
   }
+
+  getGrapes(): string[] {
+    return this.wines.wines.map(wine => wine.grape);
+  }
 }
 
 export class Wines {

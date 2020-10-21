@@ -18,6 +18,12 @@
                               display="Sparkling" id="show-sparkling-wines"></app-wine-type-selector>
     </mat-chip-list>
   </mat-expansion-panel>
+  <mat-expansion-panel id="filter-grapes">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Grape</mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-chip-list disabled>
+      <mat-chip *ngFor="let grape of model.getGrapes()" class='grape'>{{grape}}</mat-chip>
+    </mat-chip-list>
+  </mat-expansion-panel>
 </mat-accordion>
-
-
