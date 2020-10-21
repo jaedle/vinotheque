@@ -45,13 +45,20 @@ const failure = RequestMock()
   .onRequestTo('http://localhost:4200/api/wines')
   .respond(null, 404);
 
+
+const whiteWinesButton = Selector('#show-white-wines');
+const allWinesButton = Selector('#show-all-wines');
+const redWinesButton = Selector('#show-red-wines');
+const sparklingWinesButton = Selector('#show-sparkling-wines');
+const roseWinesButton = Selector('#show-rose-wines');
+
 fixture`Vinotheque`.page`http://localhost:4200/`.requestHooks(wines);
 
 test('title is correct', async (t) => {
   await t.expect(Selector('title').innerText).eql('Vinotheque');
 });
 
-test('shows wines', async (t) => {
+test('shows all wines on no selection', async (t) => {
   await assertShowsWineWithDetails(t, aRedWine, winery1, aRedWineGrape, aRedWineYear);
   await assertShowsWineWithDetails(t, anotherRedWine, winery2, anotherRedWineGrape, anotherRedWineYear);
   await assertShowsWineWithDetails(t, aWhiteWine, winery3, aWhiteWineGrape, aWhiteWineYear);
@@ -67,7 +74,6 @@ async function assertShowsWineWithDetails(t, name: string, winery: string, grape
   await t.expect(currentWine.sibling('.year').withText(year.toString()).visible).eql(true);
 }
 
-const whiteWinesButton = Selector('#show-white-wines');
 test('shows only white wines on selection', async (t) => {
   await t.click(whiteWinesButton);
 
@@ -90,7 +96,6 @@ async function assertShowsWine(t, name: string) {
 }
 
 
-const redWinesButton = Selector('#show-red-wines');
 test('shows only red wines on selection', async (t) => {
   await t.click(redWinesButton);
 
@@ -104,7 +109,6 @@ async function assertShowsWines(t, ...names: string[]) {
   }
 }
 
-const roseWinesButton = Selector('#show-rose-wines');
 test('shows only rose wines on selection', async (t) => {
   await t.click(roseWinesButton);
 
@@ -112,7 +116,6 @@ test('shows only rose wines on selection', async (t) => {
   await assertDoesNotShowWines(t, aSparklingWine, aRedWine, anotherRedWine, aWhiteWine);
 });
 
-const sparklingWinesButton = Selector('#show-sparkling-wines');
 test('shows only sparkling wines on selection', async (t) => {
   await t.click(sparklingWinesButton);
 
@@ -129,7 +132,6 @@ test('remembers wine selection on refresh', async (t) => {
   await assertDoesNotShowWines(t, aRoseWine, aRedWine, anotherRedWine, aWhiteWine);
 });
 
-const allWinesButton = Selector('#show-all-wines');
 test('shows all wines again after filter selection', async (t) => {
   await t.click(sparklingWinesButton);
   await t.click(allWinesButton);

@@ -1,16 +1,26 @@
-<mat-chip-list>
-  <app-wine-type-selector (typeSelect)="typeChanged($event)"
-                          [current]="wineType" [model]="model" [type]="undefined"
-                          display="All" id="show-all-wines"></app-wine-type-selector>
-  <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model" [type]="WineType.WHITE"
-                          display="White" id="show-white-wines"></app-wine-type-selector>
-  <app-wine-type-selector (typeSelect)="typeChanged($event)"
-                          [current]="wineType" [model]="model" [type]="WineType.ROSE"
-                          display="Rose" id="show-rose-wines"></app-wine-type-selector>
-  <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model" [type]="WineType.RED"
-                          display="Red" id="show-red-wines"></app-wine-type-selector>
-  <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model"
-                          [type]="WineType.SPARKLING"
-                          display="Sparkling" id="show-sparkling-wines"></app-wine-type-selector>
-</mat-chip-list>
+<mat-accordion>
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Type</mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-chip-list>
+      <app-wine-type-selector (typeSelect)="typeChanged($event)"
+                              [current]="wineType" [model]="model" [type]="undefined"
+                              display="All" id="show-all-wines"></app-wine-type-selector>
+      <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model"
+                              [type]="WineType.WHITE"
+                              display="White" id="show-white-wines"></app-wine-type-selector>
+      <app-wine-type-selector (typeSelect)="typeChanged($event)"
+                              [current]="wineType" [model]="model" [type]="WineType.ROSE"
+                              display="Rose" id="show-rose-wines"></app-wine-type-selector>
+      <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model"
+                              [type]="WineType.RED"
+                              display="Red" id="show-red-wines"></app-wine-type-selector>
+      <app-wine-type-selector (typeSelect)="typeChanged($event)" [current]="wineType" [model]="model"
+                              [type]="WineType.SPARKLING"
+                              display="Sparkling" id="show-sparkling-wines"></app-wine-type-selector>
+    </mat-chip-list>
+  </mat-expansion-panel>
+</mat-accordion>
+
 
