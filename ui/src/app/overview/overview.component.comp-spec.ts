@@ -46,6 +46,7 @@ const failure = RequestMock()
   .respond(null, 404);
 
 
+const toggleWineTypeFilter = Selector('#filter-types');
 const whiteWinesButton = Selector('#show-white-wines');
 const allWinesButton = Selector('#show-all-wines');
 const redWinesButton = Selector('#show-red-wines');
@@ -74,7 +75,12 @@ async function assertShowsWineWithDetails(t, name: string, winery: string, grape
   await t.expect(currentWine.sibling('.year').withText(year.toString()).visible).eql(true);
 }
 
+test('wine type selection is closed by default', async (t) => {
+  await t.expect(Selector('#show-white-wines', {timeout: 0}).visible).eql(false);
+});
+
 test('shows only white wines on selection', async (t) => {
+  await t.click(toggleWineTypeFilter);
   await t.click(whiteWinesButton);
 
   await assertShowsWine(t, aWhiteWine);
@@ -97,6 +103,7 @@ async function assertShowsWine(t, name: string) {
 
 
 test('shows only red wines on selection', async (t) => {
+  await t.click(toggleWineTypeFilter);
   await t.click(redWinesButton);
 
   await assertShowsWines(t, aRedWine, anotherRedWine);
@@ -110,6 +117,7 @@ async function assertShowsWines(t, ...names: string[]) {
 }
 
 test('shows only rose wines on selection', async (t) => {
+  await t.click(toggleWineTypeFilter);
   await t.click(roseWinesButton);
 
   await assertShowsWine(t, aRoseWine);
@@ -117,6 +125,7 @@ test('shows only rose wines on selection', async (t) => {
 });
 
 test('shows only sparkling wines on selection', async (t) => {
+  await t.click(toggleWineTypeFilter);
   await t.click(sparklingWinesButton);
 
   await assertShowsWine(t, aSparklingWine);
@@ -124,6 +133,7 @@ test('shows only sparkling wines on selection', async (t) => {
 });
 
 test('remembers wine selection on refresh', async (t) => {
+  await t.click(toggleWineTypeFilter);
   await t.click(sparklingWinesButton);
 
   await t.eval(() => location.reload());
@@ -133,6 +143,7 @@ test('remembers wine selection on refresh', async (t) => {
 });
 
 test('shows all wines again after filter selection', async (t) => {
+  await t.click(toggleWineTypeFilter);
   await t.click(sparklingWinesButton);
   await t.click(allWinesButton);
 
@@ -182,6 +193,8 @@ const countResponse = RequestMock()
 
 fixture`counts wines`.page`http://localhost:4200/`.requestHooks(countResponse);
 test('shows count of wines', async (t) => {
+  await t.click(toggleWineTypeFilter);
+
   await t.expect(allWinesButton.innerText).contains(`(${countFixture.allWineCount})`);
   await t.expect(sparklingWinesButton.innerText).contains(`(${countFixture.sparkling})`);
   await t.expect(whiteWinesButton.innerText).contains(`(${countFixture.white})`);
