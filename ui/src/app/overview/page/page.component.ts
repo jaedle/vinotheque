@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {WineModel, WineType} from '../../shared/model/wine.model';
-import {WineService} from '../services/wine.service';
+import {WineService} from '../../shared/services/wine.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({

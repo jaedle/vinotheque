@@ -2,7 +2,7 @@ import {TestBed} from '@angular/core/testing';
 
 import {WineService} from './wine.service';
 import {HttpClientTestingModule, HttpTestingController, } from '@angular/common/http/testing';
-import {WineModel, Wine, Wines, WineType} from '../../shared/model/wine.model';
+import {WineModel, Wine, Wines, WineType} from '../model/wine.model';
 
 describe('WineService', () => {
   let service: WineService;

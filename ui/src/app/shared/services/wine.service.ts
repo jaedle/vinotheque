@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {WineModel, Wine, Wines, WineType} from '../../shared/model/wine.model';
+import {WineModel, Wine, Wines, WineType} from '../model/wine.model';
 
 @Injectable({
   providedIn: 'root',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WineService } from './overview/services/wine.service';
+import { WineService } from './shared/services/wine.service';
 import { WineModel } from './shared/model/wine.model';
 
 @Component({
