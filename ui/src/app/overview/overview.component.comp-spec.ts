@@ -1,4 +1,5 @@
 import {RequestMock, Selector} from 'testcafe';
+import {v4 as uuidv4} from 'uuid';
 
 const aRedWine = 'Great Shiraz';
 const anotherRedWine = 'Wodden Pinot Noir';
@@ -33,11 +34,11 @@ const wines = RequestMock()
   .onRequestTo('http://localhost:4200/api/wines')
   .respond({
     wines: [
-      {name: aRedWine, type: red, winery: winery1, grape: aRedWineGrape, year: aRedWineYear},
-      {name: anotherRedWine, type: red, winery: winery2, grape: anotherRedWineGrape, year: anotherRedWineYear},
-      {name: aWhiteWine, type: white, winery: winery3, grape: aWhiteWineGrape, year: aWhiteWineYear},
-      {name: aSparklingWine, type: sparkling, winery: winery4, grape: aSparklingWineGrape, year: aSparklingWineYear},
-      {name: aRoseWine, type: rose, winery: winery5, grape: aRoseWineGrape, year: aRoseWineYear}
+      {id: uuidv4(), name: aRedWine, type: red, winery: winery1, grape: aRedWineGrape, year: aRedWineYear},
+      {id: uuidv4(), name: anotherRedWine, type: red, winery: winery2, grape: anotherRedWineGrape, year: anotherRedWineYear},
+      {id: uuidv4(), name: aWhiteWine, type: white, winery: winery3, grape: aWhiteWineGrape, year: aWhiteWineYear},
+      {id: uuidv4(), name: aSparklingWine, type: sparkling, winery: winery4, grape: aSparklingWineGrape, year: aSparklingWineYear},
+      {id: uuidv4(), name: aRoseWine, type: rose, winery: winery5, grape: aRoseWineGrape, year: aRoseWineYear}
     ],
   });
 
@@ -188,6 +189,7 @@ function generateWines(type: string, count: number) {
   for (let i = 0; i < count; i++) {
     wines.push(
       {
+        id: uuidv4(),
         name: `${type}-wine-${i}`,
         type: type,
         winery: `${type}-winery-${i}`,

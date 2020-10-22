@@ -1,5 +1,7 @@
 import * as YAML from 'yaml'
 import * as faker from 'faker';
+import {v4 as uuidv4} from 'uuid';
+
 
 const types = ['red', 'rose', 'white', 'sparkling'];
 
@@ -20,6 +22,7 @@ function aWine() {
     const possibleGrapes = grapes[type];
     const grape = possibleGrapes[Math.floor(Math.random() * possibleGrapes.length)];
     return {
+        id: uuidv4(),
         name: faker.commerce.productName(),
         winery: faker.company.companyName(),
         type: type,

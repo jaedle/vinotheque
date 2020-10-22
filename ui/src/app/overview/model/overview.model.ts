@@ -52,11 +52,12 @@ export class Wines {
 }
 
 export class Wine {
-  constructor(public readonly name: string,
-              public readonly winery: string,
-              public readonly type: WineType,
-              public readonly grape: string,
-              public readonly year: number) {
+  constructor(
+    public readonly id: string,
+    public readonly name: string,
+    public readonly winery: string,
+    public readonly type: WineType,
+    public readonly grape: string, public readonly year: number) {
   }
 }
 

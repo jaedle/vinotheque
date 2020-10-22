@@ -2,10 +2,10 @@ import {OverviewModel, Wine, Wines, WineType} from './overview.model';
 
 
 describe('OverviewModelSpec', () => {
-  const aRedWine = new Wine('a-red-wine', 'red-wine-winery', WineType.RED, 'red-wine-grape', 1010);
-  const aWhiteWine = new Wine('a-white-wine', 'white-wine-winery', WineType.WHITE, 'white-wine-grape', 1010);
-  const aSparklingWine = new Wine('a-sparkling-wine', 'sparkling-wine-winery', WineType.SPARKLING, 'sparkling-wine-grape', 1010);
-  const aRoseWine = new Wine('a-rose-wine', 'rose-wine-winery', WineType.ROSE, 'rose-wine-grape', 1010);
+  const aRedWine = new Wine('TODO', 'a-red-wine', 'red-wine-winery', WineType.RED, 'red-wine-grape', 1010);
+  const aWhiteWine = new Wine('TODO', 'a-white-wine', 'white-wine-winery', WineType.WHITE, 'white-wine-grape', 1010);
+  const aSparklingWine = new Wine('TODO', 'a-sparkling-wine', 'sparkling-wine-winery', WineType.SPARKLING, 'sparkling-wine-grape', 1010);
+  const aRoseWine = new Wine('TODO', 'a-rose-wine', 'rose-wine-winery', WineType.ROSE, 'rose-wine-grape', 1010);
 
   let wineNameCounter: number;
 
@@ -112,7 +112,7 @@ describe('OverviewModelSpec', () => {
 
   function aWineWithGrape(grape: string, type: WineType): Wine {
     wineNameCounter++;
-    return new Wine(`a-wine-${wineNameCounter}`, 'a-winery', type, grape, 1010);
+    return new Wine('TODO', `a-wine-${wineNameCounter}`, 'a-winery', type, grape, 1010);
   }
 
 });
