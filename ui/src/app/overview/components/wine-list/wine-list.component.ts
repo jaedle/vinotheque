@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {OverviewModel, Wine, Wines} from '../../model/overview.model';
+import {WineModel, Wine, Wines} from '../../../shared/model/wine.model';
 
 @Component({
   selector: 'app-wine-list',
@@ -8,6 +8,6 @@ import {OverviewModel, Wine, Wines} from '../../model/overview.model';
 })
 export class WineListComponent {
 
-  @Input() model: OverviewModel;
+  @Input() model: WineModel;
   columns: string[] = ['name', 'winery', 'grape', 'year'];
 }

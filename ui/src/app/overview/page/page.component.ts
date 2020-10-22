@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {OverviewModel, WineType} from '../model/overview.model';
+import {WineModel, WineType} from '../../shared/model/wine.model';
 import {WineService} from '../services/wine.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -12,8 +12,8 @@ export class PageComponent implements OnInit {
   private error = false;
 
   readonly WineType = WineType;
-  model: OverviewModel;
-  view: OverviewModel;
+  model: WineModel;
+  view: WineModel;
   wineType: WineType | undefined;
 
   constructor(private wineService: WineService, private router: Router, private activatedRoute: ActivatedRoute) {

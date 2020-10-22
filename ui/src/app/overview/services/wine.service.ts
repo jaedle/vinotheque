@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {OverviewModel, Wine, Wines, WineType} from '../model/overview.model';
+import {WineModel, Wine, Wines, WineType} from '../../shared/model/wine.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,10 +24,10 @@ export class WineService {
     }
   }
 
-  getWines(): Observable<OverviewModel> {
+  getWines(): Observable<WineModel> {
     return this.http.get<GetWineResponse>('/api/wines').pipe(
       map((response) => {
-        return new OverviewModel(
+        return new WineModel(
           new Wines(response.wines.map((wine) => {
             const type = WineService.getWineType(wine);
             return new Wine(wine.id, wine.name, wine.winery, type, wine.grape, wine.year);

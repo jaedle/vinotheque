@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {OverviewModel, WineType} from '../../model/overview.model';
+import {WineModel, WineType} from '../../../shared/model/wine.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TypeDeselected, TypeSelectionChange} from '../wine-type-selector/wine-type-selector.component';
 
@@ -12,7 +12,7 @@ import {TypeDeselected, TypeSelectionChange} from '../wine-type-selector/wine-ty
 export class WineSelectorComponent implements OnInit {
 
 
-  @Input() model: OverviewModel;
+  @Input() model: WineModel;
   readonly wineType = WineType;
   current: WineType[];
   private readonly typesParameter = `types`;

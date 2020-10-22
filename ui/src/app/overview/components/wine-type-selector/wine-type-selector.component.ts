@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {OverviewModel, WineType} from '../../model/overview.model';
+import {WineModel, WineType} from '../../../shared/model/wine.model';
 
 export class TypeSelectionChange {
   constructor(public readonly type: WineType) {
@@ -19,7 +19,7 @@ export class TypeDeselected extends TypeSelectionChange {
 })
 export class WineTypeSelectorComponent implements OnInit {
   @Input() type: WineType;
-  @Input() model: OverviewModel;
+  @Input() model: WineModel;
   @Input() display: string;
   @Input() current: WineType[];
   @Output() typeSelect = new EventEmitter<TypeSelectionChange>();

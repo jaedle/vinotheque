@@ -1,8 +1,8 @@
 import {TestBed} from '@angular/core/testing';
 
-import {WineService} from '../services/wine.service';
+import {WineService} from './wine.service';
 import {HttpClientTestingModule, HttpTestingController, } from '@angular/common/http/testing';
-import {OverviewModel, Wine, Wines, WineType} from '../model/overview.model';
+import {WineModel, Wine, Wines, WineType} from '../../shared/model/wine.model';
 
 describe('WineService', () => {
   let service: WineService;
@@ -25,7 +25,7 @@ describe('WineService', () => {
 
     result.subscribe((model) => {
       expect(model).toEqual(
-        new OverviewModel(new Wines([
+        new WineModel(new Wines([
           new Wine('id-1', 'a-red-wine', 'winery-1', WineType.RED, 'grape-1', 1991),
           new Wine('id-2', 'a-white-wine', 'winery-2', WineType.WHITE, 'grape-2', 1992),
           new Wine('id-3', 'a-rose-wine', 'winery-3', WineType.ROSE, 'grape-3', 1993),

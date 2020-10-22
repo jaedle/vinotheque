@@ -1,4 +1,4 @@
-export class OverviewModel {
+export class WineModel {
 
   private active: WineType[];
 
