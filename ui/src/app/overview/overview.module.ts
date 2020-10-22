@@ -15,6 +15,7 @@ import {MatTableModule} from '@angular/material/table';
 import { WineSelectorComponent } from './components/wine-selector/wine-selector.component';
 import { WineTypeSelectorComponent } from './components/wine-type-selector/wine-type-selector.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   declarations: [PageComponent, WineListComponent, WineSelectorComponent, WineTypeSelectorComponent],
@@ -29,9 +30,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatChipsModule,
     RouterModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
+    SharedModule
   ],
   exports: [PageComponent],
-  providers: [WineService],
+  providers: [],
 })
 export class OverviewModule {}
