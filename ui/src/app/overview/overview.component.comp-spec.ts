@@ -200,7 +200,7 @@ test('sorts wine grapes', async (t) => {
   }
 });
 
-test.only('opens wine detail page', async (t) => {
+test('opens wine detail page', async (t) => {
   await t.click(Selector('.wine-name').withText(aRedWine));
 
   const getLocation = ClientFunction(() => document.location.href);
