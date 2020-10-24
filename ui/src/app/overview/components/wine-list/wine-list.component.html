@@ -20,5 +20,5 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="columns"></tr>
-  <tr mat-row class="wine" *matRowDef="let row; columns: columns;"></tr>
+  <tr (click)="wineSelected(this.row)" *matRowDef="let row; columns: columns;" class="wine" mat-row></tr>
 </table>

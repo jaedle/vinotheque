@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {WineModel, Wine, Wines} from '../../../shared/model/wine.model';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Wine, WineModel} from '../../../shared/model/wine.model';
 
 @Component({
   selector: 'app-wine-list',
@@ -10,4 +10,10 @@ export class WineListComponent {
 
   @Input() model: WineModel;
   columns: string[] = ['name', 'winery', 'grape', 'year'];
+
+  @Output() wineSelect = new EventEmitter<Wine>();
+
+  wineSelected(wine: Wine): void {
+    this.wineSelect.emit(wine);
+  }
 }

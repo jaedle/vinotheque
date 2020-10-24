@@ -1,4 +1,4 @@
-import {RequestMock, Selector} from 'testcafe';
+import {ClientFunction, RequestMock, Selector} from 'testcafe';
 import {v4 as uuidv4} from 'uuid';
 
 const aRedWine = 'Great Shiraz';
@@ -30,14 +30,30 @@ const aWhiteWineYear = 2015;
 const aSparklingWineYear = 2019;
 const aRoseWineYear = 2018;
 
+const aRedWineId = 'a95ac96c-ced7-4d3e-9aa6-9fb513a46c2c';
+
 const wines = RequestMock()
   .onRequestTo('http://localhost:4200/api/wines')
   .respond({
     wines: [
-      {id: uuidv4(), name: aRedWine, type: red, winery: winery1, grape: aRedWineGrape, year: aRedWineYear},
-      {id: uuidv4(), name: anotherRedWine, type: red, winery: winery2, grape: anotherRedWineGrape, year: anotherRedWineYear},
+      {id: aRedWineId, name: aRedWine, type: red, winery: winery1, grape: aRedWineGrape, year: aRedWineYear},
+      {
+        id: uuidv4(),
+        name: anotherRedWine,
+        type: red,
+        winery: winery2,
+        grape: anotherRedWineGrape,
+        year: anotherRedWineYear
+      },
       {id: uuidv4(), name: aWhiteWine, type: white, winery: winery3, grape: aWhiteWineGrape, year: aWhiteWineYear},
-      {id: uuidv4(), name: aSparklingWine, type: sparkling, winery: winery4, grape: aSparklingWineGrape, year: aSparklingWineYear},
+      {
+        id: uuidv4(),
+        name: aSparklingWine,
+        type: sparkling,
+        winery: winery4,
+        grape: aSparklingWineGrape,
+        year: aSparklingWineYear
+      },
       {id: uuidv4(), name: aRoseWine, type: rose, winery: winery5, grape: aRoseWineGrape, year: aRoseWineYear}
     ],
   });
@@ -183,6 +199,15 @@ test('sorts wine grapes', async (t) => {
     await t.expect(Selector('#filter-grapes').find('.grape').nth(i).withText(grapes[i]).visible).eql(true);
   }
 });
+
+test.only('opens wine detail page', async (t) => {
+  await t.click(Selector('.wine-name').withText(aRedWine));
+
+  const getLocation = ClientFunction(() => document.location.href);
+  await t
+    .expect(getLocation()).eql(`http://localhost:4200/wines/${aRedWineId}`);
+});
+
 
 function generateWines(type: string, count: number) {
   const wines = [];

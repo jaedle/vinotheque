@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {WineModel, WineType} from '../../shared/model/wine.model';
+import {Wine, WineModel, WineType} from '../../shared/model/wine.model';
 import {WineService} from '../../shared/services/wine.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -39,5 +39,7 @@ export class OverviewPageComponent implements OnInit {
     return this.error;
   }
 
-
+  wineSelected(wine: Wine): void {
+    this.router.navigateByUrl(`/wines/${wine.id}`);
+  }
 }
