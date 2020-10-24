@@ -45,4 +45,22 @@ describe('WineService', () => {
         ],
       });
   });
+
+  it('fetches single wine', (done) => {
+    const result = service.getWine('id-1');
+
+    result.subscribe((model) => {
+      expect(model).toEqual(
+        new Wine('id-1', 'a-red-wine', 'winery-1', WineType.RED, 'grape-1', 1991)
+      );
+      done();
+    });
+
+    http
+      .expectOne((req) => req.url === '/api/wines/id-1' && req.method === 'GET')
+      .flush(
+        {id: 'id-1', name: 'a-red-wine', type: 'red', winery: 'winery-1', grape: 'grape-1', year: 1991},
+      );
+
+  });
 });

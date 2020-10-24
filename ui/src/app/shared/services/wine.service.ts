@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {WineModel, Wine, Wines, WineType} from '../model/wine.model';
+import {Wine, WineModel, Wines, WineType} from '../model/wine.model';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +34,20 @@ export class WineService {
           })),
         );
       }),
+    );
+  }
+
+  getWine(id: string): Observable<Wine> {
+    return this.http.get<WineDto>(`/api/wines/${id}`).pipe(
+      map((response) => {
+        return new Wine(
+          response.id,
+          response.name,
+          response.winery,
+          WineService.getWineType(response),
+          response.grape,
+          response.year);
+      })
     );
   }
 }
