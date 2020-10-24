@@ -1,19 +1,4 @@
-<p>
-  <mat-toolbar color="primary" id="toolbar-top">
-    <span>Vinotheque</span>
-    <div>
-      <a
-        href="https://github.com/jaedle/vinotheque"
-        id="github"
-        mat-button
-        target="_blank"
-      >
-        <img src="assets/github.svg"/>
-      </a>
-    </div>
-  </mat-toolbar>
-</p>
-
+<app-header></app-header>
 <div class="content">
   <ng-container *ngIf="hasError()">could not fetch wines</ng-container>
   <ng-container *ngIf="hasModel()">

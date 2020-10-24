@@ -16,6 +16,7 @@ import { WineSelectorComponent } from './components/wine-selector/wine-selector.
 import { WineTypeSelectorComponent } from './components/wine-type-selector/wine-type-selector.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {SharedModule} from '../shared/shared.module';
+import {HeaderModule} from '../header/header.module';
 
 @NgModule({
   declarations: [OverviewPageComponent, WineListComponent, WineSelectorComponent, WineTypeSelectorComponent],
@@ -23,15 +24,13 @@ import {SharedModule} from '../shared/shared.module';
     CommonModule,
     BrowserAnimationsModule,
     BrowserModule,
-    HttpClientModule,
     MatListModule,
-    MatToolbarModule,
-    MatButtonModule,
     MatChipsModule,
     RouterModule,
     MatTableModule,
     MatExpansionModule,
-    SharedModule
+    SharedModule,
+    HeaderModule
   ],
   exports: [OverviewPageComponent],
   providers: [],
