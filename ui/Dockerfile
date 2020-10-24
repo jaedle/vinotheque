@@ -8,6 +8,9 @@ RUN npm -s run build:prod
 
 FROM caddy:2 as runtime
 
-WORKDIR /app
+WORKDIR /app/dist
 COPY --from=build /app/dist/ui ./
-CMD ["caddy", "file-server", "--listen", ":8080", "--root", "/app"]
+WORKDIR /app
+COPY Caddyfile ./
+
+CMD ["caddy", "run", "--config", "Caddyfile"]

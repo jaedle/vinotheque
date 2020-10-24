@@ -1,0 +1,10 @@
+{
+	admin off
+}
+
+:8080
+log
+
+root * /app/dist
+try_files {path} /index.html
+file_server
