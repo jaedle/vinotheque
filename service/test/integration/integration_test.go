@@ -83,7 +83,10 @@ var _ = Describe("Integration", func() {
 		var err error
 		err = ioutil.WriteFile(winelist.Name(), []byte(`wines:
 - name: Great Shiraz
-- name: Wodden Pinot Noir`), os.ModePerm)
+  id: a43b6c80-91c0-4e06-8fd7-bfafea949865
+- name: Wodden Pinot Noir
+  id: c71d4699-dd29-4fb6-8509-e57f947835be
+`), os.ModePerm)
 		Expect(err).ShouldNot(HaveOccurred())
 
 		session, err = Start(command, GinkgoWriter, GinkgoWriter)
@@ -99,8 +102,64 @@ var _ = Describe("Integration", func() {
 
 		body, err := ioutil.ReadAll(resp.Body)
 		Expect(err).ShouldNot(HaveOccurred())
-		Expect(string(body)).To(Equal(`{"wines":[{"name":"Great Shiraz"},{"name":"Wodden Pinot Noir"}]}`))
+		Expect(string(body)).To(Equal(`{"wines":[{"id":"a43b6c80-91c0-4e06-8fd7-bfafea949865","name":"Great Shiraz"},{"id":"c71d4699-dd29-4fb6-8509-e57f947835be","name":"Wodden Pinot Noir"}]}`))
 	})
+
+	It("finds wine by id", func() {
+		command := exec.Command(artifact)
+		command.Env = append(command.Env, fmt.Sprintf("PORT=%d", port))
+		command.Env = append(command.Env, fmt.Sprintf("WINES=%s", winelist.Name()))
+
+		var err error
+		err = ioutil.WriteFile(winelist.Name(), []byte(`wines:
+- name: Great Shiraz
+  id: a43b6c80-91c0-4e06-8fd7-bfafea949865
+- name: Wodden Pinot Noir
+  id: c71d4699-dd29-4fb6-8509-e57f947835be
+`), os.ModePerm)
+		Expect(err).ShouldNot(HaveOccurred())
+
+		session, err = Start(command, GinkgoWriter, GinkgoWriter)
+		Expect(err).ShouldNot(HaveOccurred())
+
+		awaitStartup()
+
+		resp, err := http.Get(url("/api/wines/" + "c71d4699-dd29-4fb6-8509-e57f947835be"))
+		Expect(err).ShouldNot(HaveOccurred())
+		defer resp.Body.Close()
+		Expect(resp.StatusCode).To(Equal(http.StatusOK))
+		Expect(resp.Header.Get("Content-Type")).To(Equal("application/json"))
+
+		body, err := ioutil.ReadAll(resp.Body)
+		Expect(err).ShouldNot(HaveOccurred())
+		Expect(string(body)).To(Equal(`{"id":"c71d4699-dd29-4fb6-8509-e57f947835be","name":"Wodden Pinot Noir"}`))
+	})
+
+	It("finds wine by id", func() {
+		command := exec.Command(artifact)
+		command.Env = append(command.Env, fmt.Sprintf("PORT=%d", port))
+		command.Env = append(command.Env, fmt.Sprintf("WINES=%s", winelist.Name()))
+
+		var err error
+		err = ioutil.WriteFile(winelist.Name(), []byte(`wines:
+- name: Great Shiraz
+  id: a43b6c80-91c0-4e06-8fd7-bfafea949865
+- name: Wodden Pinot Noir
+  id: c71d4699-dd29-4fb6-8509-e57f947835be
+`), os.ModePerm)
+		Expect(err).ShouldNot(HaveOccurred())
+
+		session, err = Start(command, GinkgoWriter, GinkgoWriter)
+		Expect(err).ShouldNot(HaveOccurred())
+
+		awaitStartup()
+
+		resp, err := http.Get(url("/api/wines/" + "asdf4699-dd29-4fb6-8509-e57f947835be"))
+		Expect(err).ShouldNot(HaveOccurred())
+		defer resp.Body.Close()
+		Expect(resp.StatusCode).To(Equal(http.StatusNotFound))
+	})
+
 })
 
 func awaitStartup() bool {
