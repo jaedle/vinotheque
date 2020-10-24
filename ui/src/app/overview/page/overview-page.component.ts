@@ -4,11 +4,11 @@ import {WineService} from '../../shared/services/wine.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-page',
-  templateUrl: './page.component.html',
-  styleUrls: ['./page.component.scss'],
+  selector: 'app-overview-page',
+  templateUrl: './overview-page.component.html',
+  styleUrls: ['./overview-page.component.scss'],
 })
-export class PageComponent implements OnInit {
+export class OverviewPageComponent implements OnInit {
   private error = false;
 
   readonly WineType = WineType;

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PageComponent } from './page/page.component';
+import { OverviewPageComponent } from './page/overview-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -18,7 +18,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
-  declarations: [PageComponent, WineListComponent, WineSelectorComponent, WineTypeSelectorComponent],
+  declarations: [OverviewPageComponent, WineListComponent, WineSelectorComponent, WineTypeSelectorComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
@@ -33,7 +33,7 @@ import {SharedModule} from '../shared/shared.module';
     MatExpansionModule,
     SharedModule
   ],
-  exports: [PageComponent],
+  exports: [OverviewPageComponent],
   providers: [],
 })
 export class OverviewModule {}
