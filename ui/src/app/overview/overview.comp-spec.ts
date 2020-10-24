@@ -36,7 +36,7 @@ const wines = RequestMock()
   .onRequestTo('http://localhost:4200/api/wines')
   .respond({
     wines: [
-      {id: aRedWineId, name: aRedWine, type: red, winery: winery1, grape: aRedWineGrape, year: aRedWineYear},
+      {id: 'a95ac96c-ced7-4d3e-9aa6-9fb513a46c2c', name: 'Great Shiraz', type: 'red', winery: 'a-winery-1', grape: 'Shiraz', year: 2001},
       {
         id: uuidv4(),
         name: anotherRedWine,

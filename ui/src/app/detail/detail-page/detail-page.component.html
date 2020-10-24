@@ -2,4 +2,21 @@
 
 <div class="content">
   <h1>Wine Detail Page</h1>
+
+  <table [dataSource]="dataSource()" class="mat-elevation-z8" mat-table>
+
+    <ng-container matColumnDef="key">
+      <th *matHeaderCellDef mat-header-cell></th>
+      <td *matCellDef="let element" mat-cell>{{element.key}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="value">
+      <th *matHeaderCellDef mat-header-cell></th>
+      <td *matCellDef="let element" mat-cell>{{element.value}}</td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="['key','value']" mat-header-row style="display: none;"></tr>
+    <tr *matRowDef="let row; columns: ['key','value'];" mat-row></tr>
+  </table>
+
 </div>
