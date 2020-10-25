@@ -16,6 +16,20 @@ function aType() {
     return types[Math.floor(Math.random() * types.length)];
 }
 
+let currentBottle = 1;
+
+function bottles() {
+    const result = [];
+
+    const amount = Math.floor(Math.random() * 4) + 1;
+    for (let i = 0; i < amount; i++) {
+        result.push(currentBottle);
+        currentBottle++;
+    }
+
+    return result;
+}
+
 function aWine() {
     const type = aType();
 
@@ -27,7 +41,8 @@ function aWine() {
         winery: faker.company.companyName(),
         type: type,
         grape: grape,
-        year: faker.date.past(20).getFullYear()
+        year: faker.date.past(20).getFullYear(),
+        bottles: bottles(),
     };
 }
 
