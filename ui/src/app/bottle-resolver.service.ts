@@ -1,9 +1,9 @@
-import {Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from "@angular/router";
-import {Observable} from "rxjs";
-import {WineService} from "./shared/services/wine.service";
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs';
+import {WineService} from './shared/services/wine.service';
 
-@Injectable({providedIn: "root"})
+@Injectable({providedIn: 'root'})
 export class BottleResolverService implements Resolve<any> {
   constructor(
     private router: Router,
@@ -21,6 +21,6 @@ export class BottleResolverService implements Resolve<any> {
       .toPromise()
       .then((id) => {
         this.router.navigateByUrl(`wines/${id}`);
-      })
+      });
   }
 }
