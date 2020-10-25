@@ -13,7 +13,7 @@ import (
 	. "github.com/onsi/gomega/gexec"
 )
 
-const port = 8080
+const port = 8337
 const waitStartup = 10 * time.Second
 const pollIntervalStartup = 100 * time.Millisecond
 const healthEndpoint = "/api/health"
@@ -27,20 +27,27 @@ var _ = Describe("Integration", func() {
 		var err error
 		artifact, err = Build("github.com/jaedle/vinotheque/service")
 		Expect(err).ShouldNot(HaveOccurred())
+	})
+
+	BeforeEach(func() {
+		var err error
 		winelist, err = ioutil.TempFile("", "")
 		Expect(err).NotTo(HaveOccurred())
+		assertServiceNotRunning()
 	})
 
 	AfterEach(func() {
 		if session != nil {
 			session.Kill()
 		}
-	})
+		assertServiceNotRunning()
 
-	AfterSuite(func() {
 		if winelist != nil {
 			_ = os.Remove(winelist.Name())
 		}
+	})
+
+	AfterSuite(func() {
 		CleanupBuildArtifacts()
 	})
 
@@ -135,7 +142,7 @@ var _ = Describe("Integration", func() {
 		Expect(string(body)).To(Equal(`{"id":"c71d4699-dd29-4fb6-8509-e57f947835be","name":"Wodden Pinot Noir"}`))
 	})
 
-	It("finds wine by id", func() {
+	It("finds wine by id fails on unknown id", func() {
 		command := exec.Command(artifact)
 		command.Env = append(command.Env, fmt.Sprintf("PORT=%d", port))
 		command.Env = append(command.Env, fmt.Sprintf("WINES=%s", winelist.Name()))
@@ -160,16 +167,82 @@ var _ = Describe("Integration", func() {
 		Expect(resp.StatusCode).To(Equal(http.StatusNotFound))
 	})
 
+	It("finds wine by bottle", func() {
+		command := exec.Command(artifact)
+		command.Env = append(command.Env, fmt.Sprintf("PORT=%d", port))
+		command.Env = append(command.Env, fmt.Sprintf("WINES=%s", winelist.Name()))
+
+		var err error
+		err = ioutil.WriteFile(winelist.Name(), []byte(`wines:
+- name: Great Shiraz
+  id: a43b6c80-91c0-4e06-8fd7-bfafea949865
+  bottles: ['1','3']
+- name: Wodden Pinot Noir
+  id: c71d4699-dd29-4fb6-8509-e57f947835be
+  bottles: ['2','5','7']
+`), os.ModePerm)
+		Expect(err).ShouldNot(HaveOccurred())
+
+		session, err = Start(command, GinkgoWriter, GinkgoWriter)
+		Expect(err).ShouldNot(HaveOccurred())
+
+		awaitStartup()
+
+		resp, err := http.Get(url("/api/wines/byBottle/2"))
+		Expect(err).ShouldNot(HaveOccurred())
+		defer resp.Body.Close()
+		Expect(resp.StatusCode).To(Equal(http.StatusOK))
+		Expect(resp.Header.Get("Content-Type")).To(Equal("application/json"))
+
+		body, err := ioutil.ReadAll(resp.Body)
+		Expect(err).ShouldNot(HaveOccurred())
+		Expect(string(body)).To(Equal(`{"id":"c71d4699-dd29-4fb6-8509-e57f947835be"}`))
+	})
+
+	It("fails on missing bottle", func() {
+		command := exec.Command(artifact)
+		command.Env = append(command.Env, fmt.Sprintf("PORT=%d", port))
+		command.Env = append(command.Env, fmt.Sprintf("WINES=%s", winelist.Name()))
+
+		var err error
+		err = ioutil.WriteFile(winelist.Name(), []byte(`wines:
+- name: Great Shiraz
+  id: a43b6c80-91c0-4e06-8fd7-bfafea949865
+  bottles: ['1','3']
+- name: Wodden Pinot Noir
+  id: c71d4699-dd29-4fb6-8509-e57f947835be
+  bottles: ['2','5','7']
+`), os.ModePerm)
+		Expect(err).ShouldNot(HaveOccurred())
+
+		session, err = Start(command, GinkgoWriter, GinkgoWriter)
+		Expect(err).ShouldNot(HaveOccurred())
+
+		awaitStartup()
+
+		resp, err := http.Get(url("/api/wines/byBottle/77"))
+		Expect(err).ShouldNot(HaveOccurred())
+		defer resp.Body.Close()
+		Expect(resp.StatusCode).To(Equal(http.StatusNotFound))
+	})
+
 })
 
-func awaitStartup() bool {
-	return Eventually(func() bool {
+func awaitStartup() {
+	Eventually(func() bool {
 		get, err := http.Get(url(healthEndpoint))
 		if err != nil {
 			return false
 		}
 		return get.StatusCode == http.StatusOK
 	}, waitStartup, pollIntervalStartup).Should(Equal(true), "service must be healthy")
+}
+
+func assertServiceNotRunning() {
+	Eventually(func() bool {
+		_, err := http.Get(url(healthEndpoint))
+		return err != nil
+	}, waitStartup, pollIntervalStartup).Should(Equal(true), "service did not shut down")
 }
 
 func url(route string) string {
