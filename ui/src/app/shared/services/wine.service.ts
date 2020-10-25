@@ -50,6 +50,11 @@ export class WineService {
       })
     );
   }
+
+  findByBottle(bottle: string): Observable<string> {
+    return this.http.get<FindByBottleResponse>(`/api/wines/byBottle/${bottle}`)
+      .pipe(map((res) => res.id));
+  }
 }
 
 export interface GetWineResponse {
@@ -63,4 +68,8 @@ export interface WineDto {
   winery: string;
   grape: string;
   year: number;
+}
+
+interface FindByBottleResponse {
+  id: string;
 }

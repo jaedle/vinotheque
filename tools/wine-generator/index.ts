@@ -23,7 +23,7 @@ function bottles() {
 
     const amount = Math.floor(Math.random() * 4) + 1;
     for (let i = 0; i < amount; i++) {
-        result.push(currentBottle);
+        result.push(currentBottle.toString());
         currentBottle++;
     }
 

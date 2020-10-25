@@ -1,9 +1,11 @@
 import {TestBed} from '@angular/core/testing';
 
 import {WineService} from './wine.service';
-import {HttpClientTestingModule, HttpTestingController, } from '@angular/common/http/testing';
-import {WineModel, Wine, Wines, WineType} from '../model/wine.model';
+import {HttpClientTestingModule, HttpTestingController,} from '@angular/common/http/testing';
+import {Wine, WineModel, Wines, WineType} from '../model/wine.model';
 
+const aBottle = 'a-bottle';
+const aWineId = 'a-wine-id';
 describe('WineService', () => {
   let service: WineService;
   let http: HttpTestingController;
@@ -61,6 +63,17 @@ describe('WineService', () => {
       .flush(
         {id: 'id-1', name: 'a-red-wine', type: 'red', winery: 'winery-1', grape: 'grape-1', year: 1991},
       );
+  });
 
+  it('finds wine by bottle', (done) => {
+    const result = service.findByBottle(aBottle);
+    result.subscribe((actual) => {
+      expect(actual).toEqual(aWineId);
+      done();
+    });
+
+    http
+      .expectOne((req) => req.url === `/api/wines/byBottle/${aBottle}` && req.method === 'GET')
+      .flush({id: aWineId});
   });
 });
