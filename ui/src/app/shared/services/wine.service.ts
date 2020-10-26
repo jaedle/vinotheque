@@ -53,7 +53,9 @@ export class WineService {
 
   findByBottle(bottle: string): Observable<string> {
     return this.http.get<FindByBottleResponse>(`/api/wines/byBottle/${bottle}`)
-      .pipe(map((res) => res.id));
+      .pipe(
+        map((res) => res.id)
+      );
   }
 }
 
