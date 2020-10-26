@@ -3,7 +3,6 @@ import {ClientFunction, RequestMock, Selector} from "testcafe";
 const aWineId = 'a95ac96c-ced7-4d3e-9aa6-9fb513a46c2c';
 
 const aBottle = '1';
-const anUnknownBottle = '2';
 
 const wine = RequestMock()
   .onRequestTo(`http://localhost:4200/api/wines/byBottle/${aBottle}`)
@@ -19,6 +18,7 @@ test('opens wine detail page by bottle if exists', async (t) => {
     .expect(getLocation()).eql(`http://localhost:4200/wines/${aWineId}`);
 });
 
+const anUnknownBottle = '2';
 const notFound = RequestMock()
   .onRequestTo(`http://localhost:4200/api/wines/byBottle/${anUnknownBottle}`)
   .respond(undefined, 404);
@@ -29,8 +29,8 @@ test('shows error if bottle is unknown', async (t) => {
   await t.expect(Selector('body').innerText).contains(`Could not find bottle: ${anUnknownBottle}`);
 });
 
-fixture.skip`Wrong links`.page`http://localhost:4200/link?bottle=${aBottle}`.requestHooks(wine);
+fixture`Wrong links`.page`http://localhost:4200/link`.requestHooks();
 
 test('shows error on invalid link', async (t) => {
-  await t.expect(Selector('body').innerText).eql('Could not find bottle');
+  await t.expect(Selector('body').innerText).contains('Invalid link');
 });

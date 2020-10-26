@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Wine, WineModel, WineType} from '../../shared/model/wine.model';
 import {WineService} from '../../shared/services/wine.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-overview-page',
@@ -9,14 +9,14 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./overview-page.component.scss'],
 })
 export class OverviewPageComponent implements OnInit {
-  private error = false;
 
   readonly WineType = WineType;
-  model: WineModel;
-  view: WineModel;
+  model: WineModel | undefined;
   wineType: WineType | undefined;
 
-  constructor(private wineService: WineService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private wineService: WineService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -25,18 +25,14 @@ export class OverviewPageComponent implements OnInit {
         this.model = model;
       },
       () => {
-        this.error = true;
+        this.router.navigateByUrl(`error?message=${encodeURIComponent('could not fetch wines')}`);
       },
     );
   }
 
 
-  hasModel(): boolean {
+  modelLoaded(): boolean {
     return this.model !== undefined;
-  }
-
-  hasError(): boolean {
-    return this.error;
   }
 
   wineSelected(wine: Wine): void {

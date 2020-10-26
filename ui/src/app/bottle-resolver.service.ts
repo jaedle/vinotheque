@@ -16,10 +16,18 @@ export class BottleResolverService implements Resolve<any> {
     state: RouterStateSnapshot
   ): Observable<any> | Promise<any> | any {
     const bottle = route.queryParamMap.get('bottle');
+    if (bottle === null) {
+      return this.showError('Invalid link');
+    }
+
 
     return this.wineService.findByBottle(bottle)
       .toPromise()
       .then((id) => this.router.navigateByUrl(`wines/${id}`))
-      .catch(() => this.router.navigateByUrl(`error?message=${encodeURIComponent(`Could not find bottle: ${bottle}`)}`));
+      .catch(() => this.showError(`Could not find bottle: ${bottle}`));
+  }
+
+  private showError(message: string): Promise<boolean> {
+    return this.router.navigateByUrl(`error?message=${encodeURIComponent(message)}`);
   }
 }
