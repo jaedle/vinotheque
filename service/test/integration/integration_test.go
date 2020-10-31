@@ -188,7 +188,7 @@ var _ = Describe("Integration", func() {
 
 		awaitStartup()
 
-		resp, err := http.Get(url("/api/wines/byBottle/2"))
+		resp, err := http.Get(url("/api/byBottle/2"))
 		Expect(err).ShouldNot(HaveOccurred())
 		defer resp.Body.Close()
 		Expect(resp.StatusCode).To(Equal(http.StatusOK))
@@ -220,7 +220,7 @@ var _ = Describe("Integration", func() {
 
 		awaitStartup()
 
-		resp, err := http.Get(url("/api/wines/byBottle/77"))
+		resp, err := http.Get(url("/api/byBottle/77"))
 		Expect(err).ShouldNot(HaveOccurred())
 		defer resp.Body.Close()
 		Expect(resp.StatusCode).To(Equal(http.StatusNotFound))

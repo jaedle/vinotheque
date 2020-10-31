@@ -5,7 +5,7 @@ const aWineId = 'a95ac96c-ced7-4d3e-9aa6-9fb513a46c2c';
 const aBottle = '1';
 
 const wine = RequestMock()
-  .onRequestTo(`http://localhost:4200/api/wines/byBottle/${aBottle}`)
+  .onRequestTo(`http://localhost:4200/api/byBottle/${aBottle}`)
   .respond({id: aWineId});
 
 
@@ -20,7 +20,7 @@ test('opens wine detail page by bottle if exists', async (t) => {
 
 const anUnknownBottle = '2';
 const notFound = RequestMock()
-  .onRequestTo(`http://localhost:4200/api/wines/byBottle/${anUnknownBottle}`)
+  .onRequestTo(`http://localhost:4200/api/byBottle/${anUnknownBottle}`)
   .respond(undefined, 404);
 
 fixture`unknown bottle`.page`http://localhost:4200/link?bottle=${anUnknownBottle}`.requestHooks(notFound);
