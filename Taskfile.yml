@@ -145,7 +145,8 @@ tasks:
     dir: service/
     env:
       PORT: 8080
-      WINES: "test/wines.yml"
+      WINES: test/wines.yml
+      ELASTIC_APM_SECRET_TOKEN: very-secret
     cmds:
       - screen -dmS service go run main.go
       - ./wait-healthy.sh
