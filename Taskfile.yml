@@ -50,13 +50,13 @@ tasks:
     desc: run - literally - everything :)
     cmds:
       - task: check-preconditions
-      - task: stop
-      - task: format
-      - task: lint
-      - task: test
+#      - task: stop
+#      - task: format
+#      - task: lint
+#      - task: test
       - task: e2e
-      - task: cleanup-dependencies-service
-      - task: stop
+#      - task: cleanup-dependencies-service
+#      - task: stop
 
   check-preconditions:
     desc: check if everything is ready to go
