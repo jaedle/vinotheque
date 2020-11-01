@@ -18,6 +18,7 @@ tasks:
       - '$(cd $HOME && go get -u github.com/onsi/ginkgo/ginkgo)'
       - curl -fsSL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$PWD/tools" v1.27.0
       - HOMEBREW_NO_AUTO_UPDATE=1 brew list --full-name | grep 'mkcert' &> /dev/null || HOMEBREW_NO_AUTO_UPDATE=1 brew install mkcert
+      - mkcert -install
 
   install-e2e-dependencies:
     dir: e2e/
@@ -36,9 +37,8 @@ tasks:
     cmds: [ ./download.sh ]
 
   generate-certificates:
-    dir: certs/
+    dir: reverse-proxy/
     cmds:
-      - mkcert -install
       - mkcert "vinotheque.foo.bar"
 
   register-local-domain:
@@ -199,7 +199,7 @@ tasks:
 
   start-local-docker-compose:
     desc: start local within docker-compose
-    deps: [ build-docker-images ]
+    deps: [ build-docker-images, generate-certificates-for-docker ]
     dir: deployments/
     cmds:
       - task: stop-local-docker-compose
@@ -212,6 +212,11 @@ tasks:
 
   build-docker-images:
     deps: [ build-ui-docker-image, build-service-docker-image ]
+
+  generate-certificates-for-docker:
+    dir: deployments/certificates/
+    cmds:
+      - mkcert "vinotheque.foo.bar"
 
   build-ui-docker-image:
     dir: ui/

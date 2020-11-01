@@ -5,7 +5,7 @@
 }
 
 vinotheque.foo.bar {
-    tls ./../certs/vinotheque.foo.bar.pem ./../certs/vinotheque.foo.bar-key.pem
+    tls ./vinotheque.foo.bar.pem ./vinotheque.foo.bar-key.pem
 
     respond /health 200
 
