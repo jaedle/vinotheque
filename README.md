@@ -49,3 +49,10 @@ task install # install dependencies for the project
 task register-local-domain # register the domain vinotheque.foo.bar in your `/etc/hosts` file
 task world # run all verifications (lint, format, tests, e2e-tests, ...)
 ```
+
+### Start locally
+
+```sh
+task start
+open https://vinotheque.foo.bar:8443
+```
