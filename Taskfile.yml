@@ -16,7 +16,7 @@ tasks:
     cmds:
       - '$(cd $HOME && go get -u github.com/onsi/ginkgo/ginkgo)'
       - curl -fsSL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$PWD/tools" v1.27.0
-      - brew list --full-name | grep 'mkcert' &> /dev/null || brew install mkcert
+      - HOMEBREW_NO_AUTO_UPDATE=1 brew list --full-name | grep 'mkcert' &> /dev/null || HOMEBREW_NO_AUTO_UPDATE=1 brew install mkcert
 
   install-e2e-dependencies:
     dir: e2e/
