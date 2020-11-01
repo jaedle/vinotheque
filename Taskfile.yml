@@ -11,7 +11,7 @@ tasks:
       - task: install-ui-dependencies
       - task: install-e2e-dependencies
       - task: install-reverse-proxy
-      - tasK: generate-certificates
+      - task: generate-certificates
 
   install-tools:
     cmds:
