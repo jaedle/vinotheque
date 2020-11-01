@@ -19,7 +19,9 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "14"
+      - run: apt install libnss3-tools
       - run: task install
+      - run: task register-local-domain
       - run: task world
 
   build:

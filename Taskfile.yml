@@ -41,6 +41,11 @@ tasks:
       - mkcert -install
       - mkcert "*.foo.bar"
 
+  register-local-domain:
+    desc: propagate local domain to hosts
+    cmds:
+      - echo '127.0.0.1 vinotheque.foo.bar' >> /etc/hosts
+
   world:
     desc: run - literally - everything :)
     cmds:
