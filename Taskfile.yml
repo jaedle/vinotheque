@@ -204,7 +204,7 @@ tasks:
     cmds:
       - task: stop-local-docker-compose
       - docker-compose up --remove-orphans --force-recreate -d
-      - open http://localhost:8001
+      - open https://vinotheque.foo.bar:8001
 
   stop-local-docker-compose:
     dir: deployments/

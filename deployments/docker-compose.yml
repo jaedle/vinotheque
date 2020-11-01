@@ -7,11 +7,12 @@ services:
   reverse-proxy:
     image: caddy:2
     ports:
-      - 8001:8080
+      - 8001:8443
     networks:
       - internal
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./certificates:/certificates:ro
 
   ui:
     image: jaedle/vinotheque:ui-latest
