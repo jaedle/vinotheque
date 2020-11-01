@@ -11,6 +11,7 @@ tasks:
       - task: install-ui-dependencies
       - task: install-e2e-dependencies
       - task: install-reverse-proxy
+      - tasK: generate-certificates
 
   install-tools:
     cmds:
@@ -33,6 +34,12 @@ tasks:
   install-reverse-proxy:
     dir: reverse-proxy/
     cmds: [ ./download.sh ]
+
+  generate-certificates:
+    dir: certs/
+    cmds:
+      - mkcert -install
+      - mkcert "*.foo.bar"
 
   world:
     desc: run - literally - everything :)
