@@ -10,11 +10,15 @@ tasks:
       - task: install-service-dependencies
       - task: install-ui-dependencies
       - task: install-e2e-dependencies
+      - task: install-reverse-proxy
+      - task: generate-certificates
 
   install-tools:
     cmds:
       - '$(cd $HOME && go get -u github.com/onsi/ginkgo/ginkgo)'
       - curl -fsSL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$PWD/tools" v1.27.0
+      - HOMEBREW_NO_AUTO_UPDATE=1 brew list --full-name | grep 'mkcert' &> /dev/null || HOMEBREW_NO_AUTO_UPDATE=1 brew install mkcert
+      - mkcert -install
 
   install-e2e-dependencies:
     dir: e2e/
@@ -27,6 +31,20 @@ tasks:
   install-ui-dependencies:
     dir: ui/
     cmds: [ npm ci --no-progress ]
+
+  install-reverse-proxy:
+    dir: reverse-proxy/
+    cmds: [ ./download.sh ]
+
+  generate-certificates:
+    dir: reverse-proxy/
+    cmds:
+      - mkcert "vinotheque.foo.bar"
+
+  register-local-domain:
+    desc: propagate local domain to hosts
+    cmds:
+      - echo '127.0.0.1 vinotheque.foo.bar' | sudo tee -a /etc/hosts
 
   world:
     desc: run - literally - everything :)
@@ -49,6 +67,7 @@ tasks:
       - which screen &> /dev/null
       - which curl &> /dev/null
       - '[[ -x tools/golangci-lint ]]'
+      - '[[ -x reverse-proxy/caddy ]]'
       - go version | grep 'go1.15' &> /dev/null
       - node --version | grep 'v14.' &> /dev/null
       - tools/golangci-lint --version | grep 'has version 1.27' &> /dev/null
@@ -132,12 +151,12 @@ tasks:
     deps: [ stop-reverse-proxy ]
     dir: reverse-proxy/
     cmds:
-      - screen -dmS reverse-proxy go run main.go
+      - screen -dmS reverse-proxy ./caddy start
       - ./wait-healthy.sh
 
   stop-reverse-proxy:
     desc: locally stop reverse proxy
-    cmds: [ '(! lsof -ti tcp:8000 &> /dev/null) || kill -9 $(lsof -ti tcp:8000) &> /dev/null || true' ]
+    cmds: [ '(! lsof -ti tcp:8443 &> /dev/null) || kill -9 $(lsof -ti tcp:8443) &> /dev/null || true' ]
 
   start-service:
     desc: locally start service
@@ -180,12 +199,12 @@ tasks:
 
   start-local-docker-compose:
     desc: start local within docker-compose
-    deps: [ build-docker-images ]
+    deps: [ build-docker-images, generate-certificates-for-docker ]
     dir: deployments/
     cmds:
       - task: stop-local-docker-compose
       - docker-compose up --remove-orphans --force-recreate -d
-      - open http://localhost:8001
+      - open https://vinotheque.foo.bar:8001
 
   stop-local-docker-compose:
     dir: deployments/
@@ -193,6 +212,11 @@ tasks:
 
   build-docker-images:
     deps: [ build-ui-docker-image, build-service-docker-image ]
+
+  generate-certificates-for-docker:
+    dir: deployments/certificates/
+    cmds:
+      - mkcert "vinotheque.foo.bar"
 
   build-ui-docker-image:
     dir: ui/
