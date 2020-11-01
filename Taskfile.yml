@@ -138,7 +138,7 @@ tasks:
     deps: [ stop-reverse-proxy ]
     dir: reverse-proxy/
     cmds:
-      - screen -dmS reverse-proxy caddy start
+      - screen -dmS reverse-proxy ./caddy start
       - ./wait-healthy.sh
 
   stop-reverse-proxy:
