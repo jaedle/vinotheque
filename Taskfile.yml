@@ -50,13 +50,13 @@ tasks:
     desc: run - literally - everything :)
     cmds:
       - task: check-preconditions
-#      - task: stop
-#      - task: format
-#      - task: lint
-#      - task: test
+      - task: stop
+      - task: format
+      - task: lint
+      - task: test
       - task: e2e
-#      - task: cleanup-dependencies-service
-#      - task: stop
+      - task: cleanup-dependencies-service
+      - task: stop
 
   check-preconditions:
     desc: check if everything is ready to go
@@ -151,7 +151,8 @@ tasks:
     deps: [ stop-reverse-proxy ]
     dir: reverse-proxy/
     cmds:
-      - ./caddy start && ./wait-healthy.sh
+      - screen -dmS reverse-proxy ./caddy start
+      - ./wait-healthy.sh
 
   stop-reverse-proxy:
     desc: locally stop reverse proxy
