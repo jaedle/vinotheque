@@ -39,7 +39,7 @@ tasks:
     dir: certs/
     cmds:
       - mkcert -install
-      - mkcert "*.foo.bar"
+      - mkcert "vinotheque.foo.bar"
 
   register-local-domain:
     desc: propagate local domain to hosts
@@ -156,7 +156,7 @@ tasks:
 
   stop-reverse-proxy:
     desc: locally stop reverse proxy
-    cmds: [ '(! lsof -ti tcp:8000 &> /dev/null) || kill -9 $(lsof -ti tcp:8000) &> /dev/null || true' ]
+    cmds: [ '(! lsof -ti tcp:8443 &> /dev/null) || kill -9 $(lsof -ti tcp:8443) &> /dev/null || true' ]
 
   start-service:
     desc: locally start service

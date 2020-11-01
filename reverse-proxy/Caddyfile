@@ -1,17 +1,29 @@
 {
-	admin off
+    admin off
 }
 
-:8000
-log
+vinotheque.foo.bar:8443 {
+    tls ./../certs/vinotheque.foo.bar.pem ./../certs/vinotheque.foo.bar-key.pem
 
-route /api/* {
-	reverse_proxy http://localhost:8080
-}
+    respond /health 200
 
-route /* {
-	respond /health 200 {
-        close
+    reverse_proxy /api* localhost:8080 {
+        header_up Host                "localhost"
+        header_up X-Real-IP           {remote}
+        header_up X-Forwarded-Host    "localhost"
+        header_up X-Forwarded-Server  "localhost"
+        header_up X-Forwarded-Port    {port}
+        header_up X-Forwarded-For     {remote}
+        header_up X-Forwarded-Proto   {scheme}
     }
-	reverse_proxy http://localhost:4200
+
+    reverse_proxy /* localhost:4200 {
+        header_up Host                "localhost"
+        header_up X-Real-IP           {remote}
+        header_up X-Forwarded-Host    "localhost"
+        header_up X-Forwarded-Server  "localhost"
+        header_up X-Forwarded-Port    {port}
+        header_up X-Forwarded-For     {remote}
+        header_up X-Forwarded-Proto   {scheme}
+    }
 }
