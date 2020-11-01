@@ -1,17 +1,17 @@
 {
-	admin off
+    admin off
+    http_port 8000
+    https_port 8443
 }
 
-:8080
-encode zstd gzip
-log
+vinotheque.foo.bar {
+    tls /certificates/vinotheque.foo.bar.pem /certificates/vinotheque.foo.bar-key.pem
 
-route /api/* {
-	reverse_proxy http://service:8080
+    respond /health 200
+
+    reverse_proxy /api* http://service:8080 {
+    }
+
+    reverse_proxy /* http://ui:8080 {
+    }
 }
-
-route /* {
-	reverse_proxy http://ui:8080
-}
-
-respond /* 404

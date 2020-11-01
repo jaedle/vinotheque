@@ -73,7 +73,7 @@ describe('WineService', () => {
     });
 
     http
-      .expectOne((req) => req.url === `/api/wines/byBottle/${aBottle}` && req.method === 'GET')
+      .expectOne((req) => req.url === `/api/byBottle/${aBottle}` && req.method === 'GET')
       .flush({id: aWineId});
   });
 });

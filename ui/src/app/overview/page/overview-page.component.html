@@ -1,7 +1,6 @@
 <app-header></app-header>
 <div class="content">
-  <ng-container *ngIf="hasError()">could not fetch wines</ng-container>
-  <ng-container *ngIf="hasModel()">
+  <ng-container *ngIf="modelLoaded()">
     <h1>Wines</h1>
     <app-wine-selector [model]="model"></app-wine-selector>
     <app-wine-list [model]="model" (wineSelect)="wineSelected($event)"></app-wine-list>

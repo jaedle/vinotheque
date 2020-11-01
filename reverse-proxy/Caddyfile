@@ -1,0 +1,31 @@
+{
+    admin off
+    http_port 8000
+    https_port 8443
+}
+
+vinotheque.foo.bar {
+    tls ./vinotheque.foo.bar.pem ./vinotheque.foo.bar-key.pem
+
+    respond /health 200
+
+    reverse_proxy /api* localhost:8080 {
+        header_up Host                "localhost"
+        header_up X-Real-IP           {remote}
+        header_up X-Forwarded-Host    "localhost"
+        header_up X-Forwarded-Server  "localhost"
+        header_up X-Forwarded-Port    {port}
+        header_up X-Forwarded-For     {remote}
+        header_up X-Forwarded-Proto   {scheme}
+    }
+
+    reverse_proxy /* localhost:4200 {
+        header_up Host                "localhost"
+        header_up X-Real-IP           {remote}
+        header_up X-Forwarded-Host    "localhost"
+        header_up X-Forwarded-Server  "localhost"
+        header_up X-Forwarded-Port    {port}
+        header_up X-Forwarded-For     {remote}
+        header_up X-Forwarded-Proto   {scheme}
+    }
+}
