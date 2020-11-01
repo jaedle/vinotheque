@@ -1,8 +1,10 @@
 {
     admin off
+    http_port 8000
+    https_port 8443
 }
 
-vinotheque.foo.bar:8443 {
+vinotheque.foo.bar {
     tls ./../certs/vinotheque.foo.bar.pem ./../certs/vinotheque.foo.bar-key.pem
 
     respond /health 200
