@@ -1,0 +1,17 @@
+{
+	admin off
+}
+
+:8000
+log
+
+route /api/* {
+	reverse_proxy http://localhost:8080
+}
+
+route /* {
+	respond /health 200 {
+        close
+    }
+	reverse_proxy http://localhost:4200
+}

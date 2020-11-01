@@ -7,7 +7,7 @@ current=0
 until curl -fsSL localhost:8000/health &> /dev/null; do
   current=$((current+1))
   if [[ $current -gt $RETRIES ]]; then
-    &>2 echo 'reverse-proxy did not get healthy; failing'
+    echo 'reverse-proxy did not get healthy; failing'
     exit 1
   fi
   sleep 0.1

@@ -10,6 +10,7 @@ tasks:
       - task: install-service-dependencies
       - task: install-ui-dependencies
       - task: install-e2e-dependencies
+      - task: install-reverse-proxy
 
   install-tools:
     cmds:
@@ -27,6 +28,10 @@ tasks:
   install-ui-dependencies:
     dir: ui/
     cmds: [ npm ci --no-progress ]
+
+  install-reverse-proxy:
+    dir: reverse-proxy/
+    cmds: [ ./download.sh ]
 
   world:
     desc: run - literally - everything :)
@@ -49,6 +54,7 @@ tasks:
       - which screen &> /dev/null
       - which curl &> /dev/null
       - '[[ -x tools/golangci-lint ]]'
+      - '[[ -x reverse-proxy/caddy ]]'
       - go version | grep 'go1.15' &> /dev/null
       - node --version | grep 'v14.' &> /dev/null
       - tools/golangci-lint --version | grep 'has version 1.27' &> /dev/null
@@ -132,7 +138,7 @@ tasks:
     deps: [ stop-reverse-proxy ]
     dir: reverse-proxy/
     cmds:
-      - screen -dmS reverse-proxy go run main.go
+      - screen -dmS reverse-proxy caddy start
       - ./wait-healthy.sh
 
   stop-reverse-proxy:
