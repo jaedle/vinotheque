@@ -44,7 +44,7 @@ tasks:
   register-local-domain:
     desc: propagate local domain to hosts
     cmds:
-      - echo '127.0.0.1 vinotheque.foo.bar' >> /etc/hosts
+      - echo '127.0.0.1 vinotheque.foo.bar' | sudo tee -a /etc/hosts
 
   world:
     desc: run - literally - everything :)
