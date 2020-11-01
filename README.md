@@ -24,12 +24,14 @@ Manage your vinotheque! ;)
 | |         |                        +------------------>|                  |  |
 | |         | /api                                       |                  |  |
 | |         +------------------------------------------->|                  |  |
-| |  caddy  |                                            | Go               |  |
+| |  caddy  |                                            | go               |  |
 | +---------+                                            +------------------+  |
 |                                                                              |
 |                               docker compose                                 |
 +------------------------------------------------------------------------------+
 ```
+
+This diagram was created with [asciiflow](http://asciiflow.com/)
 
 ### Repository structure
 
