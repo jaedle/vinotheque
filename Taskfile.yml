@@ -211,7 +211,7 @@ tasks:
     cmds: [ docker-compose down --remove-orphans -v ]
 
   build-docker-images:
-    deps: [ build-ui-docker-image, build-service-docker-image ]
+    deps: [ build-ui-docker-image, build-reverse-proxy-docker-image, build-service-docker-image ]
 
   generate-certificates-for-docker:
     dir: deployments/certificates/
@@ -221,6 +221,10 @@ tasks:
   build-ui-docker-image:
     dir: ui/
     cmds: [ docker image build -t jaedle/vinotheque:ui-latest . ]
+
+  build-reverse-proxy-docker-image:
+    dir: reverse-proxy/
+    cmds: [ docker image build -t jaedle/vinotheque:reverse-proxy-latest . ]
 
   build-service-docker-image:
     dir: service/
@@ -233,10 +237,13 @@ tasks:
 
   publish-docker-images:
     desc: push docker images to dockerhub
-    deps: [ push-ui-docker-image, push-service-docker-image ]
+    deps: [ push-ui-docker-image, push-reverse-proxy-docker-image, push-service-docker-image ]
 
   push-ui-docker-image:
     cmds: [ docker image push jaedle/vinotheque:ui-latest ]
+
+  push-reverse-proxy-docker-image:
+    cmds: [ docker image push jaedle/vinotheque:reverse-proxy-latest ]
 
   push-service-docker-image:
     cmds: [ docker image push jaedle/vinotheque:service-latest ]

@@ -5,8 +5,7 @@ networks:
 
 services:
   reverse-proxy:
-    build:
-      context: image/
+    image: jaedle/vinotheque:reverse-proxy-latest
     ports:
       - 8001:8443
     networks:

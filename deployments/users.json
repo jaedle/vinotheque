@@ -3,54 +3,15 @@
   "users": [
     {
       "id": "40a498cd-13bc-4ed1-884a-721007a74375",
-      "username": "webadmin",
-      "email_addresses": [
-        {
-          "address": "webadmin@localdomain.local",
-          "domain": "localdomain.local"
-        }
-      ],
+      "username": "drink",
       "passwords": [
         {
           "purpose": "generic",
           "type": "bcrypt",
-          "hash": "$2a$10$qH69ENvVECRoN2DYI7aLw.eoijyRFTt895iquVYNc9QjPE9LLGR/m",
-          "cost": 10,
-          "expired_at": "0001-01-01T00:00:00Z",
-          "created_at": "2020-10-31T21:05:06.8597716Z",
-          "disabled_at": "0001-01-01T00:00:00Z"
+          "hash": "$2a$10$yBlkNpHj2WKmloUfx4rjNehOIYCFrqs9mDpzFKiRiQtbTKewU/S36",
+          "cost": 10
         }
       ],
-      "created": "2020-10-31T21:05:06.8597371Z",
-      "last_modified": "2020-10-31T21:05:06.8597546Z",
-      "roles": [
-        {
-          "name": "superadmin"
-        }
-      ]
-    },
-    {
-      "id": "40a498cd-13bc-4ed1-884a-721007a74373",
-      "username": "drinker",
-      "email_addresses": [
-        {
-          "address": "no@email.local",
-          "domain": "localdomain.local"
-        }
-      ],
-      "passwords": [
-        {
-          "purpose": "generic",
-          "type": "bcrypt",
-          "hash": "$2a$10$GweGtrRl8musMiEsEgs.PeGv8h./a1lBotYla8He6ND8b6NpI/Sgy",
-          "cost": 10,
-          "expired_at": "0001-01-01T00:00:00Z",
-          "created_at": "2020-10-31T21:05:06.8597716Z",
-          "disabled_at": "0001-01-01T00:00:00Z"
-        }
-      ],
-      "created": "2020-10-31T21:05:06.8597371Z",
-      "last_modified": "2020-10-31T21:05:06.8597546Z",
       "roles": [
         {
           "name": "drinker"
