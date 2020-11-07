@@ -34,7 +34,7 @@ tasks:
 
   install-reverse-proxy:
     dir: reverse-proxy/
-    cmds: [ ./download.sh ]
+    cmds: [ ./build.sh ]
 
   generate-certificates:
     dir: reverse-proxy/
