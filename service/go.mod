@@ -6,6 +6,7 @@ require (
 	github.com/elastic/go-sysinfo v1.4.0 // indirect
 	github.com/elastic/go-windows v1.0.1 // indirect
 	github.com/ghodss/yaml v1.0.0
+	github.com/go-sql-driver/mysql v1.5.0
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/onsi/ginkgo v1.14.2
 	github.com/onsi/gomega v1.10.3
