@@ -12,7 +12,6 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/procfs v0.2.0 // indirect
 	go.elastic.co/apm/module/apmhttprouter v1.9.0
-	go.elastic.co/fastjson v1.1.0 // indirect
 	golang.org/x/sys v0.0.0-20201029080932-201ba4db2418 // indirect
 	howett.net/plist v0.0.0-20201026045517-117a925f2150 // indirect
 )

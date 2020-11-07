@@ -51,6 +51,7 @@ tasks:
     cmds:
       - task: check-preconditions
       - task: stop
+      - task: start-dependencies
       - task: format
       - task: lint
       - task: test
@@ -66,6 +67,7 @@ tasks:
       - which ginkgo &> /dev/null
       - which screen &> /dev/null
       - which curl &> /dev/null
+      - which mysql &> /dev/null
       - '[[ -x tools/golangci-lint ]]'
       - '[[ -x reverse-proxy/caddy ]]'
       - go version | grep 'go1.15' &> /dev/null
@@ -85,8 +87,6 @@ tasks:
     desc: formats sources in ui
     dir: ui/
     cmds: [ npm run format ]
-
-
 
   format-service:
     desc: formats sources in service
@@ -188,11 +188,23 @@ tasks:
 
   stop:
     desc: stop components for local development
-    deps: [ stop-reverse-proxy, stop-service, stop-ui ]
+    deps: [ stop-dependencies, stop-reverse-proxy, stop-service, stop-ui ]
+
+  stop-dependencies:
+    desc: stop dependencies
+    dir: dependencies/
+    cmds: [ docker-compose down --remove-orphans --volumes &> /dev/null ]
 
   start:
     desc: start components for local development
     deps: [ start-reverse-proxy, start-service, start-ui ]
+
+  start-dependencies:
+    desc: start dependencies
+    dir: dependencies/
+    cmds:
+      - docker-compose up -d --remove-orphans --force-recreate &> /dev/null
+      - ./wait-mariadb-healthy.sh
 
   default:
     cmds: [ task: world ]
