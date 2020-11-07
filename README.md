@@ -39,6 +39,7 @@ This diagram was created with [asciiflow](http://asciiflow.com/)
 .
 ├── .dependabot         dependabot configuration
 ├── .github             ci workflow configuration
+├── dependencies        development dependencies (i.e. databases)
 ├── deployments         recipies for deployments
 ├── e2e                 end-2-end tests based on testcafe
 ├── label-creator       cli-tool based on typescript to generate bottle labels
