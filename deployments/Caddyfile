@@ -29,7 +29,9 @@ vinotheque.foo.bar {
           auth_url /auth
           allow roles drinker
         }
-        reverse_proxy http://service:8080
+        reverse_proxy http://service:8080 {
+
+        }
     }
 
     route /* {

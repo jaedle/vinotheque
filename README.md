@@ -84,3 +84,5 @@ task world # run all verifications (lint, format, tests, e2e-tests, ...)
 task start
 open https://vinotheque.foo.bar:8443
 ```
+
+The login for local development is `drink`:`wine`.

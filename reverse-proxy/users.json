@@ -1,0 +1,23 @@
+{
+  "revision": 1,
+  "users": [
+    {
+      "id": "40a498cd-13bc-4ed1-884a-721007a74375",
+      "username": "drink",
+      "email_addresses": [],
+      "passwords": [
+        {
+          "purpose": "generic",
+          "type": "bcrypt",
+          "hash": "$2a$10$yBlkNpHj2WKmloUfx4rjNehOIYCFrqs9mDpzFKiRiQtbTKewU/S36",
+          "cost": 10
+        }
+      ],
+      "roles": [
+        {
+          "name": "drinker"
+        }
+      ]
+    }
+  ]
+}
