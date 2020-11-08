@@ -1,6 +1,9 @@
 package persistence
 
-import "database/sql"
+import (
+	"database/sql"
+	"github.com/jaedle/vinotheque/service/domain"
+)
 import _ "github.com/go-sql-driver/mysql"
 
 type Repository struct {
@@ -14,13 +17,17 @@ func (r *Repository) Ping() error {
 func (r *Repository) Size() (int, error) {
 	var size int
 	row := r.sql.QueryRow("SELECT COUNT(id) FROM wines")
-	row.Scan(&size)
+	if err := row.Err(); err != nil {
+		return -1, err
+	}
 
-	return size, row.Err()
+	err := row.Scan(&size)
+
+	return size, err
 }
 
-func (r *Repository) Save(id string) error {
-	_, err := r.sql.Exec("INSERT INTO wines (id) VALUES ('asdf')")
+func (r *Repository) Save(w *domain.Wine) error {
+	_, err := r.sql.Exec("INSERT INTO wines (id) VALUES (?)", w.GetId())
 	return err
 }
 

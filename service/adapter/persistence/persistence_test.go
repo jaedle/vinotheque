@@ -2,6 +2,7 @@ package persistence_test
 
 import (
 	"github.com/jaedle/vinotheque/service/adapter/persistence"
+	"github.com/jaedle/vinotheque/service/domain"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -39,15 +40,14 @@ var _ = Describe("Persistence", func() {
 			Expect(repo.Size()).To(Equal(0))
 		})
 
-		It("persists wine", func() {
-			err := repo.Save("1")
-			Expect(err).NotTo(HaveOccurred())
+		It("persists wines", func() {
+			Expect(repo.Save(domain.NewWine("1"))).NotTo(HaveOccurred())
+			Expect(repo.Save(domain.NewWine("2"))).NotTo(HaveOccurred())
+			Expect(repo.Save(domain.NewWine("3"))).NotTo(HaveOccurred())
 
-			Expect(repo.Size()).To(Equal(1))
+			Expect(repo.Size()).To(Equal(3))
 		})
 
 	})
-
-
 
 })
