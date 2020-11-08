@@ -7,19 +7,47 @@ import (
 )
 
 var _ = Describe("Persistence", func() {
-	It("pings database", func() {
-		repo := persistence.New("root:password@tcp(localhost:3307)/database")
+	Context("database health check", func() {
+		It("does not fail if ok", func() {
+			repo, err := persistence.New("root:password@tcp(localhost:3307)/database")
+			Expect(err).NotTo(HaveOccurred())
 
-		err := repo.Ping()
+			Expect(repo.Ping()).NotTo(HaveOccurred())
+		})
 
-		Expect(err).NotTo(HaveOccurred())
+		It("fails on connection problem", func() {
+			repo, err := persistence.New("root:wrong-password@tcp(localhost:3307)/database")
+			Expect(err).NotTo(HaveOccurred())
+
+			Expect(repo.Ping()).To(HaveOccurred())
+		})
 	})
 
-	It("fails on failing connection", func() {
-		repo := persistence.New("root:wrong-password@tcp(localhost:3307)/database")
+	Context("persists wine", func() {
+		var repo *persistence.Repository
 
-		err := repo.Ping()
+		BeforeEach(func() {
+			var err error
+			repo, err = persistence.New("root:password@tcp(localhost:3307)/database")
+			Expect(err).NotTo(HaveOccurred())
 
-		Expect(err).To(HaveOccurred())
+			err = repo.Clear()
+			Expect(err).NotTo(HaveOccurred())
+		})
+
+		It("is empty on creation", func() {
+			Expect(repo.Size()).To(Equal(0))
+		})
+
+		It("persists wine", func() {
+			err := repo.Save("1")
+			Expect(err).NotTo(HaveOccurred())
+
+			Expect(repo.Size()).To(Equal(1))
+		})
+
 	})
+
+
+
 })
