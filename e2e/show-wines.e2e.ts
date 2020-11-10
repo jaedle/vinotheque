@@ -26,8 +26,7 @@ test('shows wine details', async (t) => {
 
 fixture`External links`.page`https://vinotheque.foo.bar:8443/link?bottle=1337`;
 
-// temporary disabled because of https://github.com/greenpau/caddy-auth-jwt/issues/38
-test.skip('opens wine details by bottle id', async (t) => {
+test('opens wine details by bottle id', async (t) => {
   await login(t);
 
   await t.expect(Selector('body').withText('RED').visible).eql(true);
