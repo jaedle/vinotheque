@@ -20,7 +20,6 @@ func (r *Repository) Size() (int, error) {
 	if err := row.Err(); err != nil {
 		return -1, err
 	}
-
 	err := row.Scan(&size)
 
 	return size, err
@@ -43,6 +42,17 @@ CREATE TABLE wines (
 );
 `)
 	return err
+}
+
+func (r *Repository) Load(id string) (*domain.Wine, error) {
+	res := r.sql.QueryRow("SELECT id FROM wines WHERE id = ?", id)
+
+	var result string
+	err := res.Scan(&result)
+	if err != nil {
+		return nil, err
+	}
+	return domain.NewWine(result), nil
 }
 
 func New(con string) (*Repository, error) {

@@ -40,6 +40,13 @@ var _ = Describe("Persistence", func() {
 			Expect(repo.Size()).To(Equal(0))
 		})
 
+		It("persists wine", func() {
+			Expect(repo.Save(domain.NewWine("1"))).NotTo(HaveOccurred())
+
+			Expect(repo.Size()).To(Equal(1))
+			Expect(repo.Load("1")).To(Equal(domain.NewWine("1")))
+		})
+
 		It("persists wines", func() {
 			Expect(repo.Save(domain.NewWine("1"))).NotTo(HaveOccurred())
 			Expect(repo.Save(domain.NewWine("2"))).NotTo(HaveOccurred())
@@ -48,6 +55,13 @@ var _ = Describe("Persistence", func() {
 			Expect(repo.Size()).To(Equal(3))
 		})
 
+		It("fails on loading wine with unknnown id", func() {
+			Expect(repo.Save(domain.NewWine("1"))).NotTo(HaveOccurred())
+
+			res, err := repo.Load("2")
+			Expect(err).To(HaveOccurred())
+			Expect(res).To(BeNil())
+		})
 	})
 
 })
