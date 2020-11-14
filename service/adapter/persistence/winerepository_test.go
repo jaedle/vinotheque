@@ -10,14 +10,14 @@ import (
 var _ = Describe("Persistence", func() {
 	Context("database health check", func() {
 		It("does not fail if ok", func() {
-			repo, err := persistence.New("root:password@tcp(localhost:3307)/database")
+			repo, err := persistence.NewWineRepository("root:password@tcp(localhost:3307)/database")
 			Expect(err).NotTo(HaveOccurred())
 
 			Expect(repo.Ping()).NotTo(HaveOccurred())
 		})
 
 		It("fails on connection problem", func() {
-			repo, err := persistence.New("root:wrong-password@tcp(localhost:3307)/database")
+			repo, err := persistence.NewWineRepository("root:wrong-password@tcp(localhost:3307)/database")
 			Expect(err).NotTo(HaveOccurred())
 
 			Expect(repo.Ping()).To(HaveOccurred())
@@ -25,11 +25,11 @@ var _ = Describe("Persistence", func() {
 	})
 
 	Context("persists wine", func() {
-		var repo *persistence.Repository
+		var repo *persistence.WineRepository
 
 		BeforeEach(func() {
 			var err error
-			repo, err = persistence.New("root:password@tcp(localhost:3307)/database")
+			repo, err = persistence.NewWineRepository("root:password@tcp(localhost:3307)/database")
 			Expect(err).NotTo(HaveOccurred())
 
 			err = repo.Clear()

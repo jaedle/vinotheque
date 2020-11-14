@@ -6,15 +6,21 @@ import (
 )
 import _ "github.com/go-sql-driver/mysql"
 
-type Repository struct {
+const tableQuery = `
+CREATE TABLE wines (
+	id varchar(255) primary key
+);
+`
+
+type WineRepository struct {
 	sql *sql.DB
 }
 
-func (r *Repository) Ping() error {
+func (r *WineRepository) Ping() error {
 	return r.sql.Ping()
 }
 
-func (r *Repository) Size() (int, error) {
+func (r *WineRepository) Size() (int, error) {
 	var size int
 	row := r.sql.QueryRow("SELECT COUNT(id) FROM wines")
 	if err := row.Err(); err != nil {
@@ -25,26 +31,30 @@ func (r *Repository) Size() (int, error) {
 	return size, err
 }
 
-func (r *Repository) Save(w *domain.Wine) error {
+func (r *WineRepository) Save(w *domain.Wine) error {
 	_, err := r.sql.Exec("INSERT INTO wines (id) VALUES (?)", w.GetId().Value())
 	return err
 }
 
-func (r *Repository) Clear() error {
-	_, err := r.sql.Exec("DROP TABLE IF EXISTS wines")
-	if err != nil {
+func (r *WineRepository) Clear() error {
+	if err := r.dropTable(); err != nil {
 		return err
 	}
 
-	_, err = r.sql.Exec(`
-CREATE TABLE wines (
-	id varchar(255) primary key
-);
-`)
+	return r.createTable()
+}
+
+func (r *WineRepository) dropTable() error {
+	_, err := r.sql.Exec("DROP TABLE IF EXISTS wines")
 	return err
 }
 
-func (r *Repository) Load(id *domain.WineId) (*domain.Wine, error) {
+func (r *WineRepository) createTable() error {
+	_, err := r.sql.Exec(tableQuery)
+	return err
+}
+
+func (r *WineRepository) Load(id *domain.WineId) (*domain.Wine, error) {
 	res := r.sql.QueryRow("SELECT id FROM wines WHERE id = ?", id.Value())
 
 	var result string
@@ -60,10 +70,10 @@ func toWine(result string) *domain.Wine {
 	return domain.NewWine(domain.NewWineId(result))
 }
 
-func New(con string) (*Repository, error) {
+func NewWineRepository(con string) (*WineRepository, error) {
 	sql, err := sql.Open("mysql", con)
 
-	return &Repository{
+	return &WineRepository{
 		sql: sql,
 	}, err
 }
