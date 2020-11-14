@@ -8,8 +8,8 @@ import (
 
 var _ = Describe("Wine", func() {
 	It("creates", func() {
-		wine := domain.NewWine("1")
+		wine := domain.NewWine(domain.NewWineId("1"))
 
-		Expect(wine.GetId()).To(Equal("1"))
+		Expect(wine.GetId()).To(Equal(domain.NewWineId("1")))
 	})
 })

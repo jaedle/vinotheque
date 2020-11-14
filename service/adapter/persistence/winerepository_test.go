@@ -40,25 +40,28 @@ var _ = Describe("Persistence", func() {
 			Expect(repo.Size()).To(Equal(0))
 		})
 
+		const aWineId = "1"
+		const aMissingWineId = "2"
+
 		It("persists wine", func() {
-			Expect(repo.Save(domain.NewWine("1"))).NotTo(HaveOccurred())
+			Expect(repo.Save(domain.NewWine(domain.NewWineId(aWineId)))).NotTo(HaveOccurred())
 
 			Expect(repo.Size()).To(Equal(1))
-			Expect(repo.Load("1")).To(Equal(domain.NewWine("1")))
+			Expect(repo.Load(domain.NewWineId(aWineId))).To(Equal(domain.NewWine(domain.NewWineId(aWineId))))
 		})
 
 		It("persists wines", func() {
-			Expect(repo.Save(domain.NewWine("1"))).NotTo(HaveOccurred())
-			Expect(repo.Save(domain.NewWine("2"))).NotTo(HaveOccurred())
-			Expect(repo.Save(domain.NewWine("3"))).NotTo(HaveOccurred())
+			Expect(repo.Save(domain.NewWine(domain.NewWineId(aWineId)))).NotTo(HaveOccurred())
+			Expect(repo.Save(domain.NewWine(domain.NewWineId("2")))).NotTo(HaveOccurred())
+			Expect(repo.Save(domain.NewWine(domain.NewWineId("3")))).NotTo(HaveOccurred())
 
 			Expect(repo.Size()).To(Equal(3))
 		})
 
 		It("fails on loading wine with unknown id", func() {
-			Expect(repo.Save(domain.NewWine("1"))).NotTo(HaveOccurred())
+			Expect(repo.Save(domain.NewWine(domain.NewWineId(aWineId)))).NotTo(HaveOccurred())
 
-			res, err := repo.Load("2")
+			res, err := repo.Load(domain.NewWineId(aMissingWineId))
 			Expect(err).To(HaveOccurred())
 			Expect(res).To(BeNil())
 		})
