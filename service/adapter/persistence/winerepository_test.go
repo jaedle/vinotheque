@@ -7,17 +7,20 @@ import (
 	. "github.com/onsi/gomega"
 )
 
+const connectionString = "root:password@tcp(localhost:3307)/database"
+const notAuthorizedConnectionString = "root:wrong-password@tcp(localhost:3307)/database"
+
 var _ = Describe("Persistence", func() {
 	Context("database health check", func() {
 		It("does not fail if ok", func() {
-			repo, err := persistence.NewWineRepository("root:password@tcp(localhost:3307)/database")
+			repo, err := persistence.NewWineRepository(connectionString)
 			Expect(err).NotTo(HaveOccurred())
 
 			Expect(repo.Ping()).NotTo(HaveOccurred())
 		})
 
 		It("fails on connection problem", func() {
-			repo, err := persistence.NewWineRepository("root:wrong-password@tcp(localhost:3307)/database")
+			repo, err := persistence.NewWineRepository(notAuthorizedConnectionString)
 			Expect(err).NotTo(HaveOccurred())
 
 			Expect(repo.Ping()).To(HaveOccurred())
@@ -29,7 +32,7 @@ var _ = Describe("Persistence", func() {
 
 		BeforeEach(func() {
 			var err error
-			repo, err = persistence.NewWineRepository("root:password@tcp(localhost:3307)/database")
+			repo, err = persistence.NewWineRepository(connectionString)
 			Expect(err).NotTo(HaveOccurred())
 
 			err = repo.Clear()
@@ -44,16 +47,17 @@ var _ = Describe("Persistence", func() {
 		const aMissingWineId = "2"
 
 		It("persists wine", func() {
-			Expect(repo.Save(domain.NewWine(domain.NewWineId(aWineId)))).NotTo(HaveOccurred())
+			wine := domain.NewWine(domain.NewWineId(aWineId))
+			aSavedWine(repo, wine)
 
 			Expect(repo.Size()).To(Equal(1))
 			Expect(repo.Load(domain.NewWineId(aWineId))).To(Equal(domain.NewWine(domain.NewWineId(aWineId))))
 		})
 
 		It("persists wines", func() {
-			Expect(repo.Save(domain.NewWine(domain.NewWineId(aWineId)))).NotTo(HaveOccurred())
-			Expect(repo.Save(domain.NewWine(domain.NewWineId("2")))).NotTo(HaveOccurred())
-			Expect(repo.Save(domain.NewWine(domain.NewWineId("3")))).NotTo(HaveOccurred())
+			aSavedWine(repo, aWine(aWineId))
+			aSavedWine(repo, aWine("2"))
+			aSavedWine(repo, aWine("3"))
 
 			Expect(repo.Size()).To(Equal(3))
 		})
@@ -68,3 +72,13 @@ var _ = Describe("Persistence", func() {
 	})
 
 })
+
+func aSavedWine(repo *persistence.WineRepository, wine *domain.Wine) bool {
+	return Expect(repo.Save(wine)).NotTo(HaveOccurred())
+}
+
+func aWine(id string) *domain.Wine {
+	return domain.NewWine(
+		domain.NewWineId(id),
+	)
+}
