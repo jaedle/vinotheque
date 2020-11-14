@@ -55,7 +55,7 @@ var _ = Describe("Persistence", func() {
 			Expect(repo.Size()).To(Equal(3))
 		})
 
-		It("fails on loading wine with unknnown id", func() {
+		It("fails on loading wine with unknown id", func() {
 			Expect(repo.Save(domain.NewWine("1"))).NotTo(HaveOccurred())
 
 			res, err := repo.Load("2")
