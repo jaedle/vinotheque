@@ -15,7 +15,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), FormsModule],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }), FormsModule],
   exports: [RouterModule],
   providers: [BottleResolverService]
 })
