@@ -124,12 +124,12 @@ tasks:
       - task: component-test-ui
 
   unit-test-ui:
-    desc: run ui tests
+    desc: run ui unit-tests
     dir: ui/
     cmds: [ npm run test ]
 
   component-test-ui:
-    desc: run component ui-tests
+    desc: run ui component-tests
     deps: [ start-ui ]
     dir: ui/
     cmds:
