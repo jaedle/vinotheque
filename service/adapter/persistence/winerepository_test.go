@@ -82,6 +82,25 @@ var _ = Describe("Persistence", func() {
 			Expect(len(res)).To(Equal(3))
 			Expect(res).To(ConsistOf([]*domain.Wine{wine1, wine2, wine3}))
 		})
+
+		It("persists optional wine year", func() {
+			wineWithYear := aWine(aWineId)
+			year, _ := domain.WineYearOf(1988)
+			wineWithYear.SetYear(year)
+			wineWithoutYear := aWine("2")
+			wineWithoutYear.SetYear(nil)
+
+			aSavedWine(repo, wineWithYear, wineWithoutYear)
+
+			wine, err := repo.Load(wineWithoutYear.GetId())
+			Expect(err).NotTo(HaveOccurred())
+			Expect(wine.GetYear()).To(BeNil())
+			wine, err = repo.Load(wineWithYear.GetId())
+			Expect(err).NotTo(HaveOccurred())
+			Expect(wine.GetYear().Value()).To(Equal(1988))
+
+		})
+
 	})
 
 })
@@ -93,8 +112,12 @@ func aSavedWine(repo *persistence.WineRepository, wines ...*domain.Wine) {
 }
 
 func aWine(id string) *domain.Wine {
-	return domain.NewWine(
+	res := domain.NewWine(
 		domain.WineIdOf(id),
 		domain.WineNameOf("A name for "+id),
 	)
+	year, err := domain.WineYearOf(1999)
+	Expect(err).NotTo(HaveOccurred())
+	res.SetYear(year)
+	return res
 }

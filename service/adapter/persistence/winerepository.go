@@ -9,7 +9,8 @@ import _ "github.com/go-sql-driver/mysql"
 const tableQuery = `
 CREATE TABLE wines (
 	id varchar(255) primary key,
-	name varchar(255)
+	name varchar(255) NOT NULL,
+	year int NULL
 );
 `
 
@@ -33,7 +34,16 @@ func (r *WineRepository) Size() (int, error) {
 }
 
 func (r *WineRepository) Save(w *domain.Wine) error {
-	_, err := r.sql.Exec("INSERT INTO wines (`id`, `name`) VALUES (?, ?)", w.GetId().Value(), w.GetName().Value())
+	var year *int = nil
+	if w.GetYear() != nil {
+		value := w.GetYear().Value()
+		year = &value
+	}
+	_, err := r.sql.Exec("INSERT INTO wines (`id`, `name`,`year`) VALUES (?, ?, ?)",
+		w.GetId().Value(),
+		w.GetName().Value(),
+		year,
+	)
 	return err
 }
 
@@ -56,20 +66,21 @@ func (r *WineRepository) createTable() error {
 }
 
 func (r *WineRepository) Load(id *domain.WineId) (*domain.Wine, error) {
-	res := r.sql.QueryRow("SELECT `id`, `name` FROM `wines` WHERE `id` = ?", id.Value())
+	res := r.sql.QueryRow("SELECT `id`, `name`, `year` FROM `wines` WHERE `id` = ?", id.Value())
 
 	var result string
 	var name string
-	err := res.Scan(&result, &name)
+	var year *int
+	err := res.Scan(&result, &name, &year)
 	if err != nil {
 		return nil, err
 	}
 
-	return toWine(result, name), nil
+	return toWine(result, name, year), nil
 }
 
 func (r *WineRepository) LoadAll() ([]*domain.Wine, error) {
-	q, err := r.sql.Query("SELECT `id`, `name` FROM `wines`")
+	q, err := r.sql.Query("SELECT `id`, `name`, `year` FROM `wines`")
 	if err != nil {
 		return nil, err
 	}
@@ -79,17 +90,23 @@ func (r *WineRepository) LoadAll() ([]*domain.Wine, error) {
 	for q.Next() {
 		var id string
 		var name string
-		if err := q.Scan(&id, &name); err != nil {
+		var year *int
+		if err := q.Scan(&id, &name, &year); err != nil {
 			return nil, err
 		}
-		result = append(result, toWine(id, name))
+		result = append(result, toWine(id, name, year))
 	}
 
 	return result, nil
 }
 
-func toWine(id string, name string) *domain.Wine {
-	return domain.NewWine(domain.WineIdOf(id), domain.WineNameOf(name))
+func toWine(id string, name string, year *int) *domain.Wine {
+	result := domain.NewWine(domain.WineIdOf(id), domain.WineNameOf(name))
+	if year != nil {
+		y, _ := domain.WineYearOf(*year)
+		result.SetYear(y)
+	}
+	return result
 }
 
 func NewWineRepository(con string) (*WineRepository, error) {
