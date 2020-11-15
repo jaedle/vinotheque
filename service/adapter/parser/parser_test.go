@@ -12,20 +12,29 @@ var _ = Describe("Parser", func() {
 		res, err := parser.Parse(`wines:
   - id: 59145fbf-686c-4697-a5a1-3efa1771924f
     name: WineDto Name 1
+    year: 1988
   - id: f6ad7a19-7db4-4cd6-a5fa-98ceab08b592
     name: WineDto Name 2
+    year: 2000
 `)
 		Expect(err).ToNot(HaveOccurred())
-		Expect(res).To(Equal([]*domain.Wine{
-			domain.NewWine(
-				domain.WineIdOf("59145fbf-686c-4697-a5a1-3efa1771924f"),
-				domain.WineNameOf("WineDto Name 1"),
-			),
-			domain.NewWine(
-				domain.WineIdOf("f6ad7a19-7db4-4cd6-a5fa-98ceab08b592"),
-				domain.WineNameOf("WineDto Name 2"),
-			),
-		}))
+		wine1 := domain.NewWine(
+			domain.WineIdOf("59145fbf-686c-4697-a5a1-3efa1771924f"),
+			domain.WineNameOf("WineDto Name 1"),
+		)
+		year, err := domain.WineYearOf(1988)
+		Expect(err).NotTo(HaveOccurred())
+		wine1.SetYear(year)
+
+		wine2 := domain.NewWine(
+			domain.WineIdOf("f6ad7a19-7db4-4cd6-a5fa-98ceab08b592"),
+			domain.WineNameOf("WineDto Name 2"),
+		)
+		year2, err := domain.WineYearOf(2000)
+		Expect(err).NotTo(HaveOccurred())
+		wine2.SetYear(year2)
+
+		Expect(res).To(Equal([]*domain.Wine{wine1, wine2}))
 	})
 
 	It("fails on empty input", func() {

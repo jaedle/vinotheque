@@ -13,6 +13,7 @@ type Import struct {
 type WineDto struct {
 	Id   string `yaml:"id"`
 	Name string `yaml:"name"`
+	Year int    `yaml:"year"`
 }
 
 func Parse(input string) ([]*domain.Wine, error) {
@@ -38,8 +39,14 @@ func toResult(i Import) []*domain.Wine {
 }
 
 func toWine(current WineDto) *domain.Wine {
-	return domain.NewWine(
+	result := domain.NewWine(
 		domain.WineIdOf(current.Id),
 		domain.WineNameOf(current.Name),
 	)
+	year, err := domain.WineYearOf(current.Year)
+	if err != nil {
+		panic(err)
+	}
+	result.SetYear(year)
+	return result
 }
