@@ -47,11 +47,11 @@ var _ = Describe("Persistence", func() {
 		const aMissingWineId = "2"
 
 		It("persists wine", func() {
-			wine := domain.NewWine(domain.NewWineId(aWineId))
+			wine := domain.NewWine(domain.WineIdOf(aWineId), domain.WineNameOf("asdf"))
 			aSavedWine(repo, wine)
 
 			Expect(repo.Size()).To(Equal(1))
-			Expect(repo.Load(domain.NewWineId(aWineId))).To(Equal(domain.NewWine(domain.NewWineId(aWineId))))
+			Expect(repo.Load(domain.WineIdOf(aWineId))).To(Equal(domain.NewWine(domain.WineIdOf(aWineId), domain.WineNameOf("asdf"))))
 		})
 
 		It("persists wines", func() {
@@ -64,9 +64,9 @@ var _ = Describe("Persistence", func() {
 		})
 
 		It("fails on loading wine with unknown id", func() {
-			Expect(repo.Save(domain.NewWine(domain.NewWineId(aWineId)))).NotTo(HaveOccurred())
+			aSavedWine(repo, aWine(aWineId))
 
-			res, err := repo.Load(domain.NewWineId(aMissingWineId))
+			res, err := repo.Load(domain.WineIdOf(aMissingWineId))
 			Expect(err).To(HaveOccurred())
 			Expect(res).To(BeNil())
 		})
@@ -94,6 +94,7 @@ func aSavedWine(repo *persistence.WineRepository, wines ...*domain.Wine) {
 
 func aWine(id string) *domain.Wine {
 	return domain.NewWine(
-		domain.NewWineId(id),
+		domain.WineIdOf(id),
+		domain.WineNameOf("A name for "+id),
 	)
 }

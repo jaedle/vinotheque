@@ -8,7 +8,8 @@ import _ "github.com/go-sql-driver/mysql"
 
 const tableQuery = `
 CREATE TABLE wines (
-	id varchar(255) primary key
+	id varchar(255) primary key,
+	name varchar(255)
 );
 `
 
@@ -32,7 +33,7 @@ func (r *WineRepository) Size() (int, error) {
 }
 
 func (r *WineRepository) Save(w *domain.Wine) error {
-	_, err := r.sql.Exec("INSERT INTO wines (id) VALUES (?)", w.GetId().Value())
+	_, err := r.sql.Exec("INSERT INTO wines (`id`, `name`) VALUES (?, ?)", w.GetId().Value(), w.GetName().Value())
 	return err
 }
 
@@ -55,19 +56,20 @@ func (r *WineRepository) createTable() error {
 }
 
 func (r *WineRepository) Load(id *domain.WineId) (*domain.Wine, error) {
-	res := r.sql.QueryRow("SELECT id FROM wines WHERE id = ?", id.Value())
+	res := r.sql.QueryRow("SELECT `id`, `name` FROM `wines` WHERE `id` = ?", id.Value())
 
 	var result string
-	err := res.Scan(&result)
+	var name string
+	err := res.Scan(&result, &name)
 	if err != nil {
 		return nil, err
 	}
 
-	return toWine(result), nil
+	return toWine(result, name), nil
 }
 
 func (r *WineRepository) LoadAll() ([]*domain.Wine, error) {
-	q, err := r.sql.Query("SELECT id FROM wines")
+	q, err := r.sql.Query("SELECT `id`, `name` FROM `wines`")
 	if err != nil {
 		return nil, err
 	}
@@ -76,17 +78,18 @@ func (r *WineRepository) LoadAll() ([]*domain.Wine, error) {
 	var result []*domain.Wine
 	for q.Next() {
 		var id string
-		if err := q.Scan(&id); err != nil {
+		var name string
+		if err := q.Scan(&id, &name); err != nil {
 			return nil, err
 		}
-		result = append(result, toWine(id))
+		result = append(result, toWine(id, name))
 	}
 
 	return result, nil
 }
 
-func toWine(result string) *domain.Wine {
-	return domain.NewWine(domain.NewWineId(result))
+func toWine(id string, name string) *domain.Wine {
+	return domain.NewWine(domain.WineIdOf(id), domain.WineNameOf(name))
 }
 
 func NewWineRepository(con string) (*WineRepository, error) {
