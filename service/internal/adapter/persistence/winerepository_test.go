@@ -1,8 +1,8 @@
 package persistence_test
 
 import (
-	"github.com/jaedle/vinotheque/service/adapter/persistence"
-	"github.com/jaedle/vinotheque/service/domain"
+	"github.com/jaedle/vinotheque/service/internal/adapter/persistence"
+	"github.com/jaedle/vinotheque/service/internal/domain"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

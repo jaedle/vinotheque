@@ -3,7 +3,7 @@ package parser
 import (
 	"fmt"
 	"github.com/ghodss/yaml"
-	"github.com/jaedle/vinotheque/service/domain"
+	"github.com/jaedle/vinotheque/service/internal/domain"
 )
 
 type Import struct {

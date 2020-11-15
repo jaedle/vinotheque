@@ -1,8 +1,8 @@
 package parser_test
 
 import (
-	"github.com/jaedle/vinotheque/service/adapter/parser"
-	"github.com/jaedle/vinotheque/service/domain"
+	"github.com/jaedle/vinotheque/service/internal/adapter/parser"
+	"github.com/jaedle/vinotheque/service/internal/domain"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )

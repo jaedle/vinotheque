@@ -2,7 +2,7 @@ package persistence
 
 import (
 	"database/sql"
-	"github.com/jaedle/vinotheque/service/domain"
+	"github.com/jaedle/vinotheque/service/internal/domain"
 )
 import _ "github.com/go-sql-driver/mysql"
 
