@@ -55,9 +55,10 @@ var _ = Describe("Persistence", func() {
 		})
 
 		It("persists wines", func() {
-			aSavedWine(repo, aWine(aWineId))
-			aSavedWine(repo, aWine("2"))
-			aSavedWine(repo, aWine("3"))
+			wine1 := aWine(aWineId)
+			wine2 := aWine("2")
+			wine3 := aWine("3")
+			aSavedWine(repo, wine1, wine2, wine3)
 
 			Expect(repo.Size()).To(Equal(3))
 		})
@@ -69,12 +70,26 @@ var _ = Describe("Persistence", func() {
 			Expect(err).To(HaveOccurred())
 			Expect(res).To(BeNil())
 		})
+
+		It("loads all wines", func() {
+			wine1 := aWine(aWineId)
+			wine2 := aWine("2")
+			wine3 := aWine("3")
+			aSavedWine(repo, wine1, wine2, wine3)
+
+			res, err := repo.LoadAll()
+			Expect(err).ToNot(HaveOccurred())
+			Expect(len(res)).To(Equal(3))
+			Expect(res).To(ConsistOf([]*domain.Wine{wine1, wine2, wine3}))
+		})
 	})
 
 })
 
-func aSavedWine(repo *persistence.WineRepository, wine *domain.Wine) bool {
-	return Expect(repo.Save(wine)).NotTo(HaveOccurred())
+func aSavedWine(repo *persistence.WineRepository, wines ...*domain.Wine) {
+	for _, w := range wines {
+		Expect(repo.Save(w)).NotTo(HaveOccurred())
+	}
 }
 
 func aWine(id string) *domain.Wine {

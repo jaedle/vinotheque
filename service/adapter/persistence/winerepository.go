@@ -66,6 +66,25 @@ func (r *WineRepository) Load(id *domain.WineId) (*domain.Wine, error) {
 	return toWine(result), nil
 }
 
+func (r *WineRepository) LoadAll() ([]*domain.Wine, error) {
+	q, err := r.sql.Query("SELECT id FROM wines")
+	if err != nil {
+		return nil, err
+	}
+	defer q.Close()
+
+	var result []*domain.Wine
+	for q.Next() {
+		var id string
+		if err := q.Scan(&id); err != nil {
+			return nil, err
+		}
+		result = append(result, toWine(id))
+	}
+
+	return result, nil
+}
+
 func toWine(result string) *domain.Wine {
 	return domain.NewWine(domain.NewWineId(result))
 }
