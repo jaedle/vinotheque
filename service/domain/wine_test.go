@@ -15,6 +15,7 @@ var _ = Describe("Wine", func() {
 
 		Expect(wine.GetId()).To(Equal(domain.WineIdOf("1")))
 		Expect(wine.GetName()).To(Equal(domain.WineNameOf("asdf")))
+		Expect(wine.GetYear()).To(BeNil())
 	})
 
 	It("restores", func() {
@@ -28,16 +29,25 @@ var _ = Describe("Wine", func() {
 
 	It("updates name", func() {
 		wine := domain.NewWine(domain.WineIdOf(aWineId), domain.WineNameOf(aWineName))
+
 		wine.SetName(domain.WineNameOf("updated"))
 
 		Expect(wine.GetName()).To(Equal(domain.WineNameOf("updated")))
+	})
+
+	It("updates year", func() {
+		wine := domain.NewWine(domain.WineIdOf(aWineId), domain.WineNameOf(aWineName))
+
+		year, _ := domain.WineYearOf(2010)
+		wine.SetYear(year)
+
+		Expect(wine.GetYear()).To(Equal(year))
 	})
 
 	Context("WineId", func() {
 		It("creates", func() {
 			Expect(domain.WineIdOf("1").Value()).To(Equal("1"))
 		})
-
 	})
 
 	Context("WineName", func() {

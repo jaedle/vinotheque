@@ -11,6 +11,7 @@ func NewWine(id *WineId, name *WineName) *Wine {
 type Wine struct {
 	id   *WineId
 	name *WineName
+	year *WineYear
 }
 
 func (w *Wine) GetId() *WineId {
@@ -23,4 +24,12 @@ func (w *Wine) SetName(n *WineName) {
 
 func (w *Wine) GetName() *WineName {
 	return w.name
+}
+
+func (w *Wine) GetYear() *WineYear {
+	return w.year
+}
+
+func (w *Wine) SetYear(year *WineYear) {
+	w.year = year
 }
