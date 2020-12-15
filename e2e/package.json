@@ -12,6 +12,6 @@
   "repository": "https://github.com/jaedle/vinotheque",
   "devDependencies": {
     "prettier": "^2.2.1",
-    "testcafe": "^1.9.4"
+    "testcafe": "^1.10.0"
   }
 }
